@@ -23,6 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: false,
     bundleIdentifier: Env.BUNDLE_ID,
   },
+  jsEngine: 'hermes',
   experiments: {
     typedRoutes: true,
   },
