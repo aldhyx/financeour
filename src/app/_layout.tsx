@@ -6,6 +6,9 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
@@ -40,9 +43,7 @@ export default function RootLayout() {
 
   return (
     <Providers>
-      <Stack>
-        <Stack.Screen name="(main)" options={{ headerShown: false }} />
-      </Stack>
+      <Stack />
     </Providers>
   );
 }
@@ -50,5 +51,20 @@ export default function RootLayout() {
 function Providers({ children }: { children: React.ReactNode }) {
   const theme = useThemeConfig();
 
-  return <ThemeProvider value={theme}>{children}</ThemeProvider>;
+  return (
+    <GestureHandlerRootView
+      style={styles.container}
+      className={theme.dark ? `dark` : undefined}
+    >
+      <KeyboardProvider>
+        <ThemeProvider value={theme}>{children}</ThemeProvider>
+      </KeyboardProvider>
+    </GestureHandlerRootView>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
