@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
-import type { ConfigContext, ExpoConfig } from "@expo/config";
+import type { ConfigContext, ExpoConfig } from '@expo/config';
 
-import { ClientEnv, Env } from "./env";
+import { ClientEnv, Env } from './env';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -11,13 +11,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: Env.SCHEME,
   slug: Env.SLUG,
   version: Env.VERSION.toString(),
-  orientation: "portrait",
-  icon: "./assets/images/icon.png",
-  userInterfaceStyle: "automatic",
+  orientation: 'portrait',
+  icon: './assets/images/icon.png',
+  userInterfaceStyle: 'automatic',
   splash: {
-    image: "./assets/images/splash.png",
-    resizeMode: "contain",
-    backgroundColor: "#18181B",
+    image: './assets/images/splash.png',
+    resizeMode: 'contain',
+    backgroundColor: '#18181B',
   },
   ios: {
     supportsTablet: false,
@@ -28,27 +28,38 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/images/adaptive-icon.png",
-      backgroundColor: "#18181B",
+      foregroundImage: './assets/images/adaptive-icon.png',
+      backgroundColor: '#18181B',
     },
     package: Env.PACKAGE,
   },
   plugins: [
-    "expo-router",
+    'expo-router',
     [
-      "app-icon-badge",
+      'expo-build-properties',
       {
-        enabled: Env.APP_ENV !== "production",
+        ios: {
+          newArchEnabled: true,
+        },
+        android: {
+          newArchEnabled: true,
+        },
+      },
+    ],
+    [
+      'app-icon-badge',
+      {
+        enabled: Env.APP_ENV !== 'production',
         badges: [
           {
             text: Env.APP_ENV,
-            type: "banner",
-            color: "white",
+            type: 'banner',
+            color: 'white',
           },
           {
             text: Env.VERSION.toString(),
-            type: "ribbon",
-            color: "white",
+            type: 'ribbon',
+            color: 'white',
           },
         ],
       },

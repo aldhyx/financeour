@@ -4,9 +4,9 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [ "./src/*" ],
+      "@/*": ["./src/*"],
       "@env": ["./src/lib/env.js"],
-      "@assets": ["./assets/*"],
+      "@assets": ["./assets/*"]
     },
     "esModuleInterop": true,
     "checkJs": true
@@ -22,5 +22,11 @@
     "lint-staged.config.js",
     "assets"
   ],
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
+  ]
 }
