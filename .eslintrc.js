@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   extends: ['expo', 'prettier', 'plugin:tailwindcss/recommended'],
   plugins: ['unicorn', 'unused-imports', 'simple-import-sort'],
@@ -41,4 +43,40 @@ module.exports = {
     'tailwindcss/classnames-order': 'error',
     'tailwindcss/enforces-shorthand': 'error',
   },
+  overrides: [
+    // Configuration for  translations files (i18next)
+    {
+      files: ['src/translations/*.json'],
+      extends: ['plugin:i18n-json/recommended'],
+      rules: {
+        'i18n-json/valid-message-syntax': [
+          2,
+          {
+            syntax: path.resolve('./scripts/i18next-syntax-validation.js'),
+          },
+        ],
+        'i18n-json/valid-json': 2,
+        'i18n-json/sorted-keys': [
+          2,
+          {
+            order: 'asc',
+            indentSpaces: 2,
+          },
+        ],
+        'i18n-json/identical-keys': [
+          2,
+          {
+            filePath: path.resolve('./src/translations/en-us.json'),
+          },
+        ],
+        'prettier/prettier': [
+          0,
+          {
+            singleQuote: true,
+            endOfLine: 'auto',
+          },
+        ],
+      },
+    },
+  ],
 };
