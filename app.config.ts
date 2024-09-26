@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/images/splash.png',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     backgroundColor: '#18181B',
   },
   ios: {
@@ -55,12 +55,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           {
             text: Env.APP_ENV,
             type: 'banner',
-            color: 'white',
+            color: 'black',
+            background: '#FFE101',
           },
           {
             text: Env.VERSION.toString(),
             type: 'ribbon',
-            color: 'white',
+            color: 'black',
+            background: '#FFE101',
           },
         ],
       },
