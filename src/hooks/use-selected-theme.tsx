@@ -2,9 +2,9 @@ import { colorScheme, useColorScheme } from 'nativewind';
 import React from 'react';
 import { useMMKVString } from 'react-native-mmkv';
 
+import { STORED_KEY } from '@/constants/local-storage-key';
 import { storage } from '@/lib/storage';
 
-const SELECTED_THEME = 'SELECTED_THEME';
 export type ColorSchemeType = 'light' | 'dark' | 'system';
 
 /**
@@ -16,7 +16,7 @@ export type ColorSchemeType = 'light' | 'dark' | 'system';
  */
 export const useSelectedTheme = () => {
   const { setColorScheme } = useColorScheme();
-  const [theme, _setTheme] = useMMKVString(SELECTED_THEME, storage);
+  const [_theme, _setTheme] = useMMKVString(STORED_KEY.COLOR_SCHEMA, storage);
 
   const setSelectedTheme = React.useCallback(
     (t: ColorSchemeType) => {
@@ -26,13 +26,13 @@ export const useSelectedTheme = () => {
     [setColorScheme, _setTheme]
   );
 
-  const selectedTheme = (theme ?? 'system') as ColorSchemeType;
+  const selectedTheme = (_theme ?? 'system') as ColorSchemeType;
   return { selectedTheme, setSelectedTheme } as const;
 };
 
 // To be used in the root file to load the selected theme from MMKV
 export const loadSelectedTheme = () => {
-  const theme = storage.getString(SELECTED_THEME);
+  const theme = storage.getString(STORED_KEY.COLOR_SCHEMA);
   if (theme !== undefined) {
     colorScheme.set(theme as ColorSchemeType);
   }
