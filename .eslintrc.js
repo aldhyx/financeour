@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   extends: ['expo', 'prettier', 'plugin:tailwindcss/recommended'],
-  plugins: ['unicorn', 'unused-imports', 'simple-import-sort'],
+  plugins: ['unicorn', 'unused-imports', 'tailwindcss', 'simple-import-sort'],
   parserOptions: {
     project: './tsconfig.json',
   },
@@ -77,6 +77,11 @@ module.exports = {
           },
         ],
       },
+    },
+    {
+      // Configuration for testing files
+      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+      extends: ['plugin:testing-library/react'],
     },
   ],
 };
