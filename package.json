@@ -57,6 +57,8 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/native": "^6.0.2",
+    "@rn-primitives/slot": "^1.0.4",
+    "@rn-primitives/types": "^1.0.4",
     "app-icon-badge": "^0.0.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
