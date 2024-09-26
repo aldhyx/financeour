@@ -43,7 +43,12 @@ export default function RootLayout() {
 
   return (
     <Providers>
-      <Stack />
+      <Stack
+        screenOptions={{
+          animation: 'fade_from_bottom',
+          headerShadowVisible: false,
+        }}
+      />
     </Providers>
   );
 }

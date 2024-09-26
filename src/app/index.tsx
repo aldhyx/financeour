@@ -1,15 +1,5 @@
-import { Env } from '@env';
-import React from 'react';
-import { Text, View } from 'react-native';
+import { Redirect } from 'expo-router';
 
-const IndexScreen = () => {
-  return (
-    <View>
-      <Text>
-        {Env.NAME} - v{Env.VERSION} Tag
-      </Text>
-    </View>
-  );
-};
+const IndexScreen = () => <Redirect href={'/settings'} />;
 
 export default IndexScreen;
