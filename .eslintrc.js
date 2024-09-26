@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['expo', 'prettier'],
+  extends: ['expo', 'prettier', 'plugin:tailwindcss/recommended'],
   plugins: ['unicorn', 'unused-imports', 'simple-import-sort'],
   parserOptions: {
     project: './tsconfig.json',
@@ -37,5 +37,8 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    'tailwindcss/no-custom-classname': 'off',
+    'tailwindcss/classnames-order': 'error',
+    'tailwindcss/enforces-shorthand': 'error',
   },
 };
