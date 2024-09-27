@@ -5,7 +5,7 @@ export const resources = {
   en_us: {
     translation: translation_en_us,
   },
-  id_ID: {
+  id_id: {
     translation: translation_id_id,
   },
 };
