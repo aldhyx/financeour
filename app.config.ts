@@ -17,7 +17,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   splash: {
     image: './assets/images/splash.png',
     resizeMode: 'cover',
-    backgroundColor: '#18181B',
+    backgroundColor: '#09090B',
   },
   ios: {
     supportsTablet: false,
@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
-      backgroundColor: '#18181B',
+      backgroundColor: '#09090B',
     },
     package: Env.PACKAGE,
   },
