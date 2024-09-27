@@ -7,9 +7,9 @@ import { Button } from '@/components/ui';
 
 function AccountCard(props: { title: string; balance: number | null }) {
   return (
-    <View className="h-24 w-full min-w-44 shrink justify-center rounded-2xl bg-secondary px-3">
+    <View className="h-24 w-full min-w-44 shrink justify-center rounded-2xl bg-secondary px-3 dark:bg-secondary-foreground">
       <Text numberOfLines={1}>{props.title}</Text>
-      <Text numberOfLines={1} className="text-lg font-semibold">
+      <Text numberOfLines={1} className="text-xl font-semibold">
         Rp. {props.balance}
       </Text>
     </View>
@@ -25,7 +25,10 @@ function CurrentBalanceSection() {
         <Button variant="link" size="sm">
           <View className="flex-row gap-2">
             <Text className="font-bold">Akun saya</Text>
-            <WalletIcon className="text-primary dark:text-primary-foreground" />
+            <WalletIcon
+              className="text-primary dark:text-primary-foreground"
+              size={20}
+            />
           </View>
         </Button>
       </View>

@@ -1,8 +1,19 @@
 const path = require('path');
 
 module.exports = {
-  extends: ['expo', 'prettier', 'plugin:tailwindcss/recommended'],
-  plugins: ['unicorn', 'unused-imports', 'tailwindcss', 'simple-import-sort'],
+  extends: [
+    'expo',
+    'prettier',
+    'plugin:tailwindcss/recommended',
+    'plugin:drizzle/all',
+  ],
+  plugins: [
+    'unicorn',
+    'unused-imports',
+    'tailwindcss',
+    'simple-import-sort',
+    'drizzle',
+  ],
   parserOptions: {
     project: './tsconfig.json',
   },

@@ -11,6 +11,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
+import { useLoadDB } from '@/hooks/use-load-db';
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
@@ -30,17 +31,16 @@ SplashScreen.preventAutoHideAsync();
 loadSelectedTheme();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [fontLoaded, error] = useFonts({
     'Open-Sans': require('@assets/fonts/OpenSans.ttf'),
   });
+  const { loaded: dbLoaded } = useLoadDB();
 
   useEffect(() => {
-    if (loaded || error) SplashScreen.hideAsync();
-  }, [loaded, error]);
+    if (fontLoaded && dbLoaded) SplashScreen.hideAsync();
+  }, [fontLoaded, dbLoaded]);
 
-  if (!loaded && !error) {
-    return null;
-  }
+  if (!dbLoaded && !fontLoaded && !error) return null;
 
   return (
     <Providers>
