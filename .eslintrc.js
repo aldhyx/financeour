@@ -13,6 +13,7 @@ module.exports = {
     'tailwindcss',
     'simple-import-sort',
     'drizzle',
+    '@tanstack/query',
   ],
   parserOptions: {
     project: './tsconfig.json',
@@ -53,6 +54,9 @@ module.exports = {
     'tailwindcss/no-custom-classname': 'off',
     'tailwindcss/classnames-order': 'error',
     'tailwindcss/enforces-shorthand': 'error',
+    '@tanstack/query/exhaustive-deps': 'warn',
+    '@tanstack/query/no-rest-destructuring': 'error',
+    '@tanstack/query/stable-query-client': 'error',
   },
   overrides: [
     // Configuration for  translations files (i18next)

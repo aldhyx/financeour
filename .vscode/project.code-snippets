@@ -22,6 +22,17 @@
     "body": ["export * from '.$1';"],
     "description": "export *",
   },
+  "Hook": {
+    "prefix": "use",
+    "body": [
+      "export const use${1:CompName} = () => {",
+      "  $2",
+      "  return {}",
+      "};",
+      "",
+    ],
+    "description": "Hook",
+  },
   "Component": {
     "prefix": "comp",
     "body": [
