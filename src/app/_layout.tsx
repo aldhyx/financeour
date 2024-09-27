@@ -1,4 +1,5 @@
 import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 import '../../global.css';
 
 import { ThemeProvider } from '@react-navigation/native';
@@ -46,9 +47,11 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           animation: 'fade_from_bottom',
-          headerShadowVisible: false,
         }}
-      />
+      >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(main)" options={{ headerShown: false }} />
+      </Stack>
     </Providers>
   );
 }

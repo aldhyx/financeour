@@ -1,19 +1,18 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import { Text, TextClassContext } from '@/components/ui/text';
+import { Text, TextClassContext } from '@/components/ui';
 import { translate } from '@/lib/i18n';
 
 // Mocking the translate function
 jest.mock('@/lib/i18n', () => ({
   translate: jest.fn((key) => {
-    console.log('run mock');
     return `translated: ${key}`;
   }),
 }));
 
 describe('Text component ', () => {
-  const defaultTextClassName = 'text-base text-foreground web:select-text';
+  const defaultTextClassName = 'text-base text-foreground dark:text-background';
 
   it('should render correctly ', () => {
     render(<Text>Default Text</Text>);
