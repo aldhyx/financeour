@@ -27,15 +27,3 @@ export const TRANSACTION_TYPES_LABEL: Record<TxTypeEnum, string> = {
   out: 'Pengeluaran',
   tf: 'Transfer',
 } as const;
-
-// export const TRANSACTION_TYPES_COLOR: Record<TxTypeEnum, ThemeColor> = {
-//   in: 'chart7',
-//   out: 'destructive',
-//   tf: 'chart8',
-// } as const;
-
-// export const TRANSACTION_TYPES_ICON: Record<TxTypeEnum, MaterialIconName> = {
-//   in: 'arrow-down-bold',
-//   out: 'arrow-up-bold',
-//   tf: 'arrow-right-bold',
-// } as const;

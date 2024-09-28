@@ -5,9 +5,9 @@ import {
   ChartColumnBigIcon,
   ChartPieIcon,
   HomeIcon,
+  Text,
   UserRoundIcon,
-} from '@/components/icons';
-import { Text } from '@/components/ui';
+} from '@/components/ui';
 import { translate } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 

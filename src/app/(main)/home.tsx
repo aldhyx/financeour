@@ -1,7 +1,8 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { PlusIcon, WalletIcon } from '@/components/icons';
+import { PlusIcon, WalletIcon } from '@/components/ui';
 import { Text } from '@/components/ui';
 import { Button } from '@/components/ui';
 
@@ -17,12 +18,18 @@ function AccountCard(props: { title: string; balance: number | null }) {
 }
 
 function CurrentBalanceSection() {
+  const router = useRouter();
+
   return (
     <View className="pl-3">
       <View className="flex-row items-center justify-between gap-4">
         <Text>Jumlah saldo saat ini</Text>
 
-        <Button variant="link" size="sm">
+        <Button
+          variant="link"
+          size="sm"
+          onPress={() => router.push('/(account)/')}
+        >
           <View className="flex-row gap-2">
             <Text className="font-bold">Akun saya</Text>
             <WalletIcon
