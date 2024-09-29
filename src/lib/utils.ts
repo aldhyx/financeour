@@ -19,3 +19,16 @@ export const log = (message?: any, ...optionalParams: any[]) => {
     console.log(message, ...optionalParams);
   }
 };
+
+export const constructSearchParams = (
+  params: Record<string, string | undefined | null>
+) => {
+  const queryString = Object.keys(params)
+    .map(
+      (key) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(params[key] || '')}`
+    )
+    .join('&');
+
+  return `?${queryString}`;
+};

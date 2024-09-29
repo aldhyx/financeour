@@ -14,10 +14,10 @@ import type {
 } from './type';
 
 export const getAccountById = async (
-  id: string,
+  id?: string,
   dbInstance?: ExpoSQLiteDatabase
 ) => {
-  if (!id) throw new Error('Failed, undefined account ID!');
+  if (!id) return null;
   const runInstance = dbInstance || db;
 
   const result = await runInstance
