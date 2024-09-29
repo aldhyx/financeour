@@ -6,6 +6,10 @@ import { SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { DevToolsBubble } from 'react-native-react-query-devtools';
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
 
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
@@ -19,15 +23,17 @@ export const Providers = (props: PropsWithChildren) => {
       style={styles.container}
       className={theme.dark ? `dark` : undefined}
     >
-      <QueryClientProvider client={queryClient}>
-        <KeyboardProvider>
-          <ThemeProvider value={theme}>
-            <SheetProvider>{props.children}</SheetProvider>
-          </ThemeProvider>
-        </KeyboardProvider>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <QueryClientProvider client={queryClient}>
+          <KeyboardProvider>
+            <ThemeProvider value={theme}>
+              <SheetProvider>{props.children}</SheetProvider>
+            </ThemeProvider>
+          </KeyboardProvider>
 
-        <DevToolsBubble />
-      </QueryClientProvider>
+          <DevToolsBubble />
+        </QueryClientProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 };

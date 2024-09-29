@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 
 type RadioGroupRootProps = {
   value: string | undefined;
-  onValueChange: (val: string) => void;
+  onValueChange?: (val: string) => void;
 };
 
 type RadioGroupItemProps = {
@@ -51,7 +51,7 @@ const RadioGroupItem = ({
   const { onValueChange } = useRadioGroupContext();
 
   function onPressHandler() {
-    onValueChange(itemValue);
+    onValueChange?.(itemValue);
     onPress?.(itemValue);
   }
 

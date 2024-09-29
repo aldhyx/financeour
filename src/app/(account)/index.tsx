@@ -1,18 +1,17 @@
 import { FlashList } from '@shopify/flash-list';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 
 import { Button, PlusIcon } from '@/components/ui';
 import { AccountCard } from '@/components/ui/cards/account.card';
 import { AlertCard } from '@/components/ui/cards/alert.card';
-import { ErrorScreen } from '@/components/ui/views/error-screen';
+import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import {
   type Account,
   useAccounts,
   useUpdateAccount,
 } from '@/db/actions/account';
 
-// eslint-disable-next-line max-lines-per-function
 const MyAccountScreen = () => {
   const router = useRouter();
 
@@ -20,17 +19,16 @@ const MyAccountScreen = () => {
   const { data, error } = useAccounts();
   const isEmptyData = data.length === 0;
 
-  const pressCardHandler = (id: string) => {
-    router.push(`/(account)/${id}`);
+  const pressAddAccountHandler = async () => {
+    router.push('/(account)/create');
   };
 
-  const pressActionHandler = (_: Account) => {
-    // SheetManager.show('account-action.sheet', {
-    //   payload: account,
-    // });
-  };
+  const pressActionHandler = (_: Account) => {};
 
-  const pressFavoriteHandler = async (id: string, isFavorite: boolean) => {
+  const pressToggleFavoriteHandler = async (
+    id: string,
+    isFavorite: boolean
+  ) => {
     try {
       await mutateAsync({ id, values: { isFavorite } });
     } catch (_) {
@@ -42,9 +40,11 @@ const MyAccountScreen = () => {
 
   return (
     <View className="flex-1 px-3">
-      <Stack.Screen options={{ title: 'Akun saya' }} />
-
-      <Button size="icon-lg" className="absolute bottom-10 right-6">
+      <Button
+        size="icon-lg"
+        className="absolute bottom-10 right-6 z-10"
+        onPress={pressAddAccountHandler}
+      >
         <PlusIcon className="text-background" />
       </Button>
 
@@ -53,9 +53,9 @@ const MyAccountScreen = () => {
         renderItem={({ item }) => (
           <AccountCard
             {...item}
-            onPressCard={pressCardHandler}
+            onPressCard={() => router.push(`/(account)/${item.id}`)}
             onPressAction={pressActionHandler}
-            onPressFavorite={pressFavoriteHandler}
+            onPressFavorite={pressToggleFavoriteHandler}
           />
         )}
         estimatedItemSize={data?.length || 1}
