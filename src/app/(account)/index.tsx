@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
+import { SheetManager } from 'react-native-actions-sheet';
 
 import { Button, PlusIcon } from '@/components/ui';
 import { AccountCard } from '@/components/ui/cards/account.card';
@@ -23,7 +24,11 @@ const MyAccountScreen = () => {
     router.push('/(account)/create');
   };
 
-  const pressActionHandler = (_: Account) => {};
+  const pressActionHandler = (account: Account) => {
+    SheetManager.show('account-action.sheet', {
+      payload: account,
+    });
+  };
 
   const pressToggleFavoriteHandler = async (
     id: string,

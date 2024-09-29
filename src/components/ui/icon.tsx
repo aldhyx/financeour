@@ -8,11 +8,15 @@ import {
   ChartPieIcon,
   CheckCircle2Icon,
   CheckIcon,
+  DeleteIcon,
   EllipsisIcon,
   HomeIcon,
   InfoIcon,
+  PencilIcon,
   PlusIcon,
   StarIcon,
+  Trash2Icon,
+  TrashIcon,
   UserRoundIcon,
   WalletIcon,
 } from 'lucide-react-native';
@@ -35,6 +39,10 @@ iconWithClassName(EllipsisIcon);
 iconWithClassName(StarIcon);
 iconWithClassName(CheckCircle2Icon);
 iconWithClassName(CheckIcon);
+iconWithClassName(PencilIcon);
+iconWithClassName(DeleteIcon);
+iconWithClassName(TrashIcon);
+iconWithClassName(Trash2Icon);
 
 export {
   AlertCircleIcon,
@@ -46,11 +54,15 @@ export {
   ChartPieIcon,
   CheckCircle2Icon,
   CheckIcon,
+  DeleteIcon,
   EllipsisIcon,
   HomeIcon,
   InfoIcon,
+  PencilIcon,
   PlusIcon,
   StarIcon,
+  Trash2Icon,
+  TrashIcon,
   UserRoundIcon,
   WalletIcon,
 };
