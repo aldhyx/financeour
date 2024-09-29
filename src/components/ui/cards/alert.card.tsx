@@ -11,7 +11,7 @@ export const AlertCard = (props: { title: string; subTitle?: string }) => {
         <View>
           <Text className="font-semibold">{props.title}</Text>
 
-          {props.subTitle && <Text className="sm">{props.subTitle}</Text>}
+          {props.subTitle && <Text className="text-sm">{props.subTitle}</Text>}
         </View>
       </View>
     </View>

@@ -6,6 +6,8 @@ import {
   ArrowBigUpIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
+  CheckCircle2Icon,
+  CheckIcon,
   EllipsisIcon,
   HomeIcon,
   InfoIcon,
@@ -31,6 +33,8 @@ iconWithClassName(AlertCircleIcon);
 iconWithClassName(InfoIcon);
 iconWithClassName(EllipsisIcon);
 iconWithClassName(StarIcon);
+iconWithClassName(CheckCircle2Icon);
+iconWithClassName(CheckIcon);
 
 export {
   AlertCircleIcon,
@@ -40,6 +44,8 @@ export {
   ArrowBigUpIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
+  CheckCircle2Icon,
+  CheckIcon,
   EllipsisIcon,
   HomeIcon,
   InfoIcon,

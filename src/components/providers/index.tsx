@@ -2,8 +2,10 @@ import { ThemeProvider } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
+import { SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { DevToolsBubble } from 'react-native-react-query-devtools';
 
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
@@ -19,8 +21,12 @@ export const Providers = (props: PropsWithChildren) => {
     >
       <QueryClientProvider client={queryClient}>
         <KeyboardProvider>
-          <ThemeProvider value={theme}>{props.children}</ThemeProvider>
+          <ThemeProvider value={theme}>
+            <SheetProvider>{props.children}</SheetProvider>
+          </ThemeProvider>
         </KeyboardProvider>
+
+        <DevToolsBubble />
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
