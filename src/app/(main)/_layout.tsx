@@ -5,9 +5,9 @@ import {
   ChartColumnBigIcon,
   ChartPieIcon,
   HomeIcon,
-  Text,
   UserRoundIcon,
 } from '@/components/ui';
+import { HeaderBar } from '@/components/ui/header-bar';
 import { translate } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
@@ -18,12 +18,6 @@ const tabIcons = {
   budgets: ChartPieIcon,
 };
 
-const TabBarLabel = (props: { focused: boolean; children: string }) => (
-  <Text className={cn([props.focused ? 'font-semibold' : 'opacity-80'])}>
-    {props.children}
-  </Text>
-);
-
 const TabBarIcon = (props: {
   focused: boolean;
   icon: keyof typeof tabIcons;
@@ -33,8 +27,8 @@ const TabBarIcon = (props: {
   return (
     <SelectedIcon
       className={cn([
-        'text-foreground dark:text-background',
-        !props.focused && 'opacity-80',
+        'text-foreground',
+        props.focused ? 'text-primary' : 'opacity-80',
       ])}
     />
   );
@@ -50,10 +44,9 @@ const TabsLayout = () => {
           paddingTop: 12,
           paddingBottom: 4,
         },
-        headerTitleStyle: {
-          left: -5,
+        header({ options }) {
+          return <HeaderBar title={options.title} />;
         },
-        headerShadowVisible: false,
       }}
       initialRouteName="home"
     >
@@ -61,7 +54,7 @@ const TabsLayout = () => {
         name="home"
         options={{
           title: translate('bottom_nav.home'),
-          tabBarLabel: TabBarLabel,
+          tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="home" />
           ),
@@ -71,7 +64,7 @@ const TabsLayout = () => {
         name="report"
         options={{
           title: translate('bottom_nav.report'),
-          tabBarLabel: TabBarLabel,
+          tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="reports" />
           ),
@@ -82,17 +75,18 @@ const TabsLayout = () => {
         name="budget"
         options={{
           title: translate('bottom_nav.budget'),
-          tabBarLabel: TabBarLabel,
+          tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="budgets" />
           ),
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
           title: translate('bottom_nav.profile'),
-          tabBarLabel: TabBarLabel,
+          tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="profile" />
           ),
