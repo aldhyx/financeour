@@ -4,6 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Button, EllipsisIcon, StarIcon, Text } from '@/components/ui';
 import { Account } from '@/db/actions/account';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
+import { cn } from '@/lib/utils';
 
 type Props = {
   onPressFavorite: (id: string, isFavorite: boolean) => void;
@@ -43,9 +44,17 @@ export const AccountCard = memo((props: Props) => {
             <Button
               size="icon"
               variant="ghost"
-              onPress={() => props.onPressFavorite(props.id, !props.isFavorite)}
+              onPress={() =>
+                props.onPressFavorite(props.id, !Boolean(props.isFavorite))
+              }
             >
-              <StarIcon className="text-foreground" size={20} />
+              <StarIcon
+                className={cn(
+                  'text-foreground',
+                  props.isFavorite && 'fill-foreground'
+                )}
+                size={20}
+              />
             </Button>
 
             <Button

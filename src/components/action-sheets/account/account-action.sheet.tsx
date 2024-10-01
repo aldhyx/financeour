@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import ActionSheet, {
   SheetManager,
@@ -19,11 +19,36 @@ const AccountActionSheet = (props: SheetProps<'account-action.sheet'>) => {
   const [renderView, setRenderView] = useState<RenderView>('menu');
   const router = useRouter();
   const { colors } = useThemeConfig();
+
   const pressCancel = () => {
     setTimeout(() => {
       setRenderView('menu');
     }, 250);
   };
+
+  const pressChangeAccount = useCallback(async () => {
+    console.log('pressed 1');
+    await SheetManager.hide(props.sheetId);
+    console.log('pressed 2');
+    const searchParams = constructSearchParams({
+      id: props.payload?.id,
+      name: props.payload?.name,
+      description: props.payload?.description,
+      type: props.payload?.type,
+    });
+
+    router.push(`/(account)/update${searchParams}`);
+  }, [props.payload, router, props.sheetId]);
+
+  const pressChangeAccountBalance = useCallback(async () => {
+    await SheetManager.hide(props.sheetId);
+    const searchParams = constructSearchParams({
+      id: props.payload?.id,
+      balance: props.payload?.balance ? props.payload.balance.toString() : '',
+    });
+
+    router.push(`/(account)/update-balance${searchParams}`);
+  }, [router, props.payload, props.sheetId]);
 
   return (
     <ActionSheet
@@ -44,26 +69,14 @@ const AccountActionSheet = (props: SheetProps<'account-action.sheet'>) => {
 
         {renderView === 'menu' && (
           <View className="pb-6">
-            <TouchableOpacity
-              onPress={async () => {
-                await SheetManager.hide(props.sheetId);
-                const searchParams = constructSearchParams({
-                  id: props.payload?.id,
-                  name: props.payload?.name,
-                  description: props.payload?.description,
-                  type: props.payload?.type,
-                });
-
-                router.push(`/(account)/update${searchParams}`);
-              }}
-            >
+            <TouchableOpacity onPress={pressChangeAccount}>
               <View className="h-14 flex-row items-center gap-4 border-b border-b-input px-4">
                 <PencilIcon size={20} className="text-foreground" />
                 <Text className="text-lg font-medium">Ubah akun</Text>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={pressChangeAccountBalance}>
               <View className="h-14 flex-row items-center gap-4 border-b border-b-input px-4">
                 <PencilIcon size={20} className="text-foreground" />
                 <Text className="text-lg font-medium">Sesuaikan saldo</Text>

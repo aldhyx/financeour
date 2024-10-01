@@ -9,12 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary active:opacity-90',
-        destructive: 'bg-destructive active:opacity-90',
+        default: 'bg-primary active:opacity-80',
+        destructive: 'bg-destructive active:opacity-80',
         outline: 'border border-input bg-background active:bg-accent',
-        secondary: 'bg-secondary active:opacity-80',
-        ghost: 'active:bg-accent',
-        link: '',
+        secondary: 'bg-secondary active:opacity-60',
+        ghost: 'active:bg-accent active:opacity-60',
+        link: 'active:opacity-60',
       },
       size: {
         default: 'h-12 px-4',

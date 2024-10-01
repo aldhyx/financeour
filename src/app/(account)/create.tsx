@@ -58,7 +58,7 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <View className="px-4 pt-2">
+    <View className="px-4 pt-4">
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -82,15 +82,16 @@ export default function CreateAccountScreen() {
           value={accountType}
           errorText={errors.type?.message}
           className="capitalize"
+          size="lg"
         />
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <Input
+        <FakeInput
           label="Saldo awal (opsional)"
           errorText={errors.balance?.message}
           value={maskCurrency(balance).maskedRaw}
-          editable={false}
+          size="lg"
         />
       </TouchableOpacity>
 

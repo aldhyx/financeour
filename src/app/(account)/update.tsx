@@ -74,7 +74,7 @@ export default function UpdateAccountScreen() {
   if (!Boolean(searchParams.id)) return null;
 
   return (
-    <View className="px-4 pt-2">
+    <View className="px-4 pt-4">
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (

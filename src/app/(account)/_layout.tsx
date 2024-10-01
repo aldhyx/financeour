@@ -38,6 +38,15 @@ const AccountLayout = () => (
         },
       }}
     />
+    <Stack.Screen
+      name="update-balance"
+      options={{
+        title: 'Ubah saldo akun',
+        header({ options }) {
+          return <HeaderBar title={options.title} leftIcon="cancel" />;
+        },
+      }}
+    />
   </Stack>
 );
 

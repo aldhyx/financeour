@@ -26,9 +26,9 @@ const DeleteAccountForm = (props: {
   };
 
   return (
-    <View className="px-3 pb-6 pt-2">
-      <Text className="mb-1 font-semibold">Hapus akun?</Text>
-      <Text className="mb-4">
+    <View className="px-4 pb-6 pt-2">
+      <Text className="mb-1 text-2xl font-semibold">Hapus akun?</Text>
+      <Text className="mb-4 text-lg">
         Semua riwayat transaksi pada akun ini akan dihapus dan tidak bisa
         dikembalikan!
       </Text>
