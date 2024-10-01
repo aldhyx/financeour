@@ -34,7 +34,14 @@ export const Providers = (props: PropsWithChildren) => {
       style={styles.container}
       className={theme.dark ? `dark` : undefined}
     >
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <SafeAreaProvider
+        // A weird behavior:
+        // when navigating from screen -> tabs
+        // the app will show a flicker
+        // cause by this safeAreaProvider that has a white bg on dark theme, so we have to override using app colors
+        style={{ backgroundColor: theme.colors.background }}
+        initialMetrics={initialWindowMetrics}
+      >
         <QueryClientProvider client={queryClient}>
           <KeyboardProvider>
             <ThemeProvider value={theme}>

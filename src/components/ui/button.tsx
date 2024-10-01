@@ -61,6 +61,7 @@ const buttonTextVariants = cva('text-base font-medium text-foreground', {
 type ButtonProps = React.ComponentPropsWithoutRef<typeof Pressable> &
   VariantProps<typeof buttonVariants> & {
     loading?: boolean;
+    roundedFull?: boolean;
   };
 
 const Button = React.forwardRef<
@@ -68,7 +69,16 @@ const Button = React.forwardRef<
   ButtonProps
 >(
   (
-    { className, variant, size, loading, disabled, children, ...props },
+    {
+      className,
+      variant,
+      size,
+      loading,
+      disabled,
+      children,
+      roundedFull,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -76,7 +86,10 @@ const Button = React.forwardRef<
         value={cn(buttonTextVariants({ variant, size }))}
       >
         <Pressable
-          className={cn(buttonVariants({ variant, size, className }))}
+          className={cn(
+            buttonVariants({ variant, size, className }),
+            roundedFull && 'rounded-full'
+          )}
           ref={ref}
           role="button"
           disabled={disabled || loading}

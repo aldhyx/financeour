@@ -1,6 +1,7 @@
 import { useNavigation, useRouter } from 'expo-router';
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button, ChevronLeftIcon, Text, XIcon } from '@/components/ui';
 
@@ -20,14 +21,28 @@ export const HeaderBar = ({
   const canGoBack = navigation.canGoBack();
   const showBackButton = canGoBack && navigation.getState().type === 'stack';
 
+  /**
+   * there is a bug which will auto hide this header when theme changed
+   * so we need to set a margin top from setAreaInset.top
+   */
+  const { top } = useSafeAreaInsets();
+
   return (
-    <View className="h-14 flex-row items-center justify-between gap-4 bg-background px-4">
+    <View
+      className="h-14 flex-row items-center justify-between gap-4 bg-background px-4"
+      style={{ marginTop: top }}
+    >
       <View
         className="flex-row items-center gap-6"
         style={{ left: showBackButton ? -8 : 0 }}
       >
         {showBackButton && (
-          <Button size="icon-md" variant="ghost" onPress={router.back}>
+          <Button
+            size="icon-md"
+            variant="ghost"
+            onPress={router.back}
+            roundedFull
+          >
             {leftIcon === 'cancel' && (
               <XIcon size={28} className="text-foreground" />
             )}
