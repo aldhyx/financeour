@@ -4,10 +4,12 @@ import {
   ArrowBigDown,
   ArrowBigRight,
   ArrowBigUpIcon,
+  ArrowLeftIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
   CheckIcon,
+  ChevronLeftIcon,
   DeleteIcon,
   EllipsisIcon,
   HomeIcon,
@@ -19,6 +21,7 @@ import {
   TrashIcon,
   UserRoundIcon,
   WalletIcon,
+  XIcon,
 } from 'lucide-react-native';
 
 import { iconWithClassName } from '@/lib/icon-with-classname';
@@ -43,6 +46,9 @@ iconWithClassName(PencilIcon);
 iconWithClassName(DeleteIcon);
 iconWithClassName(TrashIcon);
 iconWithClassName(Trash2Icon);
+iconWithClassName(XIcon);
+iconWithClassName(ArrowLeftIcon);
+iconWithClassName(ChevronLeftIcon);
 
 export {
   AlertCircleIcon,
@@ -50,10 +56,12 @@ export {
   ArrowBigDown,
   ArrowBigRight,
   ArrowBigUpIcon,
+  ArrowLeftIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
   CheckIcon,
+  ChevronLeftIcon,
   DeleteIcon,
   EllipsisIcon,
   HomeIcon,
@@ -65,4 +73,5 @@ export {
   TrashIcon,
   UserRoundIcon,
   WalletIcon,
+  XIcon,
 };

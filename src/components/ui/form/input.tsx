@@ -1,3 +1,4 @@
+import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { TextInput, TouchableOpacity, View } from 'react-native';
 import { cn } from 'src/lib/utils';
@@ -5,20 +6,37 @@ import { cn } from 'src/lib/utils';
 import { Text } from '../text';
 import { FormContainer, FormErrorMessage, FormLabel } from './form';
 
-type Props = React.ComponentPropsWithoutRef<typeof TextInput> & {
-  label?: string;
-  errorText?: string;
-};
+const inputVariants = cva(
+  'group rounded-2xl border border-secondary bg-secondary px-3 text-base leading-tight text-foreground placeholder:text-muted-foreground',
+  {
+    variants: {
+      size: {
+        default: 'h-12',
+        sm: 'h-9',
+        lg: 'h-14',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  }
+);
+
+type Props = React.ComponentPropsWithoutRef<typeof TextInput> &
+  VariantProps<typeof inputVariants> & {
+    label?: string;
+    errorText?: string;
+  };
 
 export const Input = React.memo<Props>(
-  ({ className, placeholderClassName, label, errorText, ...props }) => {
+  ({ className, placeholderClassName, label, errorText, size, ...props }) => {
     return (
       <FormContainer>
         {label && <FormLabel className="mb-2" text={label} />}
 
         <TextInput
           className={cn(
-            'h-12 rounded-2xl border border-secondary bg-secondary px-3 text-base leading-[1.25] text-foreground placeholder:text-muted-foreground',
+            inputVariants({ size }),
             errorText && 'border border-destructive',
             className
           )}
@@ -36,9 +54,33 @@ export const Input = React.memo<Props>(
 );
 
 Input.displayName = 'Input';
+const fakeInputVariants = cva(
+  'group justify-center rounded-2xl border border-secondary bg-secondary px-3 leading-tight',
+  {
+    variants: {
+      size: {
+        default: 'h-12',
+        sm: 'h-9',
+        lg: 'h-14',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  }
+);
 
 export const FakeInput = React.memo<Props>(
-  ({ className, label, errorText, placeholder, value, onPress, ...props }) => {
+  ({
+    className,
+    label,
+    errorText,
+    placeholder,
+    value,
+    onPress,
+    size,
+    ...props
+  }) => {
     return (
       <TouchableOpacity onPress={onPress}>
         <FormContainer>
@@ -46,7 +88,7 @@ export const FakeInput = React.memo<Props>(
 
           <View
             className={cn(
-              'h-12 rounded-2xl border border-secondary bg-secondary px-3 leading-[1.25] justify-center',
+              fakeInputVariants({ size }),
               errorText && 'border border-destructive',
               className
             )}

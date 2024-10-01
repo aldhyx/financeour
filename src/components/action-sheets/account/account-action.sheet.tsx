@@ -7,6 +7,7 @@ import ActionSheet, {
 } from 'react-native-actions-sheet';
 
 import { PencilIcon, Text, TrashIcon } from '@/components/ui';
+import { useThemeConfig } from '@/hooks/use-theme-config';
 import { constructSearchParams } from '@/lib/utils';
 
 import DeleteAccountForm from './delete-account.form';
@@ -17,7 +18,7 @@ type RenderView = 'menu' | 'remove-confirm' | 'change-balance';
 const AccountActionSheet = (props: SheetProps<'account-action.sheet'>) => {
   const [renderView, setRenderView] = useState<RenderView>('menu');
   const router = useRouter();
-
+  const { colors } = useThemeConfig();
   const pressCancel = () => {
     setTimeout(() => {
       setRenderView('menu');
@@ -25,11 +26,20 @@ const AccountActionSheet = (props: SheetProps<'account-action.sheet'>) => {
   };
 
   return (
-    <ActionSheet gestureEnabled={true}>
+    <ActionSheet
+      id={props.sheetId}
+      gestureEnabled={true}
+      containerStyle={{ backgroundColor: colors.background }}
+      overlayColor="grey"
+      indicatorStyle={{
+        backgroundColor: colors.border,
+      }}
+      isModal={false}
+    >
       <View className="pb-6 pt-4">
-        <View className="mb-4 px-3">
+        <View className="mb-4 px-4">
           <Text className="text-lg font-bold">{props.payload!.name}</Text>
-          <Text className="text-sm">Dibuat pada 22 April 2024</Text>
+          <Text>Dibuat pada 22 April 2024</Text>
         </View>
 
         {renderView === 'menu' && (
@@ -47,23 +57,25 @@ const AccountActionSheet = (props: SheetProps<'account-action.sheet'>) => {
                 router.push(`/(account)/update${searchParams}`);
               }}
             >
-              <View className="h-14 flex-row items-center gap-3 border-b border-b-secondary px-3">
+              <View className="h-14 flex-row items-center gap-4 border-b border-b-input px-4">
                 <PencilIcon size={20} className="text-foreground" />
-                <Text className="font-medium">Ubah akun</Text>
+                <Text className="text-lg font-medium">Ubah akun</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <View className="h-14 flex-row items-center gap-3 border-b border-b-secondary px-3">
+              <View className="h-14 flex-row items-center gap-4 border-b border-b-input px-4">
                 <PencilIcon size={20} className="text-foreground" />
-                <Text className="font-medium">Sesuaikan saldo</Text>
+                <Text className="text-lg font-medium">Sesuaikan saldo</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setRenderView('remove-confirm')}>
-              <View className="h-14 flex-row items-center gap-3 border-b border-b-secondary px-3">
+              <View className="h-14 flex-row items-center gap-4 border-b border-b-input px-4">
                 <TrashIcon size={20} className="text-destructive" />
-                <Text className="font-medium text-destructive">Hapus akun</Text>
+                <Text className="text-lg font-medium text-destructive">
+                  Hapus akun
+                </Text>
               </View>
             </TouchableOpacity>
           </View>

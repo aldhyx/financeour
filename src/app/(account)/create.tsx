@@ -58,7 +58,7 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <View className="px-3 pt-2">
+    <View className="px-4 pt-2">
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -69,6 +69,7 @@ export default function CreateAccountScreen() {
             value={value}
             errorText={errors.name?.message}
             placeholder="Isi nama akun..."
+            size="lg"
           />
         )}
         name="name"
@@ -104,6 +105,7 @@ export default function CreateAccountScreen() {
             value={value || ''}
             inputMode="text"
             errorText={errors.description?.message}
+            size="lg"
           />
         )}
         name="description"
@@ -119,6 +121,7 @@ export default function CreateAccountScreen() {
         onPress={submitHandler}
         disabled={isSubmitting}
         loading={isSubmitting}
+        size="lg"
       >
         <Text>Simpan</Text>
       </Button>

@@ -59,7 +59,7 @@ const RadioGroupItem = ({
     <RadioItemContext.Provider value={{ itemValue }}>
       <TouchableOpacity onPress={onPressHandler}>
         <View
-          className="h-14 flex-row items-center justify-between gap-2 border-b border-b-secondary px-3"
+          className="h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4"
           {...otherProps}
         />
       </TouchableOpacity>

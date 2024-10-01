@@ -1,9 +1,8 @@
 import { colorScheme, useColorScheme } from 'nativewind';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useMMKVString } from 'react-native-mmkv';
 
 import { STORED_KEY } from '@/constants/local-storage-key';
-import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
 import { storage } from '@/lib/storage';
 
 export type ColorSchemeType = 'light' | 'dark' | 'system';
@@ -16,7 +15,7 @@ export type ColorSchemeType = 'light' | 'dark' | 'system';
  *
  */
 export const useSelectedTheme = () => {
-  const { colorScheme, setColorScheme } = useColorScheme();
+  const { setColorScheme } = useColorScheme();
   const [_theme, _setTheme] = useMMKVString(STORED_KEY.COLOR_SCHEMA, storage);
 
   const setSelectedTheme = React.useCallback(
@@ -27,10 +26,6 @@ export const useSelectedTheme = () => {
     [setColorScheme, _setTheme]
   );
 
-  useEffect(() => {
-    setAndroidNavigationBar(colorScheme === 'dark' ? 'dark' : 'light');
-  }, [colorScheme]);
-
   const selectedTheme = (_theme ?? 'system') as ColorSchemeType;
   return { selectedTheme, setSelectedTheme } as const;
 };
@@ -40,6 +35,5 @@ export const loadSelectedTheme = () => {
   const theme = storage.getString(STORED_KEY.COLOR_SCHEMA);
   if (theme !== undefined) {
     colorScheme.set(theme as ColorSchemeType);
-    setAndroidNavigationBar(colorScheme.get() === 'dark' ? 'dark' : 'light');
   }
 };

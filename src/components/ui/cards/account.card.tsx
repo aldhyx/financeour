@@ -42,15 +42,15 @@ export const AccountCard = memo((props: Props) => {
           <View className="flex-row gap-1" style={{ right: -5 }}>
             <Button
               size="icon"
-              variant="secondary"
+              variant="ghost"
               onPress={() => props.onPressFavorite(props.id, !props.isFavorite)}
             >
-              <StarIcon className="text-primary" size={20} />
+              <StarIcon className="text-foreground" size={20} />
             </Button>
 
             <Button
               size="icon"
-              variant="secondary"
+              variant="ghost"
               onPress={() =>
                 props.onPressAction({
                   id: props.id,
@@ -64,7 +64,7 @@ export const AccountCard = memo((props: Props) => {
                 })
               }
             >
-              <EllipsisIcon className="text-primary" size={20} />
+              <EllipsisIcon className="text-foreground " size={20} />
             </Button>
           </View>
         </View>

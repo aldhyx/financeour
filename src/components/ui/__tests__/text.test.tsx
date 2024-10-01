@@ -12,7 +12,7 @@ jest.mock('@/lib/i18n', () => ({
 }));
 
 describe('Text component ', () => {
-  const defaultTextClassName = 'text-base text-foreground dark:text-background';
+  const defaultTextClassName = 'text-base text-foreground';
 
   it('should render correctly ', () => {
     render(<Text>Default Text</Text>);

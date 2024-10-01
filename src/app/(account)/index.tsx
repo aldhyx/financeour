@@ -13,12 +13,12 @@ import {
   useUpdateAccount,
 } from '@/db/actions/account';
 
+// eslint-disable-next-line max-lines-per-function
 const MyAccountScreen = () => {
   const router = useRouter();
 
   const { mutateAsync } = useUpdateAccount();
   const { data, error } = useAccounts();
-  const isEmptyData = data.length === 0;
 
   const pressAddAccountHandler = async () => {
     router.push('/(account)/create');
@@ -44,7 +44,7 @@ const MyAccountScreen = () => {
   if (error) return <ErrorScreen />;
 
   return (
-    <View className="flex-1 px-3">
+    <View className="flex-1 px-4 pt-2">
       <Button
         size="icon-lg"
         className="absolute bottom-10 right-6 z-10"
@@ -65,7 +65,7 @@ const MyAccountScreen = () => {
         )}
         estimatedItemSize={data?.length || 1}
         contentContainerStyle={{
-          paddingTop: isEmptyData ? 8 : 16,
+          paddingTop: 14,
           paddingBottom: 120,
         }}
         showsVerticalScrollIndicator={false}

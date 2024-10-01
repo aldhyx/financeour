@@ -1,6 +1,10 @@
 import { ThemeProvider } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { PropsWithChildren } from 'react';
+import {
+  setStatusBarBackgroundColor,
+  setStatusBarStyle,
+} from 'expo-status-bar';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -12,11 +16,18 @@ import {
 } from 'react-native-safe-area-context';
 
 import { useThemeConfig } from '@/hooks/use-theme-config';
+import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
 
 const queryClient = new QueryClient();
 
 export const Providers = (props: PropsWithChildren) => {
   const theme = useThemeConfig();
+
+  useEffect(() => {
+    setStatusBarBackgroundColor(theme.colors.background, true);
+    setStatusBarStyle(theme.dark ? 'light' : 'dark', true);
+    setAndroidNavigationBar(theme.dark ? 'dark' : 'light');
+  }, [theme.colors.background, theme.dark]);
 
   return (
     <GestureHandlerRootView

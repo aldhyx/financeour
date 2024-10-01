@@ -8,7 +8,7 @@ import { Button } from '@/components/ui';
 
 function AccountCard(props: { title: string; balance: number | null }) {
   return (
-    <View className="h-24 w-full min-w-44 shrink justify-center rounded-2xl bg-secondary px-3 dark:bg-secondary-foreground">
+    <View className="h-24 w-full min-w-44 shrink justify-center rounded-2xl bg-secondary px-3">
       <Text numberOfLines={1}>{props.title}</Text>
       <Text numberOfLines={1} className="text-xl font-semibold">
         Rp. {props.balance}
@@ -21,7 +21,7 @@ function CurrentBalanceSection() {
   const router = useRouter();
 
   return (
-    <View className="pl-3">
+    <View className="pl-4 pr-2">
       <View className="flex-row items-center justify-between gap-4">
         <Text>Jumlah saldo saat ini</Text>
 
@@ -32,10 +32,7 @@ function CurrentBalanceSection() {
         >
           <View className="flex-row gap-2">
             <Text className="font-bold">Akun saya</Text>
-            <WalletIcon
-              className="text-primary dark:text-primary-foreground"
-              size={20}
-            />
+            <WalletIcon className="text-primary" size={20} />
           </View>
         </Button>
       </View>
@@ -49,7 +46,7 @@ function FavoriteAccountSection() {
   return (
     <ScrollView
       horizontal={true}
-      contentContainerStyle={{ columnGap: 8, paddingHorizontal: 12 }}
+      contentContainerStyle={{ columnGap: 8, paddingHorizontal: 16 }}
       accessibilityHint=""
       showsHorizontalScrollIndicator={false}
     >
@@ -63,7 +60,7 @@ function FavoriteAccountSection() {
 
 function MonthlySummarySection() {
   return (
-    <View className="flex-row gap-2 px-3">
+    <View className="flex-row gap-2 px-4">
       <AccountCard title="Pendapatan bulanan" balance={1000} />
       <AccountCard title="Pengeluaran bulanan" balance={1000} />
     </View>
