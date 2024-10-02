@@ -2,9 +2,9 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { PlusIcon, WalletIcon } from '@/components/ui';
-import { Text } from '@/components/ui';
-import { Button } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { PlusIcon, WalletIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 function AccountCard(props: { title: string; balance: number | null }) {
   return (

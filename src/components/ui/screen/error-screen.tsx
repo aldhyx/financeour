@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 
-import { AlertCircleIcon, Text } from '@/components/ui';
+import { AlertCircleIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 export const ErrorScreen = () => {
   return (

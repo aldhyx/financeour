@@ -1,13 +1,13 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
+import { HeaderBar } from '@/components/ui/header-bar';
 import {
   ChartColumnBigIcon,
   ChartPieIcon,
   HomeIcon,
   UserRoundIcon,
-} from '@/components/ui';
-import { HeaderBar } from '@/components/ui/header-bar';
+} from '@/components/ui/icon';
 import { translate } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 

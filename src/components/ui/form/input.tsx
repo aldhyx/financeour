@@ -1,9 +1,10 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
 import { TextInput, TouchableOpacity, View } from 'react-native';
-import { cn } from 'src/lib/utils';
 
-import { Text } from '../text';
+import { Text } from '@/components/ui/text';
+import { cn } from '@/lib/utils';
+
 import { FormContainer, FormErrorMessage, FormLabel } from './form';
 
 const inputVariants = cva(

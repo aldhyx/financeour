@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import { Text, TextClassContext } from '@/components/ui';
+import { Text, TextClassContext } from '@/components/ui/text';
 import { translate } from '@/lib/i18n';
 
 // Mocking the translate function

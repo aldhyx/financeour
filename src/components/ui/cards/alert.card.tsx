@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 
-import { InfoIcon, Text } from '@/components/ui';
+import { InfoIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 export const AlertCard = (props: { title: string; subTitle?: string }) => {
   return (

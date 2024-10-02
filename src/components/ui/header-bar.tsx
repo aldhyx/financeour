@@ -3,7 +3,9 @@ import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button, ChevronLeftIcon, Text, XIcon } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { ChevronLeftIcon, XIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 type HeaderBarProps = {
   title?: string;

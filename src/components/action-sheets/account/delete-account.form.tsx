@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { SheetManager } from 'react-native-actions-sheet';
 
-import { Text } from '@/components/ui';
 import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
 import { useRemoveAccount } from '@/db/actions/account';
 
 const DeleteAccountForm = (props: {

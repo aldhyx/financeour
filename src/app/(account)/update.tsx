@@ -6,8 +6,9 @@ import { SheetManager } from 'react-native-actions-sheet';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { z } from 'zod';
 
-import { Button, Text } from '@/components/ui';
-import { FakeInput, Input } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { FakeInput, Input } from '@/components/ui/form/input';
+import { Text } from '@/components/ui/text';
 import { insertAccountSchema, useUpdateAccount } from '@/db/actions/account';
 import { getErrorMessage } from '@/lib/utils';
 

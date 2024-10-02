@@ -4,12 +4,13 @@ import ActionSheet, {
   SheetProps,
 } from 'react-native-actions-sheet';
 
-import { CheckIcon, Text, WalletIcon } from '@/components/ui';
 import {
   RadioGroup,
   RadioGroupIndicator,
   RadioGroupItem,
-} from '@/components/ui/form';
+} from '@/components/ui/form/radio-group';
+import { CheckIcon, WalletIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 import { DEFAULT_ACCOUNT_TYPES } from '@/constants/app';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 

@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import { Button, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
 
 // Mocking the translate function
 jest.mock('@/lib/i18n', () => ({

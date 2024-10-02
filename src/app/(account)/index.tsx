@@ -3,9 +3,10 @@ import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import { SheetManager } from 'react-native-actions-sheet';
 
-import { Button, PlusIcon } from '@/components/ui';
+import { Button } from '@/components/ui/button';
 import { AccountCard } from '@/components/ui/cards/account.card';
 import { AlertCard } from '@/components/ui/cards/alert.card';
+import { PlusIcon } from '@/components/ui/icon';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import {
   type Account,

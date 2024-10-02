@@ -1,7 +1,9 @@
 import { memo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
-import { Button, EllipsisIcon, StarIcon, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { EllipsisIcon, StarIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 import { Account } from '@/db/actions/account';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { cn } from '@/lib/utils';

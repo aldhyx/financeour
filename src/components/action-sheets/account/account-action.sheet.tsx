@@ -6,7 +6,8 @@ import ActionSheet, {
   SheetProps,
 } from 'react-native-actions-sheet';
 
-import { PencilIcon, Text, TrashIcon } from '@/components/ui';
+import { PencilIcon, TrashIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 import { constructSearchParams } from '@/lib/utils';
 

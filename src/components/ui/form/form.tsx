@@ -1,9 +1,8 @@
 import { type PropsWithChildren } from 'react';
 import { View } from 'react-native';
 
+import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
-
-import { Text } from '../text';
 
 type FormLabelProps = { text?: string | null; className?: string };
 type FormErrorProps = { text?: string | null; className?: string };
