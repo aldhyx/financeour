@@ -1,9 +1,6 @@
 #!/bin/bash
 # this simple script will build and install the apk on a selected device
 
-# Build the APK
-./android/gradlew assembleRelease -p ./android
-
 # Find the release APK file
 APK_PATH=$(find ./android -type f -name "app-release.apk")
 

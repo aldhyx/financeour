@@ -1,5 +1,4 @@
 import { ThemeProvider } from '@react-navigation/native';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   setStatusBarBackgroundColor,
   setStatusBarStyle,
@@ -9,7 +8,6 @@ import { StyleSheet } from 'react-native';
 import { SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import { DevToolsBubble } from 'react-native-react-query-devtools';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -18,7 +16,8 @@ import {
 import { useThemeConfig } from '@/hooks/use-theme-config';
 import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
 
-const queryClient = new QueryClient();
+import { DevTools } from './dev-tools';
+import { QueryClientProvider } from './query-provider';
 
 export const Providers = (props: PropsWithChildren) => {
   const theme = useThemeConfig();
@@ -34,6 +33,7 @@ export const Providers = (props: PropsWithChildren) => {
       style={styles.container}
       className={theme.dark ? `dark` : undefined}
     >
+      <DevTools />
       <SafeAreaProvider
         // A weird behavior:
         // when navigating from screen -> tabs
@@ -42,14 +42,12 @@ export const Providers = (props: PropsWithChildren) => {
         style={{ backgroundColor: theme.colors.background }}
         initialMetrics={initialWindowMetrics}
       >
-        <QueryClientProvider client={queryClient}>
+        <QueryClientProvider>
           <KeyboardProvider>
             <ThemeProvider value={theme}>
               <SheetProvider>{props.children}</SheetProvider>
             </ThemeProvider>
           </KeyboardProvider>
-
-          <DevToolsBubble />
         </QueryClientProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
