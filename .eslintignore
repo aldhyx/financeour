@@ -8,3 +8,6 @@ ios/
 docs/
 cli/
 assets/
+
+# This thow unknown error when run eslint, so I ignore it
+src/lib/i18n/types.ts

@@ -11,9 +11,9 @@ module.exports = {
     'unicorn',
     'unused-imports',
     'tailwindcss',
-    'simple-import-sort',
     'drizzle',
     '@tanstack/query',
+    'simple-import-sort',
   ],
   parserOptions: {
     project: './tsconfig.json',
@@ -40,8 +40,6 @@ module.exports = {
     'react/require-default-props': 'off', // Allow non-defined react props as undefined
     'import/prefer-default-export': 'off', // Named export is easier to refactor automatically
     'import/no-cycle': ['error', { maxDepth: '∞' }],
-    'simple-import-sort/imports': 'error', // Import configuration for `eslint-plugin-simple-import-sort`
-    'simple-import-sort/exports': 'error', // Export configuration for `eslint-plugin-simple-import-sort`
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [
       'error',
@@ -57,6 +55,8 @@ module.exports = {
     '@tanstack/query/exhaustive-deps': 'warn',
     '@tanstack/query/no-rest-destructuring': 'error',
     '@tanstack/query/stable-query-client': 'error',
+    'simple-import-sort/imports': 'error', // Import configuration for `eslint-plugin-simple-import-sort`
+    'simple-import-sort/exports': 'error', // Export configuration for `eslint-plugin-simple-import-sort`
   },
   overrides: [
     // Configuration for  translations files (i18next)
