@@ -1,7 +1,4 @@
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { useRef } from 'react';
@@ -61,7 +58,7 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <BottomSheetModalProvider>
+    <>
       <ChooseAccountTypeSheet
         ref={sheetRef}
         value={accountType}
@@ -137,6 +134,6 @@ export default function CreateAccountScreen() {
           <Text>Simpan</Text>
         </Button>
       </View>
-    </BottomSheetModalProvider>
+    </>
   );
 }

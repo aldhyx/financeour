@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import {
   setStatusBarBackgroundColor,
@@ -43,7 +44,11 @@ export const Providers = (props: PropsWithChildren) => {
       >
         <QueryClientProvider>
           <KeyboardProvider>
-            <ThemeProvider value={theme}>{props.children}</ThemeProvider>
+            <ThemeProvider value={theme}>
+              <BottomSheetModalProvider>
+                {props.children}
+              </BottomSheetModalProvider>
+            </ThemeProvider>
           </KeyboardProvider>
         </QueryClientProvider>
       </SafeAreaProvider>

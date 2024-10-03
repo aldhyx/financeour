@@ -1,7 +1,4 @@
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef } from 'react';
@@ -102,7 +99,7 @@ function UpdateAccountForm(props: {
   };
 
   return (
-    <BottomSheetModalProvider>
+    <>
       <ChooseAccountTypeSheet
         ref={sheetRef}
         value={accountType}
@@ -169,6 +166,6 @@ function UpdateAccountForm(props: {
           <Text>Simpan</Text>
         </Button>
       </View>
-    </BottomSheetModalProvider>
+    </>
   );
 }

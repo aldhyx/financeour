@@ -1,7 +1,4 @@
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { FlashList } from '@shopify/flash-list';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
@@ -52,7 +49,7 @@ const MyAccountScreen = () => {
   if (error) return <ErrorScreen />;
 
   return (
-    <BottomSheetModalProvider>
+    <>
       <AccountActionSheet
         name={selectedAccount.name}
         id={selectedAccount.id}
@@ -93,7 +90,7 @@ const MyAccountScreen = () => {
           }
         />
       </View>
-    </BottomSheetModalProvider>
+    </>
   );
 };
 
