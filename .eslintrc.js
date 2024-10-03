@@ -33,7 +33,7 @@ module.exports = {
     'unicorn/no-await-in-promise-methods': 'error',
     'unicorn/prefer-date-now': 'error',
     'max-params': ['error', 3], // Limit the number of parameters in a function to use object instead
-    'max-lines-per-function': ['error', 70], // Don't be rude to write unreadable long function
+    'max-lines-per-function': ['error', 150], // Don't be rude to write unreadable long function
     'react/display-name': 'off',
     'react/no-inline-styles': 'off',
     'react/destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable

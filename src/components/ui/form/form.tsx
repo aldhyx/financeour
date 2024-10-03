@@ -14,9 +14,7 @@ export const FormLabel = (props: FormLabelProps) => {
   if (!props.text) return null;
 
   return (
-    <Text
-      className={cn('text-foreground text-sm leading-none', props.className)}
-    >
+    <Text className={cn('text-foreground leading-none', props.className)}>
       {props.text}
     </Text>
   );
@@ -26,7 +24,7 @@ export const FormErrorMessage = (props: FormErrorProps) => {
   if (!props.text) return null;
 
   return (
-    <Text className={cn('text-destructive text-sm', props.className)}>
+    <Text className={cn('text-destructive', props.className)}>
       {props.text}
     </Text>
   );

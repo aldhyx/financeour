@@ -5,7 +5,6 @@ import {
 } from 'expo-status-bar';
 import React, { PropsWithChildren, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
@@ -44,9 +43,7 @@ export const Providers = (props: PropsWithChildren) => {
       >
         <QueryClientProvider>
           <KeyboardProvider>
-            <ThemeProvider value={theme}>
-              <SheetProvider>{props.children}</SheetProvider>
-            </ThemeProvider>
+            <ThemeProvider value={theme}>{props.children}</ThemeProvider>
           </KeyboardProvider>
         </QueryClientProvider>
       </SafeAreaProvider>

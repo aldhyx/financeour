@@ -1,34 +1,49 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { FakeInput } from '@/components/ui/form/input';
+import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
   insertAccountSchema,
+  useAccountById,
   useUpdateAccountBalance,
 } from '@/db/actions/account';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { getErrorMessage } from '@/lib/utils';
+
+export default function UpdateAccountBalanceScreen() {
+  const searchParams = useLocalSearchParams<{
+    name?: string;
+    description?: string;
+    type?: string;
+    id?: string;
+  }>();
+  const { data, isLoading, isError } = useAccountById(searchParams.id);
+
+  if (isLoading) return <ActivityIndicator />;
+  if (isError) return <ErrorScreen />;
+  if (!data) return null;
+
+  return <UpdateAccountBalanceForm id={data.id} balance={data.balance} />;
+}
 
 const schema = insertAccountSchema.pick({
   balance: true,
 });
 type Schema = z.infer<typeof schema>;
 
-// eslint-disable-next-line max-lines-per-function
-export default function UpdateAccountBalanceScreen() {
+function UpdateAccountBalanceForm(props: {
+  id: string;
+  balance: number | null;
+}) {
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
-  const searchParams = useLocalSearchParams<{
-    balance?: string;
-    id?: string;
-  }>();
-  const defaultBalance = parseInt(searchParams?.balance || '0');
   const { mutateAsync: updateAccountBalance } = useUpdateAccountBalance();
 
   const {
@@ -39,16 +54,14 @@ export default function UpdateAccountBalanceScreen() {
   } = useForm<Schema>({
     resolver: zodResolver(schema),
     defaultValues: {
-      balance: isNaN(defaultBalance) ? 0 : defaultBalance,
+      balance: props.balance,
     },
   });
 
   const balance = watch('balance');
   const submitHandler = handleSubmit(async (data: Schema) => {
-    if (!searchParams.id) return;
-
     try {
-      await updateAccountBalance({ id: searchParams.id, values: data });
+      await updateAccountBalance({ id: props.id, values: data });
       router.back();
     } catch (error) {
       setError('root.api', {
@@ -56,8 +69,6 @@ export default function UpdateAccountBalanceScreen() {
       });
     }
   });
-
-  if (!Boolean(searchParams.id)) return null;
 
   return (
     <View className="px-4 pt-4">
@@ -76,29 +87,14 @@ export default function UpdateAccountBalanceScreen() {
         </Text>
       )}
 
-      <View className="flex-row gap-2">
-        <Button
-          className="flex-1"
-          variant="outline"
-          disabled={isSubmitting}
-          loading={isSubmitting}
-          onPress={() => {
-            router.back();
-          }}
-          size="lg"
-        >
-          <Text>Batalkan</Text>
-        </Button>
-        <Button
-          className="flex-1"
-          onPress={submitHandler}
-          disabled={isSubmitting}
-          loading={isSubmitting}
-          size="lg"
-        >
-          <Text>Simpan</Text>
-        </Button>
-      </View>
+      <Button
+        onPress={submitHandler}
+        disabled={isSubmitting}
+        loading={isSubmitting}
+        size="lg"
+      >
+        <Text>Simpan</Text>
+      </Button>
     </View>
   );
 }

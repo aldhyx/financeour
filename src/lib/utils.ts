@@ -21,7 +21,7 @@ export const log = (message?: any, ...optionalParams: any[]) => {
 };
 
 export const constructSearchParams = (
-  params: Record<string, string | undefined | null>
+  params: Record<string, string | number | undefined | null>
 ) => {
   const queryString = Object.keys(params)
     .map(

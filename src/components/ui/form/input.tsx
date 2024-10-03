@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { FormContainer, FormErrorMessage, FormLabel } from './form';
 
 const inputVariants = cva(
-  'group rounded-2xl border border-secondary bg-secondary px-3 text-base leading-tight text-foreground placeholder:text-muted-foreground',
+  'group rounded-2xl border border-secondary bg-secondary px-3 text-lg leading-tight text-foreground placeholder:text-muted-foreground',
   {
     variants: {
       size: {
@@ -97,7 +97,7 @@ export const FakeInput = React.memo<Props>(
           >
             <Text
               className={cn(
-                'text-base capitalize',
+                'text-lg capitalize',
                 value ? 'text-foreground' : 'text-muted-foreground'
               )}
             >

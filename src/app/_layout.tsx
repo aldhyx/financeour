@@ -1,7 +1,4 @@
-import 'react-native-gesture-handler';
-import 'react-native-reanimated';
 import '../../global.css';
-import '../components/action-sheets/sheets';
 
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';

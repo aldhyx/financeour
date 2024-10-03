@@ -55,7 +55,7 @@ describe('constructSearchParams', () => {
   it('should construct a query string from valid key-value pairs', () => {
     const params = {
       name: 'John Doe',
-      age: '30',
+      age: 30,
     };
     const result = constructSearchParams(params);
     expect(result).toBe('?name=John%20Doe&age=30');
