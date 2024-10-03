@@ -11,10 +11,10 @@
   "[javascript][typescript][typescriptreact]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.codeActionsOnSave": [
-      "source.addMissingImports",
-      "source.fixAll.eslint"
-    ]
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.addMissingImports": "explicit"
+    }
   },
   "[json][jsonc]": {
     "editor.formatOnSave": true,
