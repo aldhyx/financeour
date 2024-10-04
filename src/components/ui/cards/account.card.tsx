@@ -36,13 +36,13 @@ export const AccountCard = memo((props: Props) => {
 
         <View className="flex-row items-start justify-between gap-2 px-3 py-4">
           <View className="shrink">
-            <Text className="pt-2 text-lg">{props.name}</Text>
+            <Text className="pt-2 text-base">{props.name}</Text>
             <Text className="text-2xl font-semibold">
               {maskCurrency(props.balance).masked}
             </Text>
           </View>
 
-          <View className="flex-row gap-1" style={{ right: -5 }}>
+          <View className="flex-row" style={{ right: -5 }}>
             <Button
               size="icon"
               variant="ghost"

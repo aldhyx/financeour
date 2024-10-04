@@ -21,21 +21,23 @@ type Props = {
   onPressRadio: (val: string) => void;
 };
 
-const RenderBackdrop = (props: any) => (
-  <BottomSheetBackdrop
-    {...props}
-    disappearsOnIndex={-1}
-    opacity={0.45}
-    style={{
-      backgroundColor: 'grey',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    }}
-  />
-);
+const RenderBackdrop = (props: any) => {
+  return (
+    <BottomSheetBackdrop
+      {...props}
+      disappearsOnIndex={-1}
+      opacity={0.45}
+      style={{
+        backgroundColor: 'grey',
+        position: 'absolute',
+        top: 56, // header bar height
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}
+    />
+  );
+};
 
 const ChooseAccountTypeSheet = forwardRef<any, Props>((props, ref) => {
   const { colors } = useThemeConfig();
@@ -68,7 +70,7 @@ const ChooseAccountTypeSheet = forwardRef<any, Props>((props, ref) => {
                 value={item}
                 onPress={props.onPressRadio}
               >
-                <Text className="shrink text-lg capitalize">{item}</Text>
+                <Text className="shrink capitalize">{item}</Text>
 
                 <RadioGroupIndicator>
                   <CheckIcon size={24} className="text-foreground" />

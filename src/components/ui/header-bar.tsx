@@ -31,7 +31,7 @@ export const HeaderBar = ({
 
   return (
     <View
-      className="h-14 flex-row items-center justify-between gap-4 bg-background px-4"
+      className="h-14 flex-row items-center justify-between gap-4 px-4"
       style={{ marginTop: top }}
     >
       <View
@@ -55,7 +55,7 @@ export const HeaderBar = ({
         )}
 
         {Boolean(title) && (
-          <Text className="text-center text-2xl font-semibold">{title}</Text>
+          <Text className="text-center text-lg font-semibold">{title}</Text>
         )}
       </View>
 

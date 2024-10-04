@@ -32,6 +32,6 @@ export const FormErrorMessage = (props: FormErrorProps) => {
 
 export const FormContainer = (props: FormContainerProps) => {
   return (
-    <View className={cn('grow mb-4', props.className)}>{props.children}</View>
+    <View className={cn('grow mb-3', props.className)}>{props.children}</View>
   );
 };

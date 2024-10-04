@@ -62,7 +62,7 @@ const MyAccountScreen = () => {
           className="absolute bottom-10 right-6 z-10"
           onPress={addAccountHandler}
         >
-          <PlusIcon className="text-background" />
+          <PlusIcon size={24} className="text-background" />
         </Button>
 
         <FlashList

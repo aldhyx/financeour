@@ -26,7 +26,7 @@ const RenderBackdrop = (props: any) => (
     style={{
       backgroundColor: 'grey',
       position: 'absolute',
-      top: 0,
+      top: 56, // header bar height
       left: 0,
       right: 0,
       bottom: 0,
@@ -92,27 +92,25 @@ const AccountActionSheet = forwardRef<any, AccountActionSheetProps>(
             {renderView === 'menu' && (
               <View className="pb-6">
                 <TouchableOpacity onPress={changeAccountHandler}>
-                  <View className="h-14 flex-row items-center gap-4 border-b border-b-secondary px-4">
+                  <View className="h-14 flex-row items-center gap-4 border-b border-b-border px-4">
                     <PencilIcon size={20} className="text-foreground" />
-                    <Text className="text-lg font-medium">Ubah akun</Text>
+                    <Text className="">Ubah akun</Text>
                   </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={changeAccountBalanceHandler}>
-                  <View className="h-14 flex-row items-center gap-4 border-b border-b-secondary px-4">
+                  <View className="h-14 flex-row items-center gap-4 border-b border-b-border px-4">
                     <PencilIcon size={20} className="text-foreground" />
-                    <Text className="text-lg font-medium">Sesuaikan saldo</Text>
+                    <Text className="">Sesuaikan saldo</Text>
                   </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => setRenderView('remove-confirm')}
                 >
-                  <View className="h-14 flex-row items-center gap-4 border-b border-b-secondary px-4">
+                  <View className="h-14 flex-row items-center gap-4 border-b border-b-border px-4">
                     <TrashIcon size={20} className="text-destructive" />
-                    <Text className="text-lg font-medium text-destructive">
-                      Hapus akun
-                    </Text>
+                    <Text className="text-destructive">Hapus akun</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -120,8 +118,8 @@ const AccountActionSheet = forwardRef<any, AccountActionSheetProps>(
 
             {renderView === 'remove-confirm' && (
               <View className="px-4 pb-6 pt-2">
-                <Text className="mb-1 text-2xl font-semibold">Hapus akun?</Text>
-                <Text className="mb-4 text-lg">
+                <Text className="mb-1 text-xl font-semibold">Hapus akun?</Text>
+                <Text className="mb-4">
                   Semua riwayat transaksi pada akun ini akan dihapus dan tidak
                   bisa dikembalikan!
                 </Text>

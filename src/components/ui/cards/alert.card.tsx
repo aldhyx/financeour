@@ -7,7 +7,7 @@ export const AlertCard = (props: { title: string; subTitle?: string }) => {
   return (
     <View className="rounded-2xl border border-secondary p-3">
       <View className="flex-row gap-2">
-        <InfoIcon className="text-foreground" />
+        <InfoIcon className="text-foreground" size={24} />
 
         <View>
           <Text className="font-semibold">{props.title}</Text>
