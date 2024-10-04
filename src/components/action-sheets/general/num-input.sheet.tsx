@@ -1,8 +1,4 @@
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { forwardRef } from 'react';
 import { View } from 'react-native';
@@ -13,30 +9,14 @@ import { CalculatorIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
+import { SheetBackdrop } from '../sheet-backdrop';
+
 type Props = {
   renderView: 'calc' | 'numpad';
   renderViewNumpad: () => void;
   renderViewCalc: () => void;
   amount: number;
   setAmount: (val: number) => void;
-};
-
-const RenderBackdrop = (props: any) => {
-  return (
-    <BottomSheetBackdrop
-      {...props}
-      disappearsOnIndex={-1}
-      opacity={0.45}
-      style={{
-        backgroundColor: 'grey',
-        position: 'absolute',
-        top: 56, // header bar height
-        left: 0,
-        right: 0,
-        bottom: 0,
-      }}
-    />
-  );
 };
 
 const snapPoints = ['60%', '75%', '90%'];
@@ -50,7 +30,7 @@ const NumInputSheet = forwardRef<BottomSheetModalMethods | null, Props>(
         ref={ref}
         index={0}
         snapPoints={snapPoints}
-        backdropComponent={RenderBackdrop}
+        backdropComponent={SheetBackdrop}
         handleIndicatorStyle={{
           backgroundColor: colors.border,
         }}

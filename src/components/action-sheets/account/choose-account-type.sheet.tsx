@@ -1,8 +1,4 @@
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef } from 'react';
 import { View } from 'react-native';
 
@@ -16,29 +12,12 @@ import { Text } from '@/components/ui/text';
 import { DEFAULT_ACCOUNT_TYPES } from '@/constants/app';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
+import { SheetBackdrop } from '../sheet-backdrop';
+
 type Props = {
   value: string;
   onPressRadio: (val: string) => void;
 };
-
-const RenderBackdrop = (props: any) => {
-  return (
-    <BottomSheetBackdrop
-      {...props}
-      disappearsOnIndex={-1}
-      opacity={0.45}
-      style={{
-        backgroundColor: 'grey',
-        position: 'absolute',
-        top: 56, // header bar height
-        left: 0,
-        right: 0,
-        bottom: 0,
-      }}
-    />
-  );
-};
-
 const ChooseAccountTypeSheet = forwardRef<any, Props>((props, ref) => {
   const { colors } = useThemeConfig();
 
@@ -47,7 +26,7 @@ const ChooseAccountTypeSheet = forwardRef<any, Props>((props, ref) => {
       ref={ref}
       index={0}
       snapPoints={['50%', '75%']}
-      backdropComponent={RenderBackdrop}
+      backdropComponent={SheetBackdrop}
       handleIndicatorStyle={{
         backgroundColor: colors.border,
       }}

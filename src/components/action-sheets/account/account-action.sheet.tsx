@@ -1,5 +1,4 @@
 import {
-  BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetView,
   useBottomSheetModal,
@@ -15,24 +14,10 @@ import { Account, useRemoveAccount } from '@/db/actions/account';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 import { constructSearchParams } from '@/lib/utils';
 
+import { SheetBackdrop } from '../sheet-backdrop';
+
 type RenderView = 'menu' | 'remove-confirm';
 type AccountActionSheetProps = Pick<Account, 'name' | 'id'>;
-
-const RenderBackdrop = (props: any) => (
-  <BottomSheetBackdrop
-    {...props}
-    disappearsOnIndex={-1}
-    opacity={0.45}
-    style={{
-      backgroundColor: 'grey',
-      position: 'absolute',
-      top: 56, // header bar height
-      left: 0,
-      right: 0,
-      bottom: 0,
-    }}
-  />
-);
 
 const AccountActionSheet = forwardRef<any, AccountActionSheetProps>(
   ({ name, id }, ref) => {
@@ -73,7 +58,7 @@ const AccountActionSheet = forwardRef<any, AccountActionSheetProps>(
         index={0}
         snapPoints={['35%', '50%']}
         onChange={handleSheetChanges}
-        backdropComponent={RenderBackdrop}
+        backdropComponent={SheetBackdrop}
         handleIndicatorStyle={{
           backgroundColor: colors.border,
         }}
