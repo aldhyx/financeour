@@ -5,15 +5,19 @@ import {
   ArrowBigRight,
   ArrowBigUpIcon,
   ArrowLeftIcon,
+  CalculatorIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
   CheckIcon,
   ChevronLeftIcon,
   DeleteIcon,
+  DivideIcon,
   EllipsisIcon,
+  EqualIcon,
   HomeIcon,
   InfoIcon,
+  MinusIcon,
   PencilIcon,
   PlusIcon,
   StarIcon,
@@ -48,7 +52,11 @@ iconWithClassName(TrashIcon);
 iconWithClassName(Trash2Icon);
 iconWithClassName(XIcon);
 iconWithClassName(ArrowLeftIcon);
+iconWithClassName(EqualIcon);
 iconWithClassName(ChevronLeftIcon);
+iconWithClassName(CalculatorIcon);
+iconWithClassName(DivideIcon);
+iconWithClassName(MinusIcon);
 
 export {
   AlertCircleIcon,
@@ -57,15 +65,19 @@ export {
   ArrowBigRight,
   ArrowBigUpIcon,
   ArrowLeftIcon,
+  CalculatorIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
   CheckIcon,
   ChevronLeftIcon,
   DeleteIcon,
+  DivideIcon,
   EllipsisIcon,
+  EqualIcon,
   HomeIcon,
   InfoIcon,
+  MinusIcon,
   PencilIcon,
   PlusIcon,
   StarIcon,

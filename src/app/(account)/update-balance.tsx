@@ -1,10 +1,13 @@
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ActivityIndicator, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { z } from 'zod';
 
+import NumInputSheet from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FakeInput } from '@/components/ui/form/input';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
@@ -42,6 +45,8 @@ function UpdateAccountBalanceForm(props: {
   id: string;
   balance: number | null;
 }) {
+  const numInputRef = useRef<BottomSheetModal>(null);
+  const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
   const { mutateAsync: updateAccountBalance } = useUpdateAccountBalance();
@@ -51,6 +56,7 @@ function UpdateAccountBalanceForm(props: {
     formState: { errors, isSubmitting },
     watch,
     setError,
+    setValue,
   } = useForm<Schema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -70,14 +76,35 @@ function UpdateAccountBalanceForm(props: {
     }
   });
 
+  const pressNumInputHandler = () => {
+    numInputRef.current?.present();
+  };
+
   return (
     <View className="px-4 pt-4">
-      <TouchableOpacity>
+      <NumInputSheet
+        ref={numInputRef}
+        amount={balance || 0}
+        renderView={renderView}
+        renderViewCalc={() => {
+          numInputRef.current?.snapToIndex(1);
+          setRenderView('calc');
+        }}
+        renderViewNumpad={() => {
+          numInputRef.current?.snapToIndex(0);
+          setRenderView('numpad');
+        }}
+        setAmount={(result: number) => {
+          setValue('balance', result);
+          numInputRef.current?.close();
+        }}
+      />
+
+      <TouchableOpacity onPress={pressNumInputHandler}>
         <FakeInput
           label="Saldo saat ini"
           errorText={errors.balance?.message}
           value={maskCurrency(balance).masked}
-          size="lg"
         />
       </TouchableOpacity>
 
@@ -91,7 +118,7 @@ function UpdateAccountBalanceForm(props: {
         onPress={submitHandler}
         disabled={isSubmitting}
         loading={isSubmitting}
-        size="lg"
+        className="mt-2"
       >
         <Text>Simpan</Text>
       </Button>

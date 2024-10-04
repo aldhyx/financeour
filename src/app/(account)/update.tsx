@@ -117,7 +117,6 @@ function UpdateAccountForm(props: {
               value={value}
               errorText={errors.name?.message}
               placeholder="Isi nama akun..."
-              size="lg"
             />
           )}
           name="name"
@@ -130,7 +129,6 @@ function UpdateAccountForm(props: {
             value={accountType}
             errorText={errors.type?.message}
             className="capitalize"
-            size="lg"
           />
         </TouchableOpacity>
 
@@ -145,7 +143,6 @@ function UpdateAccountForm(props: {
               value={value || ''}
               inputMode="text"
               errorText={errors.description?.message}
-              size="lg"
             />
           )}
           name="description"
@@ -161,7 +158,7 @@ function UpdateAccountForm(props: {
           onPress={submitHandler}
           disabled={isSubmitting}
           loading={isSubmitting}
-          size="lg"
+          className="mt-2"
         >
           <Text>Simpan</Text>
         </Button>

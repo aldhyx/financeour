@@ -1,12 +1,13 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import ChooseAccountTypeSheet from '@/components/action-sheets/account/choose-account-type.sheet';
+import NumInputSheet from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FakeInput, Input } from '@/components/ui/form/input';
 import { Text } from '@/components/ui/text';
@@ -19,7 +20,10 @@ import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateAccountScreen() {
-  const sheetRef = useRef<BottomSheetModal>(null);
+  const accountTypeRef = useRef<BottomSheetModal>(null);
+  const numInputRef = useRef<BottomSheetModal>(null);
+  const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
+
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
   const { mutateAsync: createAccount } = useCreateAccount();
@@ -47,22 +51,44 @@ export default function CreateAccountScreen() {
     }
   });
 
-  const pressChooseAccountHandler = async () => {
+  const pressChooseAccountHandler = () => {
     Keyboard.dismiss();
-    sheetRef.current?.present();
+    accountTypeRef.current?.present();
+  };
+
+  const pressNumInputHandler = () => {
+    Keyboard.dismiss();
+    numInputRef.current?.present();
   };
 
   const pressRadioHandler = (val: string) => {
     setValue('type', val, { shouldValidate: true });
-    sheetRef.current?.close();
+    accountTypeRef.current?.close();
   };
 
   return (
     <>
       <ChooseAccountTypeSheet
-        ref={sheetRef}
+        ref={accountTypeRef}
         value={accountType}
         onPressRadio={pressRadioHandler}
+      />
+      <NumInputSheet
+        ref={numInputRef}
+        amount={balance || 0}
+        renderView={renderView}
+        renderViewCalc={() => {
+          numInputRef.current?.snapToIndex(1);
+          setRenderView('calc');
+        }}
+        renderViewNumpad={() => {
+          numInputRef.current?.snapToIndex(0);
+          setRenderView('numpad');
+        }}
+        setAmount={(result: number) => {
+          setValue('balance', result);
+          numInputRef.current?.close();
+        }}
       />
 
       <View className="px-4 pt-4">
@@ -76,7 +102,6 @@ export default function CreateAccountScreen() {
               value={value}
               errorText={errors.name?.message}
               placeholder="Isi nama akun..."
-              size="lg"
             />
           )}
           name="name"
@@ -89,16 +114,14 @@ export default function CreateAccountScreen() {
             value={accountType}
             errorText={errors.type?.message}
             className="capitalize"
-            size="lg"
           />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={pressNumInputHandler}>
           <FakeInput
             label="Saldo awal (opsional)"
             errorText={errors.balance?.message}
             value={maskCurrency(balance).maskedRaw}
-            size="lg"
           />
         </TouchableOpacity>
 
@@ -113,7 +136,6 @@ export default function CreateAccountScreen() {
               value={value || ''}
               inputMode="text"
               errorText={errors.description?.message}
-              size="lg"
             />
           )}
           name="description"
@@ -129,7 +151,7 @@ export default function CreateAccountScreen() {
           onPress={submitHandler}
           disabled={isSubmitting}
           loading={isSubmitting}
-          size="lg"
+          className="mt-2"
         >
           <Text>Simpan</Text>
         </Button>
