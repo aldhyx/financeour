@@ -14,7 +14,12 @@ export const FormLabel = (props: FormLabelProps) => {
   if (!props.text) return null;
 
   return (
-    <Text className={cn('text-foreground leading-none', props.className)}>
+    <Text
+      className={cn(
+        'text-foreground leading-none text-sm mb-2',
+        props.className
+      )}
+    >
       {props.text}
     </Text>
   );
@@ -24,7 +29,12 @@ export const FormErrorMessage = (props: FormErrorProps) => {
   if (!props.text) return null;
 
   return (
-    <Text className={cn('text-destructive', props.className)}>
+    <Text
+      className={cn(
+        'text-destructive text-sm leading-none mt-2',
+        props.className
+      )}
+    >
       {props.text}
     </Text>
   );
@@ -32,6 +42,6 @@ export const FormErrorMessage = (props: FormErrorProps) => {
 
 export const FormContainer = (props: FormContainerProps) => {
   return (
-    <View className={cn('grow mb-3', props.className)}>{props.children}</View>
+    <View className={cn('grow mb-2', props.className)}>{props.children}</View>
   );
 };

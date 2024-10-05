@@ -3,8 +3,10 @@ import {
   AlertTriangleIcon,
   ArrowBigDown,
   ArrowBigRight,
+  ArrowBigRightIcon,
   ArrowBigUpIcon,
   ArrowLeftIcon,
+  ArrowRightIcon,
   CalculatorIcon,
   ChartColumnBigIcon,
   ChartPieIcon,
@@ -57,14 +59,18 @@ iconWithClassName(ChevronLeftIcon);
 iconWithClassName(CalculatorIcon);
 iconWithClassName(DivideIcon);
 iconWithClassName(MinusIcon);
+iconWithClassName(ArrowRightIcon);
+iconWithClassName(ArrowBigRightIcon);
 
 export {
   AlertCircleIcon,
   AlertTriangleIcon,
   ArrowBigDown,
   ArrowBigRight,
+  ArrowBigRightIcon,
   ArrowBigUpIcon,
   ArrowLeftIcon,
+  ArrowRightIcon,
   CalculatorIcon,
   ChartColumnBigIcon,
   ChartPieIcon,

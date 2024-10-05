@@ -41,7 +41,7 @@ const AccountLayout = () => (
     <Stack.Screen
       name="update-balance"
       options={{
-        title: 'Ubah saldo akun',
+        title: 'Sesuaikan saldo',
         header({ options }) {
           return <HeaderBar title={options.title} leftIcon="cancel" />;
         },

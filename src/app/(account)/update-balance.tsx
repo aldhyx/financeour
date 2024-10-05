@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 import NumInputSheet from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
-import { FakeInput } from '@/components/ui/form/input';
+import { FakeInputBordered } from '@/components/ui/form/input';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
@@ -33,7 +33,13 @@ export default function UpdateAccountBalanceScreen() {
   if (isError) return <ErrorScreen />;
   if (!data) return null;
 
-  return <UpdateAccountBalanceForm id={data.id} balance={data.balance} />;
+  return (
+    <UpdateAccountBalanceForm
+      name={data.name}
+      id={data.id}
+      balance={data.balance}
+    />
+  );
 }
 
 const schema = insertAccountSchema.pick({
@@ -44,6 +50,7 @@ type Schema = z.infer<typeof schema>;
 function UpdateAccountBalanceForm(props: {
   id: string;
   balance: number | null;
+  name: string;
 }) {
   const numInputRef = useRef<BottomSheetModal>(null);
   const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
@@ -81,7 +88,7 @@ function UpdateAccountBalanceForm(props: {
   };
 
   return (
-    <View className="px-4 pt-4">
+    <>
       <NumInputSheet
         ref={numInputRef}
         amount={balance || 0}
@@ -100,28 +107,35 @@ function UpdateAccountBalanceForm(props: {
         }}
       />
 
-      <TouchableOpacity onPress={pressNumInputHandler}>
-        <FakeInput
-          label="Saldo saat ini"
-          errorText={errors.balance?.message}
-          value={maskCurrency(balance).masked}
-        />
-      </TouchableOpacity>
+      <View className="mb-4 bg-secondary p-4">
+        <Text className="text-lg font-bold">{props.name}</Text>
+        <Text className="text-sm">Dibuat pada 22 April 2025</Text>
+      </View>
 
-      {Boolean(errors.root?.api.message) && (
-        <Text className="mb-4 text-sm text-destructive">
-          {errors.root?.api.message}
-        </Text>
-      )}
+      <View className="px-4">
+        <TouchableOpacity onPress={pressNumInputHandler}>
+          <FakeInputBordered
+            label="Saldo saat ini"
+            value={maskCurrency(balance).maskedRaw}
+            errorText={errors.balance?.message}
+          />
+        </TouchableOpacity>
 
-      <Button
-        onPress={submitHandler}
-        disabled={isSubmitting}
-        loading={isSubmitting}
-        className="mt-2"
-      >
-        <Text>Simpan</Text>
-      </Button>
-    </View>
+        {Boolean(errors.root?.api.message) && (
+          <Text className="mb-4 text-sm text-destructive">
+            {errors.root?.api.message}
+          </Text>
+        )}
+
+        <Button
+          onPress={submitHandler}
+          disabled={isSubmitting}
+          loading={isSubmitting}
+          className="mt-2"
+        >
+          <Text>Simpan</Text>
+        </Button>
+      </View>
+    </>
   );
 }

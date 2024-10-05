@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import React from 'react';
-import { TextInput, TouchableOpacity, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { FormContainer, FormErrorMessage, FormLabel } from './form';
 
 const inputVariants = cva(
-  'group rounded-2xl border border-secondary bg-secondary px-3 text-lg leading-tight text-foreground placeholder:text-muted-foreground',
+  'group rounded-2xl border border-secondary bg-secondary px-3 text-base leading-tight text-foreground placeholder:text-muted-foreground',
   {
     variants: {
       size: {
@@ -23,17 +23,26 @@ const inputVariants = cva(
   }
 );
 
-type Props = React.ComponentPropsWithoutRef<typeof TextInput> &
+type InputProps = React.ComponentPropsWithoutRef<typeof TextInput> &
   VariantProps<typeof inputVariants> & {
     label?: string;
     errorText?: string;
+    hideErrorText?: boolean;
   };
 
-export const Input = React.memo<Props>(
-  ({ className, placeholderClassName, label, errorText, size, ...props }) => {
+export const Input = React.memo<InputProps>(
+  ({
+    className,
+    placeholderClassName,
+    label,
+    errorText,
+    size,
+    hideErrorText,
+    ...props
+  }) => {
     return (
       <FormContainer>
-        {label && <FormLabel className="mb-2" text={label} />}
+        {label && <FormLabel text={label} />}
 
         <TextInput
           className={cn(
@@ -48,13 +57,13 @@ export const Input = React.memo<Props>(
           {...props}
         />
 
-        {errorText && <FormErrorMessage className="mt-1" text={errorText} />}
+        {!hideErrorText && errorText && <FormErrorMessage text={errorText} />}
       </FormContainer>
     );
   }
 );
-
 Input.displayName = 'Input';
+
 const fakeInputVariants = cva(
   'group justify-center rounded-2xl border border-secondary bg-secondary px-3 leading-tight',
   {
@@ -71,45 +80,73 @@ const fakeInputVariants = cva(
   }
 );
 
-export const FakeInput = React.memo<Props>(
+export const FakeInput = React.memo<InputProps>(
   ({
     className,
     label,
     errorText,
     placeholder,
     value,
-    onPress,
     size,
-    ...props
+    hideErrorText,
   }) => {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <FormContainer>
-          {label && <FormLabel className="mb-2" text={label} />}
+      <FormContainer>
+        {label && <FormLabel text={label} />}
 
-          <View
+        <View
+          className={cn(
+            fakeInputVariants({ size }),
+            errorText && 'border border-destructive',
+            className
+          )}
+        >
+          <Text
             className={cn(
-              fakeInputVariants({ size }),
-              errorText && 'border border-destructive',
-              className
+              'text-base capitalize leading-tight',
+              value ? 'text-foreground' : 'text-muted-foreground'
             )}
-            {...props}
           >
-            <Text
-              className={cn(
-                'text-lg capitalize',
-                value ? 'text-foreground' : 'text-muted-foreground'
-              )}
-            >
-              {value || placeholder || ''}
-            </Text>
-          </View>
+            {value || placeholder || ''}
+          </Text>
+        </View>
 
-          {errorText && <FormErrorMessage className="mt-1" text={errorText} />}
-        </FormContainer>
-      </TouchableOpacity>
+        {!hideErrorText && errorText && <FormErrorMessage text={errorText} />}
+      </FormContainer>
     );
   }
 );
-
 FakeInput.displayName = 'FakeInput';
+
+export const FakeInputBordered = (props: {
+  errorText?: string;
+  value: string;
+  label?: string;
+  hideErrorText?: boolean;
+}) => {
+  return (
+    <FormContainer className="mb-3">
+      {props.label && <FormLabel text={props.label} />}
+      <View className="flex-row items-end gap-3">
+        <Text className="text-2xl font-medium leading-none">Rp</Text>
+
+        <View
+          className={cn(
+            'grow border-b border-b-border',
+            props.errorText && 'border-b-destructive'
+          )}
+        >
+          <Text className="text-4xl font-semibold leading-none">
+            {props.value}
+          </Text>
+        </View>
+      </View>
+
+      {!props.hideErrorText && props.errorText && (
+        <View className="pl-10">
+          <FormErrorMessage text={props.errorText} />
+        </View>
+      )}
+    </FormContainer>
+  );
+};

@@ -2,14 +2,10 @@ import { createContext, PropsWithChildren, useContext } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 type RadioGroupRootProps = {
-  value: string | undefined;
-  onValueChange?: (val: string) => void;
+  id?: string | null;
+  value?: string | null;
+  onChange?: (id: string, val: string) => void;
 };
-
-type RadioGroupItemProps = {
-  value: string;
-  onPress?: (val: string) => void;
-} & PropsWithChildren;
 
 const RadioGroupContext = createContext<RadioGroupRootProps | null>(null);
 
@@ -28,35 +24,43 @@ function useRadioGroupContext() {
 const RadioGroup = ({
   children,
   value,
-  onValueChange,
+  id,
+  onChange,
 }: PropsWithChildren & RadioGroupRootProps) => {
   return (
-    <RadioGroupContext.Provider value={{ value, onValueChange }}>
+    <RadioGroupContext.Provider value={{ id, value, onChange }}>
       {children}
     </RadioGroupContext.Provider>
   );
 };
 
+type RadioGroupItemProps = {
+  id: string;
+  value: string;
+  onPress?: (id: string, val: string) => void;
+} & PropsWithChildren;
+
 type RadioItemContextProps = {
-  itemValue: string | undefined;
+  itemId: string;
 };
 
 const RadioItemContext = createContext<RadioItemContextProps | null>(null);
 
 const RadioGroupItem = ({
   value: itemValue,
+  id: itemId,
   onPress,
   ...otherProps
 }: RadioGroupItemProps) => {
-  const { onValueChange } = useRadioGroupContext();
+  const { onChange } = useRadioGroupContext();
 
   function onPressHandler() {
-    onValueChange?.(itemValue);
-    onPress?.(itemValue);
+    onChange?.(itemId, itemValue);
+    onPress?.(itemId, itemValue);
   }
 
   return (
-    <RadioItemContext.Provider value={{ itemValue }}>
+    <RadioItemContext.Provider value={{ itemId }}>
       <TouchableOpacity onPress={onPressHandler}>
         <View
           className="h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4"
@@ -78,10 +82,10 @@ function useRadioItemContext() {
 }
 
 const RadioGroupIndicator = (props: PropsWithChildren) => {
-  const { value } = useRadioGroupContext();
-  const { itemValue } = useRadioItemContext();
+  const { id } = useRadioGroupContext();
+  const { itemId } = useRadioItemContext();
 
-  if (itemValue !== value) return null;
+  if (itemId !== id) return null;
 
   return <View {...props} />;
 };

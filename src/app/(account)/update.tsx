@@ -102,7 +102,7 @@ function UpdateAccountForm(props: {
     <>
       <ChooseAccountTypeSheet
         ref={sheetRef}
-        value={accountType}
+        id={accountType}
         onPressRadio={pressRadioHandler}
       />
 
