@@ -69,7 +69,7 @@ export default function CreateAccountScreen() {
     <>
       <ChooseAccountTypeSheet
         ref={accountTypeRef}
-        id={accountType}
+        value={accountType}
         onPressRadio={pressRadioHandler}
       />
       <NumInputSheet

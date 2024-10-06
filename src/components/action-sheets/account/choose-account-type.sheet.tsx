@@ -15,8 +15,8 @@ import { useThemeConfig } from '@/hooks/use-theme-config';
 import { SheetBackdrop } from '../sheet-backdrop';
 
 type Props = {
-  id: string;
-  onPressRadio: (id: string) => void;
+  value: string;
+  onPressRadio: (value: string) => void;
 };
 
 const ChooseAccountTypeSheet = forwardRef<any, Props>((props, ref) => {
@@ -43,11 +43,10 @@ const ChooseAccountTypeSheet = forwardRef<any, Props>((props, ref) => {
             <Text className="text-lg">Pilih tipe akun</Text>
           </View>
 
-          <RadioGroup id={props.id} value={props.id}>
+          <RadioGroup value={props.value}>
             {DEFAULT_ACCOUNT_TYPES.map((item) => (
               <RadioGroupItem
                 key={item}
-                id={item}
                 value={item}
                 onPress={props.onPressRadio}
               >
