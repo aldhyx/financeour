@@ -68,7 +68,7 @@ function FavoriteAccountSection() {
         <Button
           size="icon"
           variant="ghost"
-          roundedFull
+          rounded="full"
           onPress={() => {
             push('/(account)/create');
           }}

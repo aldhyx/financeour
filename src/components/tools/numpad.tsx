@@ -52,7 +52,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('1')}
         >
@@ -61,7 +61,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('2')}
         >
@@ -70,7 +70,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('3')}
         >
@@ -79,7 +79,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="destructive"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={backspaceHandler}
         >
@@ -91,7 +91,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('4')}
         >
@@ -100,7 +100,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('5')}
         >
@@ -109,7 +109,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('6')}
         >
@@ -118,7 +118,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="destructive"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={clearHandler}
         >
@@ -130,7 +130,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('7')}
         >
@@ -139,7 +139,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('8')}
         >
@@ -148,7 +148,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('9')}
         >
@@ -156,7 +156,7 @@ export const Numpad = (props: Props) => {
         </Button>
         <Button
           size="icon"
-          roundedFull
+          rounded="full"
           className="size-20 bg-emerald-500"
           onPress={pressDoneHandler}
         >
@@ -167,7 +167,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="secondary"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={props.onPressCalc}
         >
@@ -176,7 +176,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('0')}
         >
@@ -185,7 +185,7 @@ export const Numpad = (props: Props) => {
         <Button
           size="icon"
           variant="outline"
-          roundedFull
+          rounded="full"
           className="size-20"
           onPress={pressNumberHandler('000')}
         >

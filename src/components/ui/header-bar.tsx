@@ -13,21 +13,28 @@ type HeaderBarProps = {
   rightIcon?: ReactNode;
 };
 
+const LEFT_ICONS = {
+  back: ChevronLeftIcon,
+  cancel: XIcon,
+};
+
 export const HeaderBar = ({
   leftIcon = 'back',
   rightIcon,
   title,
 }: HeaderBarProps) => {
-  const router = useRouter();
-  const navigation = useNavigation();
-  const canGoBack = navigation.canGoBack();
-  const showBackButton = canGoBack && navigation.getState().type === 'stack';
-
   /**
    * there is a bug which will auto hide this header when theme changed
    * so we need to set a margin top from setAreaInset.top
    */
   const { top } = useSafeAreaInsets();
+
+  const router = useRouter();
+  const navigation = useNavigation();
+  const showBackButton =
+    navigation.canGoBack() && navigation.getState().type === 'stack';
+
+  const Icon = LEFT_ICONS[leftIcon];
 
   return (
     <View
@@ -43,14 +50,9 @@ export const HeaderBar = ({
             size="icon-md"
             variant="ghost"
             onPress={router.back}
-            roundedFull
+            rounded="full"
           >
-            {leftIcon === 'cancel' && (
-              <XIcon size={28} className="text-foreground" />
-            )}
-            {leftIcon === 'back' && (
-              <ChevronLeftIcon size={28} className="text-foreground" />
-            )}
+            <Icon size={28} className="text-foreground" />
           </Button>
         )}
 

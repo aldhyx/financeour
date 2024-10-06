@@ -1,32 +1,65 @@
-import { type PropsWithChildren } from 'react';
-import { View } from 'react-native';
+import {
+  createContext,
+  forwardRef,
+  PropsWithChildren,
+  ReactNode,
+  useContext,
+} from 'react';
+import { TextInputProps, View } from 'react-native';
+import { TextInput } from 'react-native';
 
-import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 
-type FormLabelProps = { text?: string | null; className?: string };
-type FormErrorProps = { text?: string | null; className?: string };
-type FormContainerProps = PropsWithChildren & {
-  className?: string;
+import { Text } from '../text';
+import { Input } from './input';
+
+type FormRootContext = { errorMessage?: string | null };
+const formRootContext = createContext<FormRootContext>({});
+const useFormRootContext = () => {
+  const formContext = useContext(formRootContext);
+
+  if (!formContext) {
+    throw new Error('useFormRootContext should be used within <FormGroup>');
+  }
+  return formContext;
 };
 
-export const FormLabel = (props: FormLabelProps) => {
-  if (!props.text) return null;
+type FormGroupProps = PropsWithChildren &
+  FormRootContext & {
+    className?: string;
+  };
 
+const FormGroup = ({ children, className, errorMessage }: FormGroupProps) => {
+  return (
+    <formRootContext.Provider
+      value={{
+        errorMessage,
+      }}
+    >
+      <View className={cn('grow mb-2', className)}>{children}</View>
+    </formRootContext.Provider>
+  );
+};
+
+FormGroup.Label = function Label(props: {
+  className?: string;
+  children?: ReactNode;
+}) {
   return (
     <Text
       className={cn(
-        'text-foreground leading-none text-sm mb-2',
+        'text-foreground leading-none text-base mb-1',
         props.className
       )}
     >
-      {props.text}
+      {props.children}
     </Text>
   );
 };
 
-export const FormErrorMessage = (props: FormErrorProps) => {
-  if (!props.text) return null;
+FormGroup.ErrorMessage = function ErrorMessage(props: { className?: string }) {
+  const { errorMessage } = useFormRootContext();
+  if (!errorMessage) return null;
 
   return (
     <Text
@@ -35,13 +68,38 @@ export const FormErrorMessage = (props: FormErrorProps) => {
         props.className
       )}
     >
-      {props.text}
+      {errorMessage}
     </Text>
   );
 };
 
-export const FormContainer = (props: FormContainerProps) => {
-  return (
-    <View className={cn('grow mb-2', props.className)}>{props.children}</View>
-  );
+// For simplicity, only pick what needed from TextInputProps
+type FormInputProps = Pick<
+  TextInputProps,
+  'inputMode' | 'placeholder' | 'defaultValue' | 'onBlur'
+> & {
+  className?: string;
+  disabled?: boolean;
+  value?: string | null;
+  onChange?: (text: string) => void;
 };
+
+FormGroup.Input = forwardRef<TextInput, FormInputProps>(function FormInput(
+  { className, disabled, onChange, value, ...otherProps },
+  ref
+) {
+  const { errorMessage } = useFormRootContext();
+
+  return (
+    <Input
+      ref={ref}
+      className={cn(className, errorMessage && 'border-destructive')}
+      editable={!disabled}
+      onChangeText={onChange}
+      value={value ?? ''}
+      {...otherProps}
+    />
+  );
+});
+
+export { FormGroup, useFormRootContext };

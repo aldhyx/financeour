@@ -7,15 +7,13 @@ type RadioGroupRootProps = {
   onChange?: (id: string, val: string) => void;
 };
 
-const RadioGroupContext = createContext<RadioGroupRootProps | null>(null);
+const RadioGroupContext = createContext<RadioGroupRootProps>({});
 
 function useRadioGroupContext() {
   const context = useContext(RadioGroupContext);
 
   if (!context) {
-    throw new Error(
-      'RadioGroup compound components cannot be rendered outside the RadioGroup component'
-    );
+    throw new Error('useRadioGroupContext should be used within <RadioGroup>');
   }
 
   return context;
@@ -34,17 +32,17 @@ const RadioGroup = ({
   );
 };
 
-type RadioGroupItemProps = {
-  id: string;
-  value: string;
-  onPress?: (id: string, val: string) => void;
-} & PropsWithChildren;
-
 type RadioItemContextProps = {
   itemId: string;
 };
 
 const RadioItemContext = createContext<RadioItemContextProps | null>(null);
+
+type RadioGroupItemProps = {
+  id: string;
+  value: string;
+  onPress?: (id: string, val: string) => void;
+} & PropsWithChildren;
 
 const RadioGroupItem = ({
   value: itemValue,
@@ -63,7 +61,7 @@ const RadioGroupItem = ({
     <RadioItemContext.Provider value={{ itemId }}>
       <TouchableOpacity onPress={onPressHandler}>
         <View
-          className="h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4"
+          className="min-h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4"
           {...otherProps}
         />
       </TouchableOpacity>
@@ -75,7 +73,7 @@ function useRadioItemContext() {
   const context = useContext(RadioItemContext);
   if (!context) {
     throw new Error(
-      'RadioItem compound components cannot be rendered outside the RadioItem component'
+      'useRadioItemContext should be used within <RadioGroupItem>'
     );
   }
   return context;
@@ -85,9 +83,13 @@ const RadioGroupIndicator = (props: PropsWithChildren) => {
   const { id } = useRadioGroupContext();
   const { itemId } = useRadioItemContext();
 
-  if (itemId !== id) return null;
-
-  return <View {...props} />;
+  return itemId === id ? <View {...props} /> : null;
 };
 
-export { RadioGroup, RadioGroupIndicator, RadioGroupItem };
+export {
+  RadioGroup,
+  RadioGroupIndicator,
+  RadioGroupItem,
+  useRadioGroupContext,
+  useRadioItemContext,
+};

@@ -3,13 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ActivityIndicator, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivityIndicator, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import NumInputSheet from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
-import { FakeInputBordered } from '@/components/ui/form/input';
+import { FormGroup } from '@/components/ui/form/form';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
@@ -113,19 +112,29 @@ function UpdateAccountBalanceForm(props: {
       </View>
 
       <View className="px-4">
-        <TouchableOpacity onPress={pressNumInputHandler}>
-          <FakeInputBordered
-            label="Saldo saat ini"
-            value={maskCurrency(balance).maskedRaw}
-            errorText={errors.balance?.message}
-          />
-        </TouchableOpacity>
+        <FormGroup errorMessage={errors.balance?.message}>
+          <FormGroup.Label>Saldo saat ini</FormGroup.Label>
 
-        {Boolean(errors.root?.api.message) && (
-          <Text className="mb-4 text-sm text-destructive">
-            {errors.root?.api.message}
-          </Text>
-        )}
+          <View className="flex-row items-baseline justify-start gap-3">
+            <Text className="text-2xl font-medium leading-none">Rp</Text>
+
+            <Pressable
+              className="grow active:opacity-50"
+              onPress={pressNumInputHandler}
+            >
+              <FormGroup.Input
+                className="h-auto rounded-none border-x-0 border-t-0 border-border bg-background pl-0 text-4xl font-semibold"
+                disabled
+                value={maskCurrency(balance).maskedRaw}
+              />
+            </Pressable>
+          </View>
+          <FormGroup.ErrorMessage className="ml-9" />
+        </FormGroup>
+
+        <FormGroup errorMessage={errors.root?.api.message}>
+          <FormGroup.ErrorMessage />
+        </FormGroup>
 
         <Button
           onPress={submitHandler}

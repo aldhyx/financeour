@@ -3,13 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ActivityIndicator, Keyboard, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import ChooseAccountTypeSheet from '@/components/action-sheets/account/choose-account-type.sheet';
 import { Button } from '@/components/ui/button';
-import { FakeInput, Input } from '@/components/ui/form/input';
+import { FormGroup } from '@/components/ui/form/form';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
@@ -109,50 +108,45 @@ function UpdateAccountForm(props: {
       <View className="px-4 pt-4">
         <Controller
           control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Nama"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              errorText={errors.name?.message}
-              placeholder="Isi nama akun..."
-            />
+          render={({ field }) => (
+            <FormGroup errorMessage={errors.name?.message}>
+              <FormGroup.Label>Nama</FormGroup.Label>
+              <FormGroup.Input placeholder="Isi nama akun..." {...field} />
+            </FormGroup>
           )}
           name="name"
         />
 
-        <TouchableOpacity onPress={pressChooseAccountHandler}>
-          <FakeInput
-            placeholder="Pilih tipe akun..."
-            label="Tipe akun"
-            value={accountType}
-            errorText={errors.type?.message}
-            className="capitalize"
-          />
-        </TouchableOpacity>
+        <FormGroup errorMessage={errors.type?.message}>
+          <FormGroup.Label>Tipe akun</FormGroup.Label>
+          <Pressable
+            className="active:opacity-50"
+            onPress={pressChooseAccountHandler}
+          >
+            <FormGroup.Input
+              placeholder="Pilih tipe akun..."
+              className="capitalize"
+              disabled
+              value={accountType}
+            />
+          </Pressable>
+        </FormGroup>
 
         <Controller
           control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              placeholder="Isi keterangan..."
-              label="Keterangan (opsional)"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value || ''}
-              inputMode="text"
-              errorText={errors.description?.message}
-            />
+          render={({ field }) => (
+            <FormGroup errorMessage={errors.description?.message}>
+              <FormGroup.Label>Keterangan (opsional)</FormGroup.Label>
+              <FormGroup.Input placeholder="Isi keterangan..." {...field} />
+              <FormGroup.ErrorMessage />
+            </FormGroup>
           )}
           name="description"
         />
 
-        {Boolean(errors.root?.api.message) && (
-          <Text className="mb-4 text-sm text-destructive">
-            {errors.root?.api.message}
-          </Text>
-        )}
+        <FormGroup errorMessage={errors.root?.api.message}>
+          <FormGroup.ErrorMessage />
+        </FormGroup>
 
         <Button
           onPress={submitHandler}
