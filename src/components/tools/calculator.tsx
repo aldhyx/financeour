@@ -96,8 +96,7 @@ export const Calculator = (props: Props) => {
     setInput((prevInput) => prevInput.slice(0, -1) || '0');
 
   const pressDoneHandler = async () => {
-    const result = parseInt(input);
-    props?.onPressDone(isNaN(result) ? 0 : result);
+    props?.onPressDone(result);
   };
 
   return (
