@@ -1,31 +1,13 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 
 import { Button } from '@/components/ui/button';
 import { PlusIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { useAccounts } from '@/db/actions/account';
+import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { cn } from '@/lib/utils';
-
-function AccountCard(props: {
-  title: string;
-  balance: number | null;
-  classnames?: string;
-}) {
-  return (
-    <View
-      className={cn(
-        'h-24 min-w-44 shrink justify-center rounded-2xl bg-secondary px-3',
-        props.classnames
-      )}
-    >
-      <Text numberOfLines={1}>{props.title}</Text>
-      <Text numberOfLines={1} className="text-xl font-semibold">
-        Rp. {props.balance}
-      </Text>
-    </View>
-  );
-}
 
 function CurrentBalanceSection() {
   const router = useRouter();
@@ -54,6 +36,12 @@ function CurrentBalanceSection() {
 
 function FavoriteAccountSection() {
   const { push } = useRouter();
+  const { data, isLoading, isError } = useAccounts({
+    byFavorite: true,
+  });
+  const { maskCurrency } = useMaskCurrency();
+  if (isLoading || isError || data.length === 0) return null;
+
   return (
     <ScrollView
       horizontal={true}
@@ -61,21 +49,28 @@ function FavoriteAccountSection() {
       accessibilityHint=""
       showsHorizontalScrollIndicator={false}
     >
-      <AccountCard balance={100} title={'Bank XYZ'} />
-      <AccountCard balance={100} title={'Bank XYZ'} />
-
-      <View className="items-center justify-center px-2">
-        <Button
-          size="icon"
-          variant="ghost"
-          rounded="full"
-          onPress={() => {
-            push('/(account)/create');
-          }}
+      {data.map((item) => (
+        <View
+          key={item.id}
+          className={cn(
+            'h-24 shrink justify-center rounded-2xl bg-secondary px-3 min-w-44'
+          )}
         >
-          <PlusIcon className="text-primary" size={24} />
-        </Button>
-      </View>
+          <Text numberOfLines={1}>{item.name}</Text>
+          <Text numberOfLines={1} className="text-xl font-semibold">
+            {maskCurrency(item.balance).masked}
+          </Text>
+        </View>
+      ))}
+
+      <Pressable
+        onPress={() => {
+          push('/(account)/create');
+        }}
+        className="h-24 min-w-16 items-center justify-center rounded-2xl border border-secondary px-2 active:bg-secondary"
+      >
+        <PlusIcon className="text-primary" size={24} />
+      </Pressable>
     </ScrollView>
   );
 }
@@ -83,16 +78,18 @@ function FavoriteAccountSection() {
 function MonthlySummarySection() {
   return (
     <View className="flex-row gap-2 px-4">
-      <AccountCard
-        classnames="w-full"
-        title="Pendapatan bulanan"
-        balance={1000}
-      />
-      <AccountCard
-        classnames="w-full"
-        title="Pengeluaran bulanan"
-        balance={1000}
-      />
+      <View className="h-24 w-full shrink justify-center rounded-2xl bg-secondary px-3">
+        <Text numberOfLines={1}>Pendapatan bulanan</Text>
+        <Text numberOfLines={1} className="text-xl font-semibold">
+          Rp. 0
+        </Text>
+      </View>
+      <View className="h-24 w-full shrink justify-center rounded-2xl bg-secondary px-3">
+        <Text numberOfLines={1}>Pengeluaran bulanan</Text>
+        <Text numberOfLines={1} className="text-xl font-semibold">
+          Rp. 0
+        </Text>
+      </View>
     </View>
   );
 }
