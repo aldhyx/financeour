@@ -17,7 +17,7 @@ import { useMaskCurrency } from '@/hooks/use-mask-currency';
 type Props = {
   onPressDone: (result: number) => void;
   onPressNumpad: () => void;
-  amount?: number;
+  value?: number;
 };
 
 const mathOperators: Record<string, string> = {
@@ -29,26 +29,24 @@ const mathOperators: Record<string, string> = {
 
 // eslint-disable-next-line max-lines-per-function
 export const Calculator = (props: Props) => {
-  const [input, setInput] = useState(props.amount ? `${props.amount}` : '0'); // To hold the current input
-  const [result, setResult] = useState<number>(props.amount ?? 0); // To hold the final result
+  const defaultVal = props.value && !isNaN(props.value) ? props.value : 0;
+  const [input, setInput] = useState<string>(`${defaultVal}`); // To hold the current input
+  const [result, setResult] = useState<number>(defaultVal); // To hold the final result
   const { maskCurrency } = useMaskCurrency();
 
   // Function to handle button click for numbers and operators
   const pressNumberHandler = useCallback(
-    (value?: string) => () => {
-      if (value === undefined) return;
-
+    (value: string) => () => {
       const valueIsMathOperator = mathOperators[value];
-      const isValueZero = value === '0';
+      const valueInt = parseInt(value);
+      const isValZero = valueInt === 0;
 
       setInput((prev) => {
         const isPrevZero = prev === '0';
-        const isValueTripleZero = value === '000';
-
         // Prevent pressing multiple leading zeros
-        if (isPrevZero && (isValueZero || isValueTripleZero)) return '0';
+        if (isPrevZero && isValZero) return prev;
         // Prevent operator at the start of input
-        if (isPrevZero && valueIsMathOperator) return '0';
+        if (isPrevZero && valueIsMathOperator) return prev;
         // Replace the leading zero with the next valid value
         if (isPrevZero && !valueIsMathOperator) return value;
 
@@ -98,7 +96,8 @@ export const Calculator = (props: Props) => {
     setInput((prevInput) => prevInput.slice(0, -1) || '0');
 
   const pressDoneHandler = async () => {
-    props.onPressDone(result);
+    const result = parseInt(input);
+    props?.onPressDone(isNaN(result) ? 0 : result);
   };
 
   return (

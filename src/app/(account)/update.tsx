@@ -1,12 +1,15 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useRef } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
-import ChooseAccountTypeSheet from '@/components/action-sheets/account/choose-account-type.sheet';
+import {
+  AccountTypeSheet,
+  AccountTypeSheetProvider,
+  useAccountTypeSheetContext,
+} from '@/components/action-sheets/account/choose-account-type.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
@@ -39,12 +42,16 @@ export default function UpdateAccountScreen() {
   if (!data) return null;
 
   return (
-    <UpdateAccountForm
-      id={data.id}
-      name={data.name}
-      description={data.description}
-      type={data.type}
-    />
+    <AccountTypeSheetProvider>
+      <AccountTypeSheet />
+
+      <UpdateAccountForm
+        id={data.id}
+        name={data.name}
+        description={data.description}
+        type={data.type}
+      />
+    </AccountTypeSheetProvider>
   );
 }
 
@@ -54,8 +61,10 @@ function UpdateAccountForm(props: {
   type: string;
   id: string;
 }) {
+  const { sheetPresentAsync: showAccountTypeSheetAsync } =
+    useAccountTypeSheetContext();
+
   const router = useRouter();
-  const sheetRef = useRef<BottomSheetModal>(null);
   const { mutateAsync: updateAccount } = useUpdateAccount();
 
   const {
@@ -89,22 +98,13 @@ function UpdateAccountForm(props: {
 
   const pressChooseAccountHandler = async () => {
     Keyboard.dismiss();
-    sheetRef.current?.present();
-  };
-
-  const pressRadioHandler = (val: string) => {
-    setValue('type', val, { shouldValidate: true });
-    sheetRef.current?.close();
+    const res = await showAccountTypeSheetAsync({ accountType });
+    if (!res) return;
+    setValue('type', res.accountType, { shouldValidate: true });
   };
 
   return (
     <>
-      <ChooseAccountTypeSheet
-        ref={sheetRef}
-        value={accountType}
-        onPressRadio={pressRadioHandler}
-      />
-
       <View className="px-4 pt-4">
         <Controller
           control={control}

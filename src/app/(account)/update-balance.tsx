@@ -1,12 +1,14 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ActivityIndicator, Pressable, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
-import NumInputSheet from '@/components/action-sheets/general/num-input.sheet';
+import {
+  NumInputSheet,
+  NumInputSheetProvider,
+  useNumInputSheetContext,
+} from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
@@ -33,11 +35,14 @@ export default function UpdateAccountBalanceScreen() {
   if (!data) return null;
 
   return (
-    <UpdateAccountBalanceForm
-      name={data.name}
-      id={data.id}
-      balance={data.balance}
-    />
+    <NumInputSheetProvider>
+      <NumInputSheet />
+      <UpdateAccountBalanceForm
+        name={data.name}
+        id={data.id}
+        balance={data.balance}
+      />
+    </NumInputSheetProvider>
   );
 }
 
@@ -51,8 +56,8 @@ function UpdateAccountBalanceForm(props: {
   balance: number | null;
   name: string;
 }) {
-  const numInputRef = useRef<BottomSheetModal>(null);
-  const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
+  const { sheetPresentAsync: showNumInputSheetAsync } =
+    useNumInputSheetContext();
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
   const { mutateAsync: updateAccountBalance } = useUpdateAccountBalance();
@@ -82,30 +87,15 @@ function UpdateAccountBalanceForm(props: {
     }
   });
 
-  const pressNumInputHandler = () => {
-    numInputRef.current?.present();
+  const pressNumInputHandler = async () => {
+    Keyboard.dismiss();
+    const res = await showNumInputSheetAsync({ value: balance || 0 });
+    if (!res) return;
+    setValue('balance', res.value, { shouldValidate: true });
   };
 
   return (
     <>
-      <NumInputSheet
-        ref={numInputRef}
-        amount={balance || 0}
-        renderView={renderView}
-        renderViewCalc={() => {
-          numInputRef.current?.snapToIndex(1);
-          setRenderView('calc');
-        }}
-        renderViewNumpad={() => {
-          numInputRef.current?.snapToIndex(0);
-          setRenderView('numpad');
-        }}
-        setAmount={(result: number) => {
-          setValue('balance', result);
-          numInputRef.current?.close();
-        }}
-      />
-
       <View className="mb-4 bg-secondary p-4">
         <Text className="text-lg font-bold">{props.name}</Text>
         <Text className="text-sm">Dibuat pada 22 April 2025</Text>

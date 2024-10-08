@@ -9,21 +9,27 @@ import { useMaskCurrency } from '@/hooks/use-mask-currency';
 type Props = {
   onPressDone: (result: number) => void;
   onPressCalc?: () => void;
-  amount?: number;
+  value?: number;
 };
 
 // eslint-disable-next-line max-lines-per-function
 export const Numpad = (props: Props) => {
+  const defaultVal = props.value && !isNaN(props.value) ? props.value : 0;
+  const [input, setInput] = useState<string>(`${defaultVal}`);
   const { maskCurrency } = useMaskCurrency();
-  const [input, setInput] = useState(props.amount ? `${props.amount}` : '0');
 
   // Function to handle button click for numbers and operators
   const pressNumberHandler = useCallback(
-    (value?: string) => () => {
-      if (value === undefined) return;
+    (value: string) => () => {
+      const valueInt = parseInt(value);
+      const isValZero = valueInt === 0;
+
       setInput((prev) => {
+        const isPrevZero = prev === '0';
         // Prevent pressing multiple leading zeros
-        if (prev === '0' && value === '0') return prev;
+        if (isPrevZero && isValZero) return prev;
+        // Replace zero with not zero value
+        if (isPrevZero) return value;
         return prev + value;
       });
     },
@@ -37,7 +43,8 @@ export const Numpad = (props: Props) => {
   const backspaceHandler = () => setInput((state) => state.slice(0, -1) || '0');
 
   const pressDoneHandler = () => {
-    props?.onPressDone(parseInt(input));
+    const result = parseInt(input);
+    props?.onPressDone(isNaN(result) ? 0 : result);
   };
 
   return (
