@@ -16,8 +16,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/images/splash.png',
-    resizeMode: 'contain',
-    backgroundColor: '#18181B',
+    resizeMode: 'cover',
+    backgroundColor: '#09090B',
   },
   ios: {
     supportsTablet: false,
@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
-      backgroundColor: '#18181B',
+      backgroundColor: '#09090B',
     },
     package: Env.PACKAGE,
   },
@@ -55,12 +55,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           {
             text: Env.APP_ENV,
             type: 'banner',
-            color: 'white',
+            color: 'black',
+            background: '#FFE101',
           },
           {
             text: Env.VERSION.toString(),
             type: 'ribbon',
-            color: 'white',
+            color: 'black',
+            background: '#FFE101',
           },
         ],
       },

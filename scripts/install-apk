@@ -1,0 +1,26 @@
+#!/bin/bash
+# this simple script will build and install the apk on a selected device
+
+# Find the release APK file
+APK_PATH=$(find ./android -type f -name "app-release.apk")
+
+if [ -z "$APK_PATH" ]; then
+  echo "APK not found!"
+  exit 1
+fi
+
+# List connected devices
+echo "Connected devices:"
+adb devices
+
+# Prompt user to select a device
+echo "Enter the device ID to install the APK:"
+read device_id
+
+# Install the APK on the selected device
+if adb -s "$device_id" install "$APK_PATH"; then
+  echo "APK successfully installed on device $device_id"
+else
+  echo "Failed to install APK on device $device_id"
+  exit 1
+fi

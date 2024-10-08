@@ -1,14 +1,14 @@
-import translation_en_US from '@/translations/en-US.json';
-import translation_id_ID from '@/translations/id-ID.json';
+import translation_en_us from '@/translations/en-us.json';
+import translation_id_id from '@/translations/id-id.json';
 
 export const resources = {
-  en_US: {
-    translation: translation_en_US,
+  en_us: {
+    translation: translation_en_us,
   },
-  id_ID: {
-    translation: translation_id_ID,
+  id_id: {
+    translation: translation_id_id,
   },
 };
 
 export type Language = keyof typeof resources;
-export type DefaultLocale = typeof resources.en_US.translation;
+export type DefaultLocale = typeof resources.en_us.translation;

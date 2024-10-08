@@ -6,11 +6,11 @@ import { cn } from 'src/lib/utils';
 
 import { translate, TxKeyPath } from '@/lib/i18n';
 
-const TextClassContext = React.createContext<string | undefined>(undefined);
-
-interface Props extends SlottableTextProps {
+type Props = SlottableTextProps & {
   tx?: TxKeyPath;
-}
+};
+
+const TextClassContext = React.createContext<string | undefined>(undefined);
 
 const Text = React.forwardRef<TextRef, Props>(
   ({ className, asChild = false, children, tx, ...props }, ref) => {
@@ -19,11 +19,7 @@ const Text = React.forwardRef<TextRef, Props>(
 
     return (
       <Component
-        className={cn(
-          'text-base text-foreground web:select-text',
-          textClass,
-          className
-        )}
+        className={cn('text-base text-foreground', textClass, className)}
         ref={ref}
         {...props}
       >

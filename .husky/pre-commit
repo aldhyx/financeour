@@ -1,0 +1,26 @@
+echo "===\n>> Checking branch name..."
+
+# Check if branch protection is enabled
+if [ -z "$SKIP_BRANCH_PROTECTION" ]; then
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    PROTECTED_BRANCHES="main master"
+
+    # Use case statement for POSIX compliance instead of [[ and =~
+    case "$BRANCH" in
+        main|master)
+            echo ">> Direct commits to the $BRANCH branch are not allowed. Please choose a new branch name."
+            exit 1
+            ;;
+    esac
+else
+    echo ">> Skipping branch protection."
+fi
+
+echo ">> Finish checking branch name"
+
+echo ">> Running type-check..."
+pnpm type-check
+echo ">> Finish type-check..."
+echo ">> Running lint-staged..."
+pnpm lint-staged
+echo ">> Finish lint-staged..."

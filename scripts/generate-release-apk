@@ -1,0 +1,5 @@
+#!/bin/bash
+# this simple script will build and install the apk on a selected device
+
+# Build the APK
+./android/gradlew assembleRelease -p ./android

@@ -9,13 +9,13 @@ export * from './utils';
 const language = () => {
   const lang = getLanguage() || ExpoLocalization.getLocales()[0].languageTag;
 
-  if (lang) return lang.replace('-', '_');
+  if (lang) return lang.replace('-', '_').toLowerCase();
 };
 
 i18n.use(initReactI18next).init({
   resources,
   lng: language(),
-  fallbackLng: 'en_US',
+  fallbackLng: 'en_us',
   compatibilityJSON: 'v3', // By default React Native projects does not support Intl
 
   // allows integrating dynamic values into translations.
