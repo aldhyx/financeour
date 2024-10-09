@@ -1,4 +1,5 @@
 import 'dayjs/locale/id';
+import 'dayjs/locale/en';
 
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';

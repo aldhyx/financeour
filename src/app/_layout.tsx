@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Providers } from '@/components/providers';
 import { useLoadDB } from '@/hooks/use-load-db';
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
+import initializeDayJs from '@/lib/dayjs';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -23,6 +24,9 @@ SplashScreen.preventAutoHideAsync();
 
 // load saved theme from local storage
 loadSelectedTheme();
+
+// init dayjs
+initializeDayJs();
 
 export default function RootLayout() {
   const [fontLoaded, error] = useFonts({
