@@ -2,6 +2,7 @@ import {
   AlertCircleIcon,
   AlertTriangleIcon,
   ArrowBigDown,
+  ArrowBigDownIcon,
   ArrowBigRight,
   ArrowBigRightIcon,
   ArrowBigUpIcon,
@@ -13,6 +14,7 @@ import {
   CheckCircle2Icon,
   CheckIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
   DeleteIcon,
   DivideIcon,
   EllipsisIcon,
@@ -21,6 +23,7 @@ import {
   InfoIcon,
   MinusIcon,
   PencilIcon,
+  PlusCircleIcon,
   PlusIcon,
   StarIcon,
   Trash2Icon,
@@ -61,11 +64,15 @@ iconWithClassName(DivideIcon);
 iconWithClassName(MinusIcon);
 iconWithClassName(ArrowRightIcon);
 iconWithClassName(ArrowBigRightIcon);
+iconWithClassName(ChevronRightIcon);
+iconWithClassName(PlusCircleIcon);
+iconWithClassName(ArrowBigDownIcon);
 
 export {
   AlertCircleIcon,
   AlertTriangleIcon,
   ArrowBigDown,
+  ArrowBigDownIcon,
   ArrowBigRight,
   ArrowBigRightIcon,
   ArrowBigUpIcon,
@@ -77,6 +84,7 @@ export {
   CheckCircle2Icon,
   CheckIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
   DeleteIcon,
   DivideIcon,
   EllipsisIcon,
@@ -85,6 +93,7 @@ export {
   InfoIcon,
   MinusIcon,
   PencilIcon,
+  PlusCircleIcon,
   PlusIcon,
   StarIcon,
   Trash2Icon,

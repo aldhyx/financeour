@@ -3,14 +3,18 @@ import React from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 
 import { Button } from '@/components/ui/button';
+import { AlertCard } from '@/components/ui/cards/alert.card';
+import { TransactionCard } from '@/components/ui/cards/transaction.card';
 import { PlusIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { useAccounts } from '@/db/actions/account';
+import { useAccounts, useTotalBalance } from '@/db/actions/account';
+import { useTransactions } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { cn } from '@/lib/utils';
 
 function CurrentBalanceSection() {
   const router = useRouter();
+  const { data } = useTotalBalance();
+  const { maskCurrency } = useMaskCurrency();
 
   return (
     <View className="pl-4 pr-2">
@@ -21,6 +25,7 @@ function CurrentBalanceSection() {
           variant="link"
           size="sm"
           onPress={() => router.push('/(account)/')}
+          className="px-0"
         >
           <View className="flex-row items-center gap-2">
             <Text className="font-medium">Akun saya</Text>
@@ -29,7 +34,9 @@ function CurrentBalanceSection() {
         </Button>
       </View>
 
-      <Text className="text-3xl font-semibold">Rp. 20.000.000</Text>
+      <Text className="text-3xl font-semibold leading-none">
+        {maskCurrency(data).masked}
+      </Text>
     </View>
   );
 }
@@ -52,9 +59,7 @@ function FavoriteAccountSection() {
       {data.map((item) => (
         <View
           key={item.id}
-          className={cn(
-            'h-24 shrink justify-center rounded-2xl bg-secondary px-3 min-w-44'
-          )}
+          className="h-24 min-w-44 shrink justify-center rounded-2xl bg-secondary px-3"
         >
           <Text numberOfLines={1}>{item.name}</Text>
           <Text numberOfLines={1} className="text-xl font-semibold">
@@ -67,7 +72,7 @@ function FavoriteAccountSection() {
         onPress={() => {
           push('/(account)/create');
         }}
-        className="h-24 min-w-16 items-center justify-center rounded-2xl border border-secondary px-2 active:bg-secondary"
+        className="h-24 min-w-16 items-center justify-center rounded-2xl px-2 active:bg-secondary"
       >
         <PlusIcon className="text-primary" size={24} />
       </Pressable>
@@ -94,13 +99,49 @@ function MonthlySummarySection() {
   );
 }
 
+function RecentTransactionSection() {
+  const { data, isLoading } = useTransactions({
+    limit: 5,
+  });
+
+  const isEmptyData = !isLoading && data.length === 0;
+
+  return (
+    <View className="px-4">
+      <View className="mb-2 flex-row items-baseline justify-between gap-1">
+        <Text className="font-semibold leading-none">Transaksi terbaru</Text>
+
+        <Button variant="link" className="px-0" size="sm">
+          <Text>Semua transaksi</Text>
+        </Button>
+      </View>
+
+      {isEmptyData && (
+        <AlertCard
+          title="Tidak ada data"
+          subTitle="Data transaksi terbaru akan ditampilkan disini."
+        />
+      )}
+      {!isEmptyData && (
+        <View className="gap-3">
+          {data.map((item) => (
+            <TransactionCard
+              key={item.id}
+              fromAccountName={item.fromAccountName}
+              toAccountName={item.toAccountName}
+              txAmount={item.amount}
+              txType={item.type}
+            />
+          ))}
+        </View>
+      )}
+    </View>
+  );
+}
+
 const HomeScreen = () => {
   return (
-    <View className="flex-1 pb-1">
-      <Button size="icon-lg" className="absolute bottom-4 right-6">
-        <PlusIcon className="text-background" size={24} />
-      </Button>
-
+    <ScrollView className="flex-1 pb-1">
       <View className="mb-4">
         <CurrentBalanceSection />
       </View>
@@ -109,7 +150,9 @@ const HomeScreen = () => {
         <FavoriteAccountSection />
         <MonthlySummarySection />
       </View>
-    </View>
+
+      <RecentTransactionSection />
+    </ScrollView>
   );
 };
 

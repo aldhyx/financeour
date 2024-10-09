@@ -19,7 +19,11 @@ const Text = React.forwardRef<TextRef, Props>(
 
     return (
       <Component
-        className={cn('text-base text-foreground', textClass, className)}
+        className={cn(
+          'text-base text-foreground leading-tight',
+          textClass,
+          className
+        )}
         ref={ref}
         {...props}
       >

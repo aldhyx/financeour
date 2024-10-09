@@ -10,7 +10,7 @@ export const AlertCard = (props: { title: string; subTitle?: string }) => {
         <InfoIcon className="text-foreground" size={24} />
 
         <View>
-          <Text className="font-semibold">{props.title}</Text>
+          <Text>{props.title}</Text>
 
           {props.subTitle && <Text className="text-sm">{props.subTitle}</Text>}
         </View>
