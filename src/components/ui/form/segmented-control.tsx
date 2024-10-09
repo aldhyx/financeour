@@ -45,7 +45,7 @@ export const SegmentedControl = memo(
 
     return (
       <View
-        className="mb-4 h-12 flex-row rounded-2xl bg-secondary"
+        className="h-12 flex-row rounded-2xl bg-secondary"
         style={[
           { width: segmentedControlWidth, paddingLeft: innerPadding / 2 },
         ]}

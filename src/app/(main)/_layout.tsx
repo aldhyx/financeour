@@ -1,11 +1,13 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import React from 'react';
+import { Pressable, View } from 'react-native';
 
 import { HeaderBar } from '@/components/ui/header-bar';
 import {
   ChartColumnBigIcon,
   ChartPieIcon,
   HomeIcon,
+  PlusIcon,
   UserRoundIcon,
 } from '@/components/ui/icon';
 import { translate } from '@/lib/i18n';
@@ -16,13 +18,28 @@ const tabIcons = {
   profile: UserRoundIcon,
   reports: ChartColumnBigIcon,
   budgets: ChartPieIcon,
+  plus: PlusIcon,
 };
 
 const TabBarIcon = (props: {
   focused: boolean;
   icon: keyof typeof tabIcons;
 }) => {
+  const router = useRouter();
   const SelectedIcon = tabIcons[props.icon];
+
+  if (props.icon === 'plus') {
+    return (
+      <Pressable
+        onPress={() => router.push('/(transaction)/create')}
+        className="items-center justify-center px-5 active:opacity-50"
+      >
+        <View className="h-8 w-14 items-center justify-center rounded-full bg-primary">
+          <SelectedIcon className="text-background" />
+        </View>
+      </Pressable>
+    );
+  }
 
   return (
     <SelectedIcon
@@ -40,9 +57,7 @@ const TabsLayout = () => {
       screenOptions={{
         tabBarStyle: {
           height: 56,
-          elevation: 0,
-          paddingTop: 12,
-          paddingBottom: 4,
+          borderTopWidth: 0,
         },
         header({ options }) {
           return <HeaderBar title={options.title} />;
@@ -60,6 +75,7 @@ const TabsLayout = () => {
           ),
         }}
       />
+
       <Tabs.Screen
         name="report"
         options={{
@@ -68,6 +84,15 @@ const TabsLayout = () => {
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="reports" />
           ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="add"
+        options={{
+          title: 'Create',
+          tabBarShowLabel: false,
+          tabBarButton: () => <TabBarIcon focused={false} icon="plus" />,
         }}
       />
 

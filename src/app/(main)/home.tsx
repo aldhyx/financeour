@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 
@@ -102,26 +102,35 @@ function MonthlySummarySection() {
 function RecentTransactionSection() {
   const { data, isLoading } = useTransactions({
     limit: 5,
+    orderBy: {
+      column: 'datetime',
+      mode: 'desc',
+    },
   });
 
   const isEmptyData = !isLoading && data.length === 0;
 
   return (
-    <View className="px-4">
-      <View className="mb-2 flex-row items-baseline justify-between gap-1">
+    <>
+      <View className="mb-2 flex-row items-baseline justify-between gap-1 px-4">
         <Text className="font-semibold leading-none">Transaksi terbaru</Text>
 
-        <Button variant="link" className="px-0" size="sm">
-          <Text>Semua transaksi</Text>
-        </Button>
+        <Link asChild href="/(transaction)/list" push>
+          <Button variant="link" className="px-0" size="sm">
+            <Text>Semua transaksi</Text>
+          </Button>
+        </Link>
       </View>
 
       {isEmptyData && (
-        <AlertCard
-          title="Tidak ada data"
-          subTitle="Data transaksi terbaru akan ditampilkan disini."
-        />
+        <View className="px-4">
+          <AlertCard
+            title="Tidak ada data"
+            subTitle="Data transaksi terbaru akan ditampilkan disini."
+          />
+        </View>
       )}
+
       {!isEmptyData && (
         <View className="gap-3">
           {data.map((item) => (
@@ -131,11 +140,12 @@ function RecentTransactionSection() {
               toAccountName={item.toAccountName}
               txAmount={item.amount}
               txType={item.type}
+              txDate={item.datetime}
             />
           ))}
         </View>
       )}
-    </View>
+    </>
   );
 }
 

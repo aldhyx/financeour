@@ -1,6 +1,8 @@
 import { createContext, PropsWithChildren, ReactNode, useContext } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
+import { cn } from '@/lib/utils';
+
 type RadioGroupRootProps = {
   value?: string | null;
   children?: ReactNode;
@@ -36,11 +38,13 @@ const RadioItemContext = createContext<RadioItemContextProps | null>(null);
 type RadioGroupItemProps = {
   value: string;
   onPress?: (val: string) => void;
+  className?: string;
 } & PropsWithChildren;
 
 const RadioGroupItem = ({
   value: itemValue,
   onPress,
+  className,
   ...otherProps
 }: RadioGroupItemProps) => {
   const { onChange } = useRadioGroupContext();
@@ -54,7 +58,10 @@ const RadioGroupItem = ({
     <RadioItemContext.Provider value={{ itemValue }}>
       <TouchableOpacity onPress={onPressHandler}>
         <View
-          className="min-h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4"
+          className={cn(
+            'min-h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4',
+            className
+          )}
           {...otherProps}
         />
       </TouchableOpacity>
