@@ -52,17 +52,19 @@ function FavoriteAccountSection() {
   return (
     <ScrollView
       horizontal={true}
-      contentContainerStyle={{ columnGap: 8, paddingHorizontal: 16 }}
+      contentContainerStyle={{ columnGap: 4, paddingHorizontal: 16 }}
       accessibilityHint=""
       showsHorizontalScrollIndicator={false}
     >
       {data.map((item) => (
         <View
           key={item.id}
-          className="h-24 min-w-44 shrink justify-center rounded-2xl bg-secondary px-3"
+          className="h-20 min-w-40 shrink justify-center rounded-2xl bg-secondary px-3"
         >
-          <Text numberOfLines={1}>{item.name}</Text>
-          <Text numberOfLines={1} className="text-xl font-semibold">
+          <Text numberOfLines={1} className="text-sm">
+            {item.name}
+          </Text>
+          <Text numberOfLines={1} className="text-base font-semibold">
             {maskCurrency(item.balance).masked}
           </Text>
         </View>
@@ -72,7 +74,7 @@ function FavoriteAccountSection() {
         onPress={() => {
           push('/(account)/create');
         }}
-        className="h-24 min-w-16 items-center justify-center rounded-2xl px-2 active:bg-secondary"
+        className="h-20 min-w-16 items-center justify-center rounded-2xl px-2 active:bg-secondary"
       >
         <PlusIcon className="text-primary" size={24} />
       </Pressable>
@@ -82,16 +84,20 @@ function FavoriteAccountSection() {
 
 function MonthlySummarySection() {
   return (
-    <View className="flex-row gap-2 px-4">
+    <View className="flex-row gap-1 px-4">
       <View className="h-24 w-full shrink justify-center rounded-2xl bg-secondary px-3">
-        <Text numberOfLines={1}>Pendapatan bulanan</Text>
-        <Text numberOfLines={1} className="text-xl font-semibold">
+        <Text numberOfLines={1} className="text-sm">
+          Pendapatan bulanan
+        </Text>
+        <Text numberOfLines={1} className="text-base font-semibold">
           Rp. 0
         </Text>
       </View>
       <View className="h-24 w-full shrink justify-center rounded-2xl bg-secondary px-3">
-        <Text numberOfLines={1}>Pengeluaran bulanan</Text>
-        <Text numberOfLines={1} className="text-xl font-semibold">
+        <Text numberOfLines={1} className="text-sm">
+          Pengeluaran bulanan
+        </Text>
+        <Text numberOfLines={1} className="text-base font-semibold">
           Rp. 0
         </Text>
       </View>
@@ -112,7 +118,7 @@ function RecentTransactionSection() {
 
   return (
     <>
-      <View className="mb-2 flex-row items-baseline justify-between gap-1 px-4">
+      <View className="mb-1 flex-row items-baseline justify-between gap-1 px-4">
         <Text className="font-semibold leading-none">Transaksi terbaru</Text>
 
         <Link asChild href="/(transaction)/list" push>
@@ -152,11 +158,11 @@ function RecentTransactionSection() {
 const HomeScreen = () => {
   return (
     <ScrollView className="flex-1 pb-1">
-      <View className="mb-4">
+      <View className="mb-3">
         <CurrentBalanceSection />
       </View>
 
-      <View className="mb-4 gap-2">
+      <View className="mb-3 gap-1">
         <FavoriteAccountSection />
         <MonthlySummarySection />
       </View>
