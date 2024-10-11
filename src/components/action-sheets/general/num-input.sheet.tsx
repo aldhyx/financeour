@@ -71,8 +71,6 @@ const NumInputSheetProvider = (props: PropsWithChildren) => {
   );
 };
 
-const snapPoints = ['60%', '75%', '90%'];
-
 const NumInputSheet = () => {
   const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
   const sheetReturnRef = useRef<SheetReturnData>();
@@ -98,8 +96,8 @@ const NumInputSheet = () => {
   return (
     <BottomSheetModal
       ref={sheetRef}
-      index={0}
-      snapPoints={snapPoints}
+      enableDynamicSizing={true}
+      enablePanDownToClose={true}
       backdropComponent={SheetBackdrop}
       handleIndicatorStyle={{
         backgroundColor: colors.border,
@@ -107,49 +105,48 @@ const NumInputSheet = () => {
       backgroundStyle={{
         backgroundColor: colors.background,
       }}
-      containerStyle={{ zIndex: 20 }}
       onDismiss={dismissHandler}
     >
       {(_data) => {
         const sheetData = _data?.data as SheetData;
 
         return (
-          <BottomSheetView className="flex-1 pt-4">
-            {renderView === 'calc' && (
-              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
-                <CalculatorIcon className="text-foreground" size={24} />
-                <Text className="text-lg">Kalkulator</Text>
-              </View>
-            )}
+          <BottomSheetView>
+            <View className="py-4">
+              {renderView === 'calc' && (
+                <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+                  <CalculatorIcon className="text-foreground" size={24} />
+                  <Text className="text-lg">Kalkulator</Text>
+                </View>
+              )}
 
-            {renderView === 'numpad' && (
-              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
-                <Text className="font-bold">123</Text>
-                <Text className="text-lg">Numpad</Text>
-              </View>
-            )}
+              {renderView === 'numpad' && (
+                <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+                  <Text className="font-bold">123</Text>
+                  <Text className="text-lg">Numpad</Text>
+                </View>
+              )}
 
-            {renderView === 'numpad' && (
-              <Numpad
-                onPressCalc={() => {
-                  sheetRef.current?.snapToIndex(1);
-                  setRenderView('calc');
-                }}
-                value={sheetData.value}
-                onPressDone={pressDoneHandler}
-              />
-            )}
+              {renderView === 'numpad' && (
+                <Numpad
+                  onPressCalc={() => {
+                    setRenderView('calc');
+                  }}
+                  value={sheetData.value}
+                  onPressDone={pressDoneHandler}
+                />
+              )}
 
-            {renderView === 'calc' && (
-              <Calculator
-                onPressNumpad={() => {
-                  sheetRef.current?.snapToIndex(0);
-                  setRenderView('numpad');
-                }}
-                value={sheetData.value}
-                onPressDone={pressDoneHandler}
-              />
-            )}
+              {renderView === 'calc' && (
+                <Calculator
+                  onPressNumpad={() => {
+                    setRenderView('numpad');
+                  }}
+                  value={sheetData.value}
+                  onPressDone={pressDoneHandler}
+                />
+              )}
+            </View>
           </BottomSheetView>
         );
       }}

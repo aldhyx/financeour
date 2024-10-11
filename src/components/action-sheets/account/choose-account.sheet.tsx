@@ -1,5 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import {
+import React, {
   createContext,
   MutableRefObject,
   PropsWithChildren,
@@ -7,7 +7,8 @@ import {
   useContext,
   useRef,
 } from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { SheetBackdrop } from '@/components/action-sheets/sheet-backdrop';
 import {
@@ -72,13 +73,13 @@ const AccountSheetProvider = (props: PropsWithChildren) => {
     </sheetContext.Provider>
   );
 };
-const snapPoints = ['50%', '75%'];
 
 const AccountSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
   const { sheetRef, _closedCbRef } = useAccountSheetContext();
   const { colors } = useThemeConfig();
   const { data } = useAccounts();
+  const { height } = useWindowDimensions();
 
   const pressRadioHandler = (accountId: string, accountName: string) => {
     sheetReturnRef.current = { accountId, accountName };
@@ -96,51 +97,54 @@ const AccountSheet = () => {
   return (
     <BottomSheetModal
       ref={sheetRef}
-      index={0}
-      snapPoints={snapPoints}
       backdropComponent={SheetBackdrop}
       onDismiss={dismissHandler}
       handleIndicatorStyle={{
         backgroundColor: colors.border,
       }}
+      maxDynamicContentSize={height / 1.5}
       backgroundStyle={{
         backgroundColor: colors.background,
       }}
-      containerStyle={{ zIndex: 20 }}
     >
       {(_data) => {
         const sheetData = _data?.data as SheetData;
         return (
           <BottomSheetView className="flex-1">
-            <View className="pb-6 pt-4">
+            <View className="py-4">
               <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
                 <WalletIcon className="text-foreground" size={24} />
                 <Text className="text-lg">Pilih akun</Text>
               </View>
 
-              <RadioGroup value={sheetData.accountId}>
-                {data.map((item) => (
-                  <RadioGroupItem
-                    key={item.id}
-                    value={item.id}
-                    onPress={() => pressRadioHandler(item.id, item.name)}
-                    className="py-3"
-                  >
-                    <View>
-                      <Text className="capita shrink font-semibold">
-                        {item.name}
-                      </Text>
-                      <Text className="shrink text-sm capitalize">
-                        {item.type}
-                      </Text>
-                    </View>
+              <ScrollView>
+                <RadioGroup value={sheetData.accountId}>
+                  {data.map((item) => (
+                    <RadioGroupItem
+                      key={item.id}
+                      value={item.id}
+                      onPress={() => pressRadioHandler(item.id, item.name)}
+                      className="py-3"
+                    >
+                      <View>
+                        <Text className="capita shrink font-semibold">
+                          {item.name}
+                        </Text>
+                        <Text className="shrink text-sm capitalize">
+                          {item.type}
+                        </Text>
+                      </View>
 
-                    <RadioGroupIndicator>
-                      <CheckIcon size={24} className="text-foreground" />
-                    </RadioGroupIndicator>
-                  </RadioGroupItem>
-                ))}
-              </RadioGroup>
+                      <RadioGroupIndicator>
+                        <CheckIcon size={24} className="text-foreground" />
+                      </RadioGroupIndicator>
+                    </RadioGroupItem>
+                  ))}
+                </RadioGroup>
+
+                {/* Trick to show some item that hidden when scroll down */}
+                <View className="h-12" />
+              </ScrollView>
             </View>
           </BottomSheetView>
         );

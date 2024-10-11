@@ -55,8 +55,8 @@ const AccountActionSheet = forwardRef<any, AccountActionSheetProps>(
     return (
       <BottomSheetModal
         ref={ref}
-        index={0}
-        snapPoints={['35%', '50%']}
+        enableDynamicSizing={true}
+        enablePanDownToClose={true}
         onChange={handleSheetChanges}
         backdropComponent={SheetBackdrop}
         handleIndicatorStyle={{
@@ -67,8 +67,8 @@ const AccountActionSheet = forwardRef<any, AccountActionSheetProps>(
         }}
         containerStyle={{ zIndex: 20 }}
       >
-        <BottomSheetView className="flex-1">
-          <View className="pb-6 pt-4">
+        <BottomSheetView>
+          <View className="py-4">
             <View className="mb-4 px-4">
               <Text className="text-lg font-bold">{name}</Text>
               <Text>Dibuat pada -</Text>

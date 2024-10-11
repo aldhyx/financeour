@@ -33,6 +33,25 @@
     ],
     "description": "Hook",
   },
+  "Screen": {
+    "prefix": "screen",
+    "body": [
+      "import React from 'react';",
+      "import { View } from 'react-native';",
+      "",
+      "import { Text } from '@/components/ui/text';",
+      "",
+      "export default function ${1:CompName} () {",
+      "  return (",
+      "    <View className=\"flex-1 px-4 pt-2\">",
+      "      <Text className=\"\">${1:CompName} </Text>",
+      "    </View>",
+      "  );",
+      "};",
+      "",
+    ],
+    "description": "Screen Component",
+  },
   "Component": {
     "prefix": "comp",
     "body": [

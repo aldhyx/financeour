@@ -72,7 +72,6 @@ const AccountTypeSheetProvider = (props: PropsWithChildren) => {
     </sheetContext.Provider>
   );
 };
-const snapPoints = ['50%', '75%'];
 
 const AccountTypeSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
@@ -95,8 +94,8 @@ const AccountTypeSheet = () => {
   return (
     <BottomSheetModal
       ref={sheetRef}
-      index={0}
-      snapPoints={snapPoints}
+      enableDynamicSizing={true}
+      enablePanDownToClose={true}
       backdropComponent={SheetBackdrop}
       onDismiss={dismissHandler}
       handleIndicatorStyle={{
@@ -110,7 +109,7 @@ const AccountTypeSheet = () => {
       {(_data) => {
         const sheetData = _data?.data as SheetData;
         return (
-          <BottomSheetView className="flex-1">
+          <BottomSheetView>
             <View className="pb-6 pt-4">
               <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
                 <WalletIcon className="text-foreground" size={24} />
