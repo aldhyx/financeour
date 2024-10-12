@@ -9,7 +9,7 @@ export const AlertCard = (props: { title: string; subTitle?: string }) => {
       <View className="flex-row gap-2">
         <InfoIcon className="text-foreground" size={24} />
 
-        <View>
+        <View className="shrink">
           <Text>{props.title}</Text>
 
           {props.subTitle && <Text className="text-sm">{props.subTitle}</Text>}

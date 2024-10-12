@@ -110,8 +110,8 @@ const AccountTypeSheet = () => {
         const sheetData = _data?.data as SheetData;
         return (
           <BottomSheetView>
-            <View className="pb-6 pt-4">
-              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+            <View className="pb-4">
+              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
                 <WalletIcon className="text-foreground" size={24} />
                 <Text className="text-lg">Pilih tipe akun</Text>
               </View>

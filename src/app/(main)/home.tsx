@@ -76,7 +76,7 @@ function FavoriteAccountSection() {
         }}
         className="h-20 min-w-16 items-center justify-center rounded-2xl px-2 active:bg-secondary"
       >
-        <PlusIcon className="text-primary" size={24} />
+        <PlusIcon className="text-muted-foreground" size={24} />
       </Pressable>
     </ScrollView>
   );
@@ -147,6 +147,7 @@ function RecentTransactionSection() {
               txAmount={item.amount}
               txType={item.type}
               txDate={item.datetime}
+              txId={item.id}
             />
           ))}
         </View>

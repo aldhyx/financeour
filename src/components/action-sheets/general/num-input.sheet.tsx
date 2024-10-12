@@ -112,16 +112,16 @@ const NumInputSheet = () => {
 
         return (
           <BottomSheetView>
-            <View className="py-4">
+            <View className="pb-4">
               {renderView === 'calc' && (
-                <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+                <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
                   <CalculatorIcon className="text-foreground" size={24} />
                   <Text className="text-lg">Kalkulator</Text>
                 </View>
               )}
 
               {renderView === 'numpad' && (
-                <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+                <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
                   <Text className="font-bold">123</Text>
                   <Text className="text-lg">Numpad</Text>
                 </View>

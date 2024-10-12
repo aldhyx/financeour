@@ -111,8 +111,8 @@ const AccountSheet = () => {
         const sheetData = _data?.data as SheetData;
         return (
           <BottomSheetView className="flex-1">
-            <View className="py-4">
-              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+            <View className="pb-4">
+              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
                 <WalletIcon className="text-foreground" size={24} />
                 <Text className="text-lg">Pilih akun</Text>
               </View>
