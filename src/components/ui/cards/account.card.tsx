@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { memo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
@@ -10,15 +11,15 @@ import { cn } from '@/lib/utils';
 
 type Props = {
   onPressFavorite: (id: string, isFavorite: boolean) => void;
-  onPressCard?: (id: string) => void;
   onPressAction: (props: Account) => void;
 } & Account;
 
 export const AccountCard = memo((props: Props) => {
   const { maskCurrency } = useMaskCurrency();
+  const router = useRouter();
 
   return (
-    <TouchableOpacity onPress={() => props.onPressCard?.(props.id)}>
+    <TouchableOpacity onPress={() => router.push(`/(account)/${props.id}`)}>
       <View className="rounded-2xl border border-secondary bg-secondary">
         <View
           className="border border-secondary bg-background px-4 py-1"
@@ -36,8 +37,8 @@ export const AccountCard = memo((props: Props) => {
 
         <View className="flex-row items-start justify-between gap-2 px-3 py-4">
           <View className="shrink">
-            <Text className="pt-2 text-base">{props.name}</Text>
-            <Text className="text-2xl font-semibold">
+            <Text className="pt-2">{props.name}</Text>
+            <Text className="text-xl font-semibold">
               {maskCurrency(props.balance).masked}
             </Text>
           </View>

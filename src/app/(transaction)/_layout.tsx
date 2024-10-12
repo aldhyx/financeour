@@ -28,7 +28,7 @@ const TransactionLayout = () => {
       <Stack.Screen
         name="list"
         options={{
-          title: 'Semua transaksi',
+          title: 'Transaksi',
         }}
       />
     </Stack>

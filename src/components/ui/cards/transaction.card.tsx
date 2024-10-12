@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
@@ -17,15 +18,16 @@ type Props = {
   txAmount: Tx['amount'];
   txType: Tx['type'];
   txDate: Tx['datetime'];
+  txId: Tx['id'];
 };
 
-const txTypeIcons = {
+export const txTypeIcons = {
   in: ArrowBigDownIcon,
   out: ArrowBigUpIcon,
   tf: ArrowBigRightIcon,
 } as const;
 
-const txTypeColors = {
+export const txTypeColors = {
   in: 'text-green-600 fill-green-600',
   out: 'text-red-600 fill-red-600',
   tf: 'text-amber-600 fill-amber-600',
@@ -36,8 +38,13 @@ export const TransactionCard = (props: Props) => {
   const TxIcon = txTypeIcons[props.txType];
   const txColor = txTypeColors[props.txType];
   const dateString = dateToString(props.txDate);
+  const router = useRouter();
+
   return (
-    <Pressable className="active:opacity-50">
+    <Pressable
+      className="active:opacity-50"
+      onPress={() => router.push(`/(transaction)/${props.txId}`)}
+    >
       <View className="gap-1 px-4">
         <View className="flex-row justify-between gap-2 ">
           <Text className="text-sm">Belanja</Text>
@@ -57,10 +64,7 @@ export const TransactionCard = (props: Props) => {
               {maskCurrency(props.txAmount).masked}
             </Text>
 
-            <TxIcon
-              size={20}
-              className={`text-forefill-foreground fill-foreground ${txColor}`}
-            />
+            <TxIcon size={20} className={`${txColor}`} />
           </View>
         </View>
       </View>

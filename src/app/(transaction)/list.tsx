@@ -29,12 +29,6 @@ const TransactionListScreen = () => {
 
   return (
     <View className="flex-1 pt-2">
-      <View className="px-4">
-        <Text className="mb-3 font-semibold leading-none">
-          Riwayat transaksi
-        </Text>
-      </View>
-
       <View className="gap-3">
         {data.map((item) => (
           <TransactionCard
@@ -44,6 +38,7 @@ const TransactionListScreen = () => {
             txAmount={item.amount}
             txType={item.type}
             txDate={item.datetime}
+            txId={item.id}
           />
         ))}
       </View>
