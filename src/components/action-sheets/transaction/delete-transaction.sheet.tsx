@@ -8,10 +8,12 @@ import React, {
   useContext,
   useRef,
 } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
-import { SheetBackdrop } from '@/components/action-sheets/sheet-backdrop';
-import { Button } from '@/components/ui/button';
+import {
+  HandleComponent,
+  SheetBackdrop,
+} from '@/components/action-sheets/sheet-backdrop';
 import { Text } from '@/components/ui/text';
 import { useRemoveTransaction } from '@/db/actions/transaction';
 import { useThemeConfig } from '@/hooks/use-theme-config';
@@ -19,11 +21,15 @@ import { useThemeConfig } from '@/hooks/use-theme-config';
 type SheetData = { id: string };
 
 type SheetContext = {
+  showSheet: (data: SheetData) => void;
+};
+
+type SheetInternalContext = {
   sheetRef: MutableRefObject<BottomSheetModal | null>;
-  sheetPresent: (data: SheetData) => void;
 };
 
 const sheetContext = createContext<SheetContext | null>(null);
+const internalSheetContext = createContext<SheetInternalContext | null>(null);
 
 const useDeleteTransactionSheetContext = () => {
   const context = useContext(sheetContext);
@@ -35,23 +41,36 @@ const useDeleteTransactionSheetContext = () => {
   return context;
 };
 
+const useInternalSheetContext = () => {
+  const context = useContext(internalSheetContext);
+  if (!context) {
+    throw new Error(
+      'useInternalSheetContext must be used within DeleteTransactionSheetProvider'
+    );
+  }
+  return context;
+};
+
 const DeleteTransactionSheetProvider = (props: PropsWithChildren) => {
   const sheetRef = useRef<BottomSheetModal | null>(null);
 
-  const sheetPresent: SheetContext['sheetPresent'] = useCallback((data) => {
+  const showSheet: SheetContext['showSheet'] = useCallback((data) => {
     sheetRef.current?.present(data);
   }, []);
 
   return (
-    <sheetContext.Provider value={{ sheetRef, sheetPresent }}>
-      {props.children}
-    </sheetContext.Provider>
+    <internalSheetContext.Provider value={{ sheetRef }}>
+      <sheetContext.Provider value={{ showSheet }}>
+        <DeleteTransactionSheet />
+        {props.children}
+      </sheetContext.Provider>
+    </internalSheetContext.Provider>
   );
 };
 
 const DeleteTransactionSheet = () => {
-  const { sheetRef } = useDeleteTransactionSheetContext();
-  const { colors } = useThemeConfig();
+  const { sheetRef } = useInternalSheetContext();
+  const { colors, dark } = useThemeConfig();
   const { mutateAsync: removeTransaction } = useRemoveTransaction();
 
   const removeAccountHandler = (id: string) => async () => {
@@ -70,11 +89,9 @@ const DeleteTransactionSheet = () => {
       enableDynamicSizing={true}
       enablePanDownToClose={true}
       backdropComponent={SheetBackdrop}
-      handleIndicatorStyle={{
-        backgroundColor: colors.border,
-      }}
+      handleComponent={HandleComponent}
       backgroundStyle={{
-        backgroundColor: colors.background,
+        backgroundColor: dark ? colors.background : colors.secondary,
       }}
       containerStyle={{ zIndex: 20 }}
     >
@@ -84,28 +101,27 @@ const DeleteTransactionSheet = () => {
         return (
           <BottomSheetView>
             <View className="px-4 pb-4">
-              <Text className="mb-1 text-lg font-semibold">
-                Hapus transaksi?
-              </Text>
+              <Text className="mb-1 font-semibold">Hapus transaksi?</Text>
               <Text className="mb-4">
                 Data transaksi akan dihapus dan tidak bisa dikembalikan!
               </Text>
 
-              <View className="flex-row justify-end gap-2">
-                <Button
-                  variant="destructive"
+              <View className="gap-2">
+                <Pressable
+                  className="h-12 items-center justify-center rounded-2xl bg-background active:opacity-50 dark:bg-foreground/5"
                   onPress={removeAccountHandler(sheetData.id)}
-                  className="flex-1"
                 >
-                  <Text>Hapus</Text>
-                </Button>
-                <Button
-                  variant="outline"
-                  onPress={() => sheetRef.current?.dismiss()}
-                  className="flex-1"
+                  <Text className="font-medium text-red-500">Hapus</Text>
+                </Pressable>
+
+                <Pressable
+                  className="h-12 items-center justify-center rounded-2xl bg-background active:opacity-50 dark:bg-foreground/5"
+                  onPress={() => {
+                    sheetRef.current?.dismiss();
+                  }}
                 >
-                  <Text>Batalkan</Text>
-                </Button>
+                  <Text className="font-medium">Batalkan</Text>
+                </Pressable>
               </View>
             </View>
           </BottomSheetView>
@@ -115,8 +131,4 @@ const DeleteTransactionSheet = () => {
   );
 };
 
-export {
-  DeleteTransactionSheet,
-  DeleteTransactionSheetProvider,
-  useDeleteTransactionSheetContext,
-};
+export { DeleteTransactionSheetProvider, useDeleteTransactionSheetContext };

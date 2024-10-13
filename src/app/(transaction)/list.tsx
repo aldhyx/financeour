@@ -1,3 +1,4 @@
+import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -22,15 +23,20 @@ function EmptyDataScreen() {
 const TransactionListScreen = () => {
   const { data, isLoading } = useTransactions({
     limit: 5,
+    orderBy: {
+      column: 'datetime',
+      mode: 'desc',
+    },
   });
   const isEmptyData = !isLoading && data.length === 0;
 
   if (isEmptyData) return <EmptyDataScreen />;
 
   return (
-    <View className="flex-1 pt-2">
-      <View className="gap-3">
-        {data.map((item) => (
+    <View className="flex-1">
+      <FlashList
+        data={data}
+        renderItem={({ item }) => (
           <TransactionCard
             key={item.id}
             fromAccountName={item.fromAccountName}
@@ -40,8 +46,13 @@ const TransactionListScreen = () => {
             txDate={item.datetime}
             txId={item.id}
           />
-        ))}
-      </View>
+        )}
+        estimatedItemSize={data?.length || 1}
+        contentContainerStyle={{
+          paddingBottom: 120,
+        }}
+        ItemSeparatorComponent={() => <View className="h-3" />}
+      />
     </View>
   );
 };

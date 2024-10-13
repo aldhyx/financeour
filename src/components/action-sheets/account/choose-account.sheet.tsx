@@ -10,7 +10,10 @@ import React, {
 import { useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import { SheetBackdrop } from '@/components/action-sheets/sheet-backdrop';
+import {
+  HandleComponent,
+  SheetBackdrop,
+} from '@/components/action-sheets/sheet-backdrop';
 import {
   RadioGroup,
   RadioGroupIndicator,
@@ -26,19 +29,20 @@ type SheetReturnData = { accountId: string; accountName: string } | undefined;
 type ClosedCbHandler = (val?: SheetReturnData) => void;
 
 type SheetContext = {
+  showSheetAsync: (data: SheetData) => Promise<SheetReturnData>;
+};
+
+type SheetInternalContext = {
   /**
    * DO_NOT_USE_OUTSIDE!
-   * ONLY_USE_INTERNALLY_TO_STORE_CALLBACK_REF
+   * ONLY_USE_INTERNALLY
    */
-  _closedCbRef: MutableRefObject<ClosedCbHandler | null>;
+  closedCbRef: MutableRefObject<ClosedCbHandler | null>;
   sheetRef: MutableRefObject<BottomSheetModal | null>;
-  /**
-   * Use this to open & await for the return value when the sheet got demised
-   */
-  sheetPresentAsync: (data: SheetData) => Promise<SheetReturnData>;
 };
 
 const sheetContext = createContext<SheetContext | null>(null);
+const internalSheetContext = createContext<SheetInternalContext | null>(null);
 
 const useAccountSheetContext = () => {
   const context = useContext(sheetContext);
@@ -50,11 +54,21 @@ const useAccountSheetContext = () => {
   return context;
 };
 
+const useInternalSheetContext = () => {
+  const context = useContext(internalSheetContext);
+  if (!context) {
+    throw new Error(
+      'useInternalSheetContext must be used within AccountSheetProvider'
+    );
+  }
+  return context;
+};
+
 const AccountSheetProvider = (props: PropsWithChildren) => {
   const sheetRef = useRef<BottomSheetModal | null>(null);
   const closedCbRef = useRef<ClosedCbHandler | null>(null);
 
-  const sheetPresentAsync: SheetContext['sheetPresentAsync'] = useCallback(
+  const showSheetAsync: SheetContext['showSheetAsync'] = useCallback(
     async (data) =>
       new Promise((resolve) => {
         sheetRef.current?.present(data);
@@ -66,18 +80,21 @@ const AccountSheetProvider = (props: PropsWithChildren) => {
   );
 
   return (
-    <sheetContext.Provider
-      value={{ sheetRef, sheetPresentAsync, _closedCbRef: closedCbRef }}
+    <internalSheetContext.Provider
+      value={{ closedCbRef: closedCbRef, sheetRef }}
     >
-      {props.children}
-    </sheetContext.Provider>
+      <sheetContext.Provider value={{ showSheetAsync }}>
+        <AccountSheet />
+        {props.children}
+      </sheetContext.Provider>
+    </internalSheetContext.Provider>
   );
 };
 
 const AccountSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
-  const { sheetRef, _closedCbRef } = useAccountSheetContext();
-  const { colors } = useThemeConfig();
+  const { sheetRef, closedCbRef } = useInternalSheetContext();
+  const { colors, dark } = useThemeConfig();
   const { data } = useAccounts();
   const { height } = useWindowDimensions();
 
@@ -87,8 +104,8 @@ const AccountSheet = () => {
   };
 
   const dismissHandler = () => {
-    if (_closedCbRef.current) {
-      _closedCbRef.current(sheetReturnRef.current);
+    if (closedCbRef.current) {
+      closedCbRef.current(sheetReturnRef.current);
       // reset the state back to undefined
       sheetReturnRef.current = undefined;
     }
@@ -99,12 +116,10 @@ const AccountSheet = () => {
       ref={sheetRef}
       backdropComponent={SheetBackdrop}
       onDismiss={dismissHandler}
-      handleIndicatorStyle={{
-        backgroundColor: colors.border,
-      }}
+      handleComponent={HandleComponent}
       maxDynamicContentSize={height / 1.5}
       backgroundStyle={{
-        backgroundColor: colors.background,
+        backgroundColor: dark ? colors.background : colors.secondary,
       }}
     >
       {(_data) => {
@@ -112,38 +127,39 @@ const AccountSheet = () => {
         return (
           <BottomSheetView className="flex-1">
             <View className="pb-4">
-              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
-                <WalletIcon className="text-foreground" size={24} />
-                <Text className="text-lg">Pilih akun</Text>
+              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+                <WalletIcon className="text-foreground" size={20} />
+                <Text>Pilih akun</Text>
               </View>
 
               <ScrollView>
-                <RadioGroup value={sheetData.accountId}>
-                  {data.map((item) => (
-                    <RadioGroupItem
-                      key={item.id}
-                      value={item.id}
-                      onPress={() => pressRadioHandler(item.id, item.name)}
-                      className="py-3"
-                    >
-                      <View>
-                        <Text className="capita shrink font-semibold">
-                          {item.name}
-                        </Text>
-                        <Text className="shrink text-sm capitalize">
-                          {item.type}
-                        </Text>
-                      </View>
+                <View className="gap-1 px-4">
+                  <RadioGroup value={sheetData.accountId}>
+                    {data.map((item) => (
+                      <RadioGroupItem
+                        key={item.id}
+                        value={item.id}
+                        onPress={() => pressRadioHandler(item.id, item.name)}
+                        className="rounded-2xl bg-background p-4 dark:bg-foreground/5"
+                      >
+                        <View>
+                          <Text className="capita shrink font-semibold">
+                            {item.name}
+                          </Text>
+                          <Text className="shrink text-sm capitalize">
+                            {item.type}
+                          </Text>
+                        </View>
 
-                      <RadioGroupIndicator>
-                        <CheckIcon size={24} className="text-foreground" />
-                      </RadioGroupIndicator>
-                    </RadioGroupItem>
-                  ))}
-                </RadioGroup>
-
-                {/* Trick to show some item that hidden when scroll down */}
-                <View className="h-12" />
+                        <RadioGroupIndicator>
+                          <CheckIcon size={24} className="text-foreground" />
+                        </RadioGroupIndicator>
+                      </RadioGroupItem>
+                    ))}
+                  </RadioGroup>
+                  {/* Trick to show some item that hidden when scroll down */}
+                  <View className="h-12" />
+                </View>
               </ScrollView>
             </View>
           </BottomSheetView>
@@ -153,4 +169,4 @@ const AccountSheet = () => {
   );
 };
 
-export { AccountSheet, AccountSheetProvider, useAccountSheetContext };
+export { AccountSheetProvider, useAccountSheetContext };

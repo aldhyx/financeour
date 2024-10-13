@@ -3,7 +3,6 @@ import React, { useMemo } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
 import {
-  DeleteTransactionSheet,
   DeleteTransactionSheetProvider,
   useDeleteTransactionSheetContext,
 } from '@/components/action-sheets/transaction/delete-transaction.sheet';
@@ -31,14 +30,12 @@ export default function DetailTransactionScreen() {
 
   return (
     <DeleteTransactionSheetProvider>
-      <DeleteTransactionSheet />
       <DetailTransaction data={data} />
     </DeleteTransactionSheetProvider>
   );
 }
 function DetailTransaction({ data: tx }: { data: Tx }) {
-  const { sheetPresent: showDeleteTxSheet } =
-    useDeleteTransactionSheetContext();
+  const { showSheet: showDeleteTxSheet } = useDeleteTransactionSheetContext();
   const { maskCurrency } = useMaskCurrency();
 
   const rightIcon = useMemo(() => {
@@ -52,7 +49,7 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
           showDeleteTxSheet({ id: tx.id });
         }}
       >
-        <TrashIcon size={20} className="text-destructive" />
+        <TrashIcon size={20} className="text-red-500" />
       </Button>
     );
   }, [showDeleteTxSheet, tx.id]);

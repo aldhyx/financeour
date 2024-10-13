@@ -4,7 +4,6 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
 import {
-  AccountActionSheet,
   AccountActionSheetProvider,
   useAccountActionSheetContext,
 } from '@/components/action-sheets/account/account-action.sheet';
@@ -37,21 +36,19 @@ export default function MyAccountScreen() {
   }
   return (
     <AccountActionSheetProvider>
-      <AccountActionSheet />
       <MyAccountList data={data} />
     </AccountActionSheetProvider>
   );
 }
 
 const MyAccountList = ({ data }: { data: Account[] }) => {
-  const { sheetPresent: showActionSheet } = useAccountActionSheetContext();
+  const { showSheet: showActionSheet } = useAccountActionSheetContext();
   const { mutateAsync } = useUpdateAccount();
 
   const actionHandler = (account: Account) => {
     showActionSheet({
       id: account.id,
       name: account.name,
-      createdAt: account.createdAt,
     });
   };
 

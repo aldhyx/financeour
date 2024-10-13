@@ -5,7 +5,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, Pressable, View } from 'react-native';
 
 import {
-  AccountTypeSheet,
   AccountTypeSheetProvider,
   useAccountTypeSheetContext,
 } from '@/components/action-sheets/account/choose-account-type.sheet';
@@ -30,7 +29,6 @@ export default function CreateAccountScreen() {
     <NumInputSheetProvider>
       <AccountTypeSheetProvider>
         <NumInputSheet />
-        <AccountTypeSheet />
 
         <CreateAccountForm />
       </AccountTypeSheetProvider>
@@ -39,10 +37,8 @@ export default function CreateAccountScreen() {
 }
 
 function CreateAccountForm() {
-  const { sheetPresentAsync: showAccountTypeSheetAsync } =
-    useAccountTypeSheetContext();
-  const { sheetPresentAsync: showNumInputSheetAsync } =
-    useNumInputSheetContext();
+  const { showSheetAsync: showAccountTypeSheet } = useAccountTypeSheetContext();
+  const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
 
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
@@ -73,7 +69,7 @@ function CreateAccountForm() {
 
   const pressChooseAccountHandler = async () => {
     Keyboard.dismiss();
-    const res = await showAccountTypeSheetAsync({ accountType });
+    const res = await showAccountTypeSheet({ accountType });
     if (!res) return;
     setValue('type', res.accountType, { shouldValidate: true });
   };
@@ -106,7 +102,6 @@ function CreateAccountForm() {
         >
           <FormGroup.Input
             placeholder="Pilih tipe akun..."
-            className="capitalize"
             disabled
             value={accountType}
           />
@@ -116,12 +111,7 @@ function CreateAccountForm() {
       <FormGroup errorMessage={errors.balance?.message}>
         <FormGroup.Label>Saldo awal (opsional)</FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={pressNumInputHandler}>
-          <FormGroup.Input
-            placeholder="Pilih tipe akun..."
-            className="capitalize"
-            disabled
-            value={maskCurrency(balance).maskedRaw}
-          />
+          <FormGroup.Input disabled value={maskCurrency(balance).maskedRaw} />
         </Pressable>
       </FormGroup>
 

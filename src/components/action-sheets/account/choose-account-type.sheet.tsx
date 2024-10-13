@@ -9,7 +9,10 @@ import {
 } from 'react';
 import { View } from 'react-native';
 
-import { SheetBackdrop } from '@/components/action-sheets/sheet-backdrop';
+import {
+  HandleComponent,
+  SheetBackdrop,
+} from '@/components/action-sheets/sheet-backdrop';
 import {
   RadioGroup,
   RadioGroupIndicator,
@@ -25,27 +28,38 @@ type SheetReturnData = { accountType: string } | undefined;
 type ClosedCbHandler = (val?: SheetReturnData) => void;
 
 type SheetContext = {
+  showSheetAsync: (data: SheetData) => Promise<SheetReturnData>;
+};
+
+type SheetInternalContext = {
   /**
    * DO_NOT_USE_OUTSIDE!
-   * ONLY_USE_INTERNALLY_TO_STORE_CALLBACK_REF
+   * ONLY_USE_INTERNALLY
    */
-  _closedCbRef: MutableRefObject<ClosedCbHandler | null>;
+  closedCbRef: MutableRefObject<ClosedCbHandler | null>;
   sheetRef: MutableRefObject<BottomSheetModal | null>;
-  /**
-   * Use this to open & await for the return value when the sheet got demised
-   */
-  sheetPresentAsync: (data: SheetData) => Promise<SheetReturnData>;
 };
 
 const sheetContext = createContext<SheetContext | null>(null);
+const internalSheetContext = createContext<SheetInternalContext | null>(null);
 
 const useAccountTypeSheetContext = () => {
   const context = useContext(sheetContext);
-  if (!context)
+  if (!context) {
     throw new Error(
       'useAccountTypeSheetContext must be used within AccountTypeSheetProvider'
     );
+  }
+  return context;
+};
 
+const useInternalSheetContext = () => {
+  const context = useContext(internalSheetContext);
+  if (!context) {
+    throw new Error(
+      'useInternalSheetContext must be used within AccountTypeSheetProvider'
+    );
+  }
   return context;
 };
 
@@ -53,7 +67,7 @@ const AccountTypeSheetProvider = (props: PropsWithChildren) => {
   const sheetRef = useRef<BottomSheetModal | null>(null);
   const closedCbRef = useRef<ClosedCbHandler | null>(null);
 
-  const sheetPresentAsync: SheetContext['sheetPresentAsync'] = useCallback(
+  const showSheetAsync: SheetContext['showSheetAsync'] = useCallback(
     async (data) =>
       new Promise((resolve) => {
         sheetRef.current?.present(data);
@@ -65,18 +79,21 @@ const AccountTypeSheetProvider = (props: PropsWithChildren) => {
   );
 
   return (
-    <sheetContext.Provider
-      value={{ sheetRef, sheetPresentAsync, _closedCbRef: closedCbRef }}
+    <internalSheetContext.Provider
+      value={{ closedCbRef: closedCbRef, sheetRef }}
     >
-      {props.children}
-    </sheetContext.Provider>
+      <sheetContext.Provider value={{ showSheetAsync }}>
+        <AccountTypeSheet />
+        {props.children}
+      </sheetContext.Provider>
+    </internalSheetContext.Provider>
   );
 };
 
 const AccountTypeSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
-  const { sheetRef, _closedCbRef } = useAccountTypeSheetContext();
-  const { colors } = useThemeConfig();
+  const { sheetRef, closedCbRef } = useInternalSheetContext();
+  const { colors, dark } = useThemeConfig();
 
   const pressRadioHandler = (accountType: string) => {
     sheetReturnRef.current = { accountType };
@@ -84,8 +101,8 @@ const AccountTypeSheet = () => {
   };
 
   const dismissHandler = () => {
-    if (_closedCbRef.current) {
-      _closedCbRef.current(sheetReturnRef.current);
+    if (closedCbRef.current) {
+      closedCbRef.current(sheetReturnRef.current);
       // reset the state back to undefined
       sheetReturnRef.current = undefined;
     }
@@ -98,11 +115,9 @@ const AccountTypeSheet = () => {
       enablePanDownToClose={true}
       backdropComponent={SheetBackdrop}
       onDismiss={dismissHandler}
-      handleIndicatorStyle={{
-        backgroundColor: colors.border,
-      }}
+      handleComponent={HandleComponent}
       backgroundStyle={{
-        backgroundColor: colors.background,
+        backgroundColor: dark ? colors.background : colors.secondary,
       }}
       containerStyle={{ zIndex: 20 }}
     >
@@ -111,26 +126,31 @@ const AccountTypeSheet = () => {
         return (
           <BottomSheetView>
             <View className="pb-4">
-              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
-                <WalletIcon className="text-foreground" size={24} />
-                <Text className="text-lg">Pilih tipe akun</Text>
+              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+                <WalletIcon className="text-foreground" size={20} />
+                <Text>Pilih tipe akun</Text>
               </View>
 
-              <RadioGroup value={sheetData.accountType}>
-                {DEFAULT_ACCOUNT_TYPES.map((item) => (
-                  <RadioGroupItem
-                    key={item}
-                    value={item}
-                    onPress={pressRadioHandler}
-                  >
-                    <Text className="shrink capitalize">{item}</Text>
+              <View className="gap-1 px-4">
+                <RadioGroup value={sheetData.accountType}>
+                  {DEFAULT_ACCOUNT_TYPES.map((item) => (
+                    <RadioGroupItem
+                      key={item}
+                      value={item}
+                      onPress={pressRadioHandler}
+                      className="rounded-2xl bg-background p-4 dark:bg-foreground/5"
+                    >
+                      <Text className="shrink font-semibold capitalize">
+                        {item}
+                      </Text>
 
-                    <RadioGroupIndicator>
-                      <CheckIcon size={24} className="text-foreground" />
-                    </RadioGroupIndicator>
-                  </RadioGroupItem>
-                ))}
-              </RadioGroup>
+                      <RadioGroupIndicator>
+                        <CheckIcon size={20} className="text-foreground" />
+                      </RadioGroupIndicator>
+                    </RadioGroupItem>
+                  ))}
+                </RadioGroup>
+              </View>
             </View>
           </BottomSheetView>
         );
@@ -139,8 +159,4 @@ const AccountTypeSheet = () => {
   );
 };
 
-export {
-  AccountTypeSheet,
-  AccountTypeSheetProvider,
-  useAccountTypeSheetContext,
-};
+export { AccountTypeSheetProvider, useAccountTypeSheetContext };

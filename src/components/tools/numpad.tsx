@@ -1,15 +1,35 @@
-import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import React, { ReactNode, useCallback, useState } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { Button } from '@/components/ui/button';
 import { CalculatorIcon, CheckIcon, DeleteIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
+import { cn } from '@/lib/utils';
 
 type Props = {
   onPressDone: (result: number) => void;
   onPressCalc?: () => void;
   value?: number;
+};
+
+const Button = (props: {
+  onPress?: () => void;
+  onLongPress?: () => void;
+  children?: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <Pressable
+      className={cn(
+        'size-20 items-center justify-center rounded-full bg-background active:opacity-50 dark:bg-foreground/15',
+        props.className
+      )}
+      onPress={props.onPress}
+      onLongPress={props.onLongPress}
+    >
+      {props.children}
+    </Pressable>
+  );
 };
 
 // eslint-disable-next-line max-lines-per-function
@@ -56,146 +76,79 @@ export const Numpad = (props: Props) => {
       </View>
 
       <View className="flex-row gap-2">
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('1')}
-        >
+        <Button onPress={pressNumberHandler('1')}>
           <Text className="text-2xl">1</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('2')}
-        >
+        <Button onPress={pressNumberHandler('2')}>
           <Text className="text-2xl">2</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('3')}
-        >
+        <Button onPress={pressNumberHandler('3')}>
           <Text className="text-2xl">3</Text>
         </Button>
         <Button
-          size="icon"
-          variant="destructive"
-          rounded="full"
-          className="size-20"
           onPress={backspaceHandler}
+          onLongPress={clearHandler}
+          className="bg-red-500 dark:bg-red-500"
         >
-          <DeleteIcon size={32} className="text-background" />
+          <DeleteIcon
+            size={32}
+            className="text-background dark:text-foreground"
+          />
         </Button>
       </View>
 
       <View className="flex-row gap-2">
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('4')}
-        >
+        <Button onPress={pressNumberHandler('4')}>
           <Text className="text-2xl">4</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('5')}
-        >
+        <Button onPress={pressNumberHandler('5')}>
           <Text className="text-2xl">5</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('6')}
-        >
+        <Button onPress={pressNumberHandler('6')}>
           <Text className="text-2xl">6</Text>
         </Button>
         <Button
-          size="icon"
-          variant="destructive"
-          rounded="full"
-          className="size-20"
           onPress={clearHandler}
+          onLongPress={clearHandler}
+          className="bg-red-500 dark:bg-red-500"
         >
-          <Text className="text-3xl text-background">C</Text>
+          <Text className="text-3xl text-background dark:text-foreground">
+            C
+          </Text>
         </Button>
       </View>
 
       <View className="flex-row gap-2">
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('7')}
-        >
+        <Button onPress={pressNumberHandler('7')}>
           <Text className="text-2xl">7</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('8')}
-        >
+        <Button onPress={pressNumberHandler('8')}>
           <Text className="text-2xl">8</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('9')}
-        >
+        <Button onPress={pressNumberHandler('9')}>
           <Text className="text-2xl">9</Text>
         </Button>
         <Button
-          size="icon"
-          rounded="full"
-          className="size-20 bg-emerald-500"
           onPress={pressDoneHandler}
+          className="size-20 bg-emerald-500 dark:bg-emerald-500"
         >
-          <CheckIcon size={32} className="text-background" />
+          <CheckIcon
+            size={32}
+            className="text-background dark:text-foreground"
+          />
         </Button>
       </View>
       <View className="flex-row gap-2">
         <Button
-          size="icon"
-          variant="secondary"
-          rounded="full"
-          className="size-20"
           onPress={props.onPressCalc}
+          className="bg-foreground/5 dark:bg-foreground/5"
         >
           <CalculatorIcon size={32} className="text-foreground" />
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('0')}
-        >
+        <Button onPress={pressNumberHandler('0')}>
           <Text className="text-2xl">0</Text>
         </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          rounded="full"
-          className="size-20"
-          onPress={pressNumberHandler('000')}
-        >
+        <Button onPress={pressNumberHandler('000')}>
           <Text className="text-2xl">000</Text>
         </Button>
         <View className="size-20" />

@@ -32,9 +32,9 @@ const TabBarIcon = (props: {
     return (
       <Pressable
         onPress={() => router.push('/(transaction)/create')}
-        className="items-center justify-center px-5 active:opacity-50"
+        className="items-center justify-center px-5 active:opacity-50 "
       >
-        <View className="h-8 w-14 items-center justify-center rounded-full bg-primary">
+        <View className="h-8 w-14 items-center justify-center rounded-full bg-foreground">
           <SelectedIcon className="text-background" />
         </View>
       </Pressable>
@@ -45,7 +45,7 @@ const TabBarIcon = (props: {
     <SelectedIcon
       className={cn([
         'text-foreground',
-        props.focused ? 'text-primary' : 'opacity-80',
+        props.focused ? 'text-foreground' : 'opacity-70',
       ])}
     />
   );

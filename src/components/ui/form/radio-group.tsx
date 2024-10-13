@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, ReactNode, useContext } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { cn } from '@/lib/utils';
 
@@ -56,15 +56,15 @@ const RadioGroupItem = ({
 
   return (
     <RadioItemContext.Provider value={{ itemValue }}>
-      <TouchableOpacity onPress={onPressHandler}>
+      <Pressable className="active:opacity-50" onPress={onPressHandler}>
         <View
           className={cn(
-            'min-h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4',
+            'min-h-14 flex-row items-center justify-between gap-2 px-4',
             className
           )}
           {...otherProps}
         />
-      </TouchableOpacity>
+      </Pressable>
     </RadioItemContext.Provider>
   );
 };

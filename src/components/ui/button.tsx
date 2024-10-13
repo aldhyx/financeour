@@ -38,12 +38,12 @@ const buttonTextVariants = cva('text-base font-medium text-foreground', {
   variants: {
     variant: {
       default: 'text-primary-foreground',
-      destructive: 'text-destructive-foreground',
+      destructive: 'text-destructive-foreground dark:text-foreground',
       outline: 'group-active:text-accent-foreground',
       secondary:
         'text-secondary-foreground group-active:text-secondary-foreground',
       ghost: 'group-active:text-accent-foreground',
-      link: 'text-primary',
+      link: 'font-medium text-primary',
     },
     size: {
       default: '',

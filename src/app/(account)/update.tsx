@@ -6,7 +6,6 @@ import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import {
-  AccountTypeSheet,
   AccountTypeSheetProvider,
   useAccountTypeSheetContext,
 } from '@/components/action-sheets/account/choose-account-type.sheet';
@@ -43,8 +42,6 @@ export default function UpdateAccountScreen() {
 
   return (
     <AccountTypeSheetProvider>
-      <AccountTypeSheet />
-
       <UpdateAccountForm
         id={data.id}
         name={data.name}
@@ -61,8 +58,7 @@ function UpdateAccountForm(props: {
   type: string;
   id: string;
 }) {
-  const { sheetPresentAsync: showAccountTypeSheetAsync } =
-    useAccountTypeSheetContext();
+  const { showSheetAsync: showAccountTypeSheet } = useAccountTypeSheetContext();
 
   const router = useRouter();
   const { mutateAsync: updateAccount } = useUpdateAccount();
@@ -98,7 +94,7 @@ function UpdateAccountForm(props: {
 
   const pressChooseAccountHandler = async () => {
     Keyboard.dismiss();
-    const res = await showAccountTypeSheetAsync({ accountType });
+    const res = await showAccountTypeSheet({ accountType });
     if (!res) return;
     setValue('type', res.accountType, { shouldValidate: true });
   };
@@ -125,7 +121,6 @@ function UpdateAccountForm(props: {
           >
             <FormGroup.Input
               placeholder="Pilih tipe akun..."
-              className="capitalize"
               disabled
               value={accountType}
             />

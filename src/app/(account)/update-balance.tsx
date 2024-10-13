@@ -56,8 +56,7 @@ function UpdateAccountBalanceForm(props: {
   balance: number | null;
   name: string;
 }) {
-  const { sheetPresentAsync: showNumInputSheetAsync } =
-    useNumInputSheetContext();
+  const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
   const { mutateAsync: updateAccountBalance } = useUpdateAccountBalance();
