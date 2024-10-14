@@ -21,7 +21,7 @@ const Button = (props: {
   return (
     <Pressable
       className={cn(
-        'size-20 items-center justify-center rounded-full bg-background active:opacity-50 dark:bg-foreground/15',
+        'size-20 items-center justify-center rounded-full bg-secondary active:opacity-50',
         props.className
       )}
       onPress={props.onPress}
@@ -141,7 +141,7 @@ export const Numpad = (props: Props) => {
       <View className="flex-row gap-2">
         <Button
           onPress={props.onPressCalc}
-          className="bg-foreground/5 dark:bg-foreground/5"
+          className="bg-foreground/15 dark:bg-foreground/25"
         >
           <CalculatorIcon size={32} className="text-foreground" />
         </Button>

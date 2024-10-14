@@ -23,7 +23,7 @@ export const SheetBackdrop = (props: any) => {
 
 export const HandleComponent = () => {
   return (
-    <View className="items-center justify-center py-2">
+    <View className="mb-1 items-center justify-center py-2">
       <View className="h-1 w-8 rounded-full bg-foreground/10 " />
     </View>
   );

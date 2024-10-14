@@ -94,7 +94,7 @@ const AccountSheetProvider = (props: PropsWithChildren) => {
 const AccountSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
   const { sheetRef, closedCbRef } = useInternalSheetContext();
-  const { colors, dark } = useThemeConfig();
+  const { colors } = useThemeConfig();
   const { data } = useAccounts();
   const { height } = useWindowDimensions();
 
@@ -119,7 +119,7 @@ const AccountSheet = () => {
       handleComponent={HandleComponent}
       maxDynamicContentSize={height / 1.5}
       backgroundStyle={{
-        backgroundColor: dark ? colors.background : colors.secondary,
+        backgroundColor: colors.background,
       }}
     >
       {(_data) => {
@@ -127,7 +127,7 @@ const AccountSheet = () => {
         return (
           <BottomSheetView className="flex-1">
             <View className="pb-4">
-              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+              <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
                 <WalletIcon className="text-foreground" size={20} />
                 <Text>Pilih akun</Text>
               </View>
@@ -140,7 +140,7 @@ const AccountSheet = () => {
                         key={item.id}
                         value={item.id}
                         onPress={() => pressRadioHandler(item.id, item.name)}
-                        className="rounded-2xl bg-background p-4 dark:bg-foreground/5"
+                        className="rounded-2xl bg-secondary p-4"
                       >
                         <View>
                           <Text className="capita shrink font-semibold">

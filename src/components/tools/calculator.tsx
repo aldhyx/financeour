@@ -37,7 +37,7 @@ const Button = (props: {
   return (
     <Pressable
       className={cn(
-        'size-20 items-center justify-center rounded-full bg-background active:opacity-50 dark:bg-foreground/15',
+        'size-20 items-center justify-center rounded-full bg-secondary active:opacity-50',
         props.className
       )}
       onPress={props.onPress}
@@ -135,25 +135,25 @@ export const Calculator = (props: Props) => {
       <View className="flex-row gap-2">
         <Button
           onPress={pressNumberHandler('*')}
-          className="bg-foreground/5 dark:bg-foreground/5"
+          className="bg-foreground/15 dark:bg-foreground/25"
         >
           <XIcon size={24} className="text-foreground" />
         </Button>
         <Button
           onPress={pressNumberHandler('/')}
-          className="bg-foreground/5 dark:bg-foreground/5"
+          className="bg-foreground/15 dark:bg-foreground/25"
         >
           <DivideIcon size={24} className="text-foreground" />
         </Button>
         <Button
           onPress={pressNumberHandler('+')}
-          className="bg-foreground/5 dark:bg-foreground/5"
+          className="bg-foreground/15 dark:bg-foreground/25"
         >
           <PlusIcon size={24} className="text-foreground" />
         </Button>
         <Button
           onPress={pressNumberHandler('-')}
-          className="bg-foreground/5 dark:bg-foreground/5"
+          className="bg-foreground/15 dark:bg-foreground/25"
         >
           <MinusIcon size={24} className="text-foreground" />
         </Button>
@@ -226,7 +226,7 @@ export const Calculator = (props: Props) => {
       <View className="flex-row gap-2">
         <Button
           onPress={props.onPressNumpad}
-          className="bg-foreground/5 dark:bg-foreground/5"
+          className="bg-foreground/15 dark:bg-foreground/25"
         >
           <Text className="text-xl">123</Text>
         </Button>

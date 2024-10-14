@@ -79,17 +79,10 @@ const MyAccountList = ({ data }: { data: Account[] }) => {
         )}
         estimatedItemSize={data?.length || 1}
         contentContainerStyle={{
-          paddingTop: 24,
+          paddingTop: 8,
           paddingBottom: 120,
         }}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{
-              // base 13 + 8 = 21
-              height: 21,
-            }}
-          />
-        )}
+        ItemSeparatorComponent={() => <View className="h-1" />}
       />
     </View>
   );

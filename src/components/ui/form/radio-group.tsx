@@ -59,7 +59,7 @@ const RadioGroupItem = ({
       <Pressable className="active:opacity-50" onPress={onPressHandler}>
         <View
           className={cn(
-            'min-h-14 flex-row items-center justify-between gap-2 px-4',
+            'min-h-12 flex-row items-center justify-between gap-2 px-4',
             className
           )}
           {...otherProps}

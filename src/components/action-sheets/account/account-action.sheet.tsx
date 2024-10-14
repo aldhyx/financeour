@@ -75,7 +75,7 @@ const AccountActionSheetProvider = (props: PropsWithChildren) => {
 type RenderView = 'menu' | 'remove-confirm';
 const AccountActionSheet = () => {
   const { sheetRef } = useInternalSheetContext();
-  const { colors, dark } = useThemeConfig();
+  const { colors } = useThemeConfig();
   const [renderView, setRenderView] = useState<RenderView>('menu');
   const { mutateAsync: removeAccount } = useRemoveAccount();
 
@@ -114,7 +114,7 @@ const AccountActionSheet = () => {
       handleComponent={HandleComponent}
       containerStyle={{ zIndex: 20 }}
       backgroundStyle={{
-        backgroundColor: dark ? colors.background : colors.secondary,
+        backgroundColor: colors.background,
       }}
     >
       {(_data) => {
@@ -122,79 +122,75 @@ const AccountActionSheet = () => {
 
         return (
           <BottomSheetView>
-            <View className="pb-4">
-              {renderView === 'menu' && (
-                <>
-                  <View className="px-4 pb-3">
-                    <Text>{sheetData.name}</Text>
-                  </View>
+            {renderView === 'menu' && (
+              <View className="px-4 pb-4">
+                <Text className="mb-3 text-center">{sheetData.name}</Text>
 
-                  <View className="mx-4 mb-2 rounded-2xl bg-background dark:bg-foreground/5">
-                    <Pressable
-                      className="active:opacity-50"
-                      onPress={changeAccountHandler(sheetData.id)}
-                    >
-                      <View className="h-14 flex-row items-center justify-between gap-4 px-4">
-                        <Text className="font-semibold">Ubah akun</Text>
-                        <PencilIcon size={20} className="text-foreground" />
-                      </View>
-                    </Pressable>
+                <View className="mb-2 rounded-2xl bg-secondary">
+                  <Pressable
+                    className="active:opacity-50"
+                    onPress={changeAccountHandler(sheetData.id)}
+                  >
+                    <View className="h-14 flex-row items-center justify-between gap-4 px-4">
+                      <Text className="font-medium">Ubah akun</Text>
+                      <PencilIcon size={20} className="text-foreground" />
+                    </View>
+                  </Pressable>
 
-                    <LineSeparator />
+                  <LineSeparator />
 
-                    <Pressable
-                      className="active:opacity-50"
-                      onPress={changeAccountBalanceHandler(sheetData.id)}
-                    >
-                      <View className="h-14 flex-row items-center justify-between gap-4 px-4">
-                        <Text className="font-semibold">Sesuaikan saldo</Text>
-                        <PencilIcon size={20} className="text-foreground" />
-                      </View>
-                    </Pressable>
-                  </View>
-
-                  <View className="mx-4 rounded-2xl bg-background dark:bg-foreground/5">
-                    <Pressable
-                      className="active:opacity-50"
-                      onPress={() => setRenderView('remove-confirm')}
-                    >
-                      <View className="h-14 flex-row items-center justify-between gap-4 px-4">
-                        <Text className="font-semibold text-red-600">
-                          Hapus akun
-                        </Text>
-                        <TrashIcon size={20} className="text-red-600" />
-                      </View>
-                    </Pressable>
-                  </View>
-                </>
-              )}
-
-              {renderView === 'remove-confirm' && (
-                <View className="px-4">
-                  <Text className="mb-1 font-semibold">Hapus akun?</Text>
-                  <Text className="mb-4">
-                    Semua riwayat transaksi pada akun ini akan dihapus dan tidak
-                    bisa dikembalikan!
-                  </Text>
-
-                  <View className="gap-2">
-                    <Pressable
-                      className="h-12 items-center justify-center rounded-2xl bg-background active:opacity-50 dark:bg-foreground/5"
-                      onPress={removeAccountHandler(sheetData.id)}
-                    >
-                      <Text className="font-medium text-red-500">Hapus</Text>
-                    </Pressable>
-
-                    <Pressable
-                      className="h-12 items-center justify-center rounded-2xl bg-background active:opacity-50 dark:bg-foreground/5"
-                      onPress={() => setRenderView('menu')}
-                    >
-                      <Text className="font-medium">Batalkan</Text>
-                    </Pressable>
-                  </View>
+                  <Pressable
+                    className="active:opacity-50"
+                    onPress={changeAccountBalanceHandler(sheetData.id)}
+                  >
+                    <View className="h-14 flex-row items-center justify-between gap-4 px-4">
+                      <Text className="font-medium">Sesuaikan saldo</Text>
+                      <PencilIcon size={20} className="text-foreground" />
+                    </View>
+                  </Pressable>
                 </View>
-              )}
-            </View>
+
+                <View className="rounded-2xl bg-secondary">
+                  <Pressable
+                    className="active:opacity-50"
+                    onPress={() => setRenderView('remove-confirm')}
+                  >
+                    <View className="h-14 flex-row items-center justify-between gap-4 px-4">
+                      <Text className="font-medium text-red-600">
+                        Hapus akun
+                      </Text>
+                      <TrashIcon size={20} className="text-red-600" />
+                    </View>
+                  </Pressable>
+                </View>
+              </View>
+            )}
+
+            {renderView === 'remove-confirm' && (
+              <View className="px-4 pb-4">
+                <Text className="mb-1 font-medium">Hapus akun?</Text>
+                <Text className="mb-4">
+                  Semua riwayat transaksi pada akun ini akan dihapus dan tidak
+                  bisa dikembalikan!
+                </Text>
+
+                <View className="gap-1">
+                  <Pressable
+                    className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
+                    onPress={removeAccountHandler(sheetData.id)}
+                  >
+                    <Text className="font-medium text-red-500">Hapus</Text>
+                  </Pressable>
+
+                  <Pressable
+                    className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
+                    onPress={() => setRenderView('menu')}
+                  >
+                    <Text className="font-medium">Batalkan</Text>
+                  </Pressable>
+                </View>
+              </View>
+            )}
           </BottomSheetView>
         );
       }}

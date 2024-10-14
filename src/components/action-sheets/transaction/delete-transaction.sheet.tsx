@@ -70,7 +70,7 @@ const DeleteTransactionSheetProvider = (props: PropsWithChildren) => {
 
 const DeleteTransactionSheet = () => {
   const { sheetRef } = useInternalSheetContext();
-  const { colors, dark } = useThemeConfig();
+  const { colors } = useThemeConfig();
   const { mutateAsync: removeTransaction } = useRemoveTransaction();
 
   const removeAccountHandler = (id: string) => async () => {
@@ -91,7 +91,7 @@ const DeleteTransactionSheet = () => {
       backdropComponent={SheetBackdrop}
       handleComponent={HandleComponent}
       backgroundStyle={{
-        backgroundColor: dark ? colors.background : colors.secondary,
+        backgroundColor: colors.background,
       }}
       containerStyle={{ zIndex: 20 }}
     >
@@ -106,16 +106,16 @@ const DeleteTransactionSheet = () => {
                 Data transaksi akan dihapus dan tidak bisa dikembalikan!
               </Text>
 
-              <View className="gap-2">
+              <View className="gap-1">
                 <Pressable
-                  className="h-12 items-center justify-center rounded-2xl bg-background active:opacity-50 dark:bg-foreground/5"
+                  className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
                   onPress={removeAccountHandler(sheetData.id)}
                 >
                   <Text className="font-medium text-red-500">Hapus</Text>
                 </Pressable>
 
                 <Pressable
-                  className="h-12 items-center justify-center rounded-2xl bg-background active:opacity-50 dark:bg-foreground/5"
+                  className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
                   onPress={() => {
                     sheetRef.current?.dismiss();
                   }}

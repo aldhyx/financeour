@@ -93,7 +93,7 @@ const AccountTypeSheetProvider = (props: PropsWithChildren) => {
 const AccountTypeSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
   const { sheetRef, closedCbRef } = useInternalSheetContext();
-  const { colors, dark } = useThemeConfig();
+  const { colors } = useThemeConfig();
 
   const pressRadioHandler = (accountType: string) => {
     sheetReturnRef.current = { accountType };
@@ -117,7 +117,7 @@ const AccountTypeSheet = () => {
       onDismiss={dismissHandler}
       handleComponent={HandleComponent}
       backgroundStyle={{
-        backgroundColor: dark ? colors.background : colors.secondary,
+        backgroundColor: colors.background,
       }}
       containerStyle={{ zIndex: 20 }}
     >
@@ -125,8 +125,8 @@ const AccountTypeSheet = () => {
         const sheetData = _data?.data as SheetData;
         return (
           <BottomSheetView>
-            <View className="pb-4">
-              <View className="mb-4 flex-row items-center justify-start gap-2 px-4">
+            <View className="pb-3">
+              <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
                 <WalletIcon className="text-foreground" size={20} />
                 <Text>Pilih tipe akun</Text>
               </View>
@@ -138,9 +138,9 @@ const AccountTypeSheet = () => {
                       key={item}
                       value={item}
                       onPress={pressRadioHandler}
-                      className="rounded-2xl bg-background p-4 dark:bg-foreground/5"
+                      className="rounded-2xl bg-secondary px-4"
                     >
-                      <Text className="shrink font-semibold capitalize">
+                      <Text className="shrink font-medium capitalize">
                         {item}
                       </Text>
 

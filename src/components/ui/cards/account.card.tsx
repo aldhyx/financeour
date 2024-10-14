@@ -1,8 +1,7 @@
 import { useRouter } from 'expo-router';
 import { memo } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, TouchableOpacity, View } from 'react-native';
 
-import { Button } from '@/components/ui/button';
 import { EllipsisIcon, StarIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Account } from '@/db/actions/account';
@@ -22,31 +21,27 @@ export const AccountCard = memo((props: Props) => {
     <TouchableOpacity onPress={() => router.push(`/(account)/${props.id}`)}>
       <View className="rounded-2xl border border-secondary bg-secondary">
         <View
-          className="border border-secondary bg-background px-4 py-1"
+          className="mb-2 self-start border border-secondary bg-background px-4 py-1"
           style={{
             borderTopLeftRadius: 16,
             borderTopRightRadius: 0,
             borderBottomRightRadius: 16,
-            left: -1,
-            top: -14,
-            position: 'absolute',
           }}
         >
           <Text className="text-sm capitalize">{props.type}</Text>
         </View>
 
-        <View className="flex-row items-start justify-between gap-2 px-3 py-4">
+        <View className="flex-row items-start justify-between gap-2 px-3 pb-4">
           <View className="shrink">
-            <Text className="pt-2">{props.name}</Text>
+            <Text>{props.name}</Text>
             <Text className="text-xl font-semibold">
               {maskCurrency(props.balance).masked}
             </Text>
           </View>
 
-          <View className="flex-row" style={{ right: -5 }}>
-            <Button
-              size="icon"
-              variant="ghost"
+          <View className="flex-row gap-2">
+            <Pressable
+              className="size-6 items-center justify-center self-start rounded-full active:bg-border "
               onPress={() =>
                 props.onPressFavorite(props.id, !Boolean(props.isFavorite))
               }
@@ -58,11 +53,10 @@ export const AccountCard = memo((props: Props) => {
                 )}
                 size={20}
               />
-            </Button>
+            </Pressable>
 
-            <Button
-              size="icon"
-              variant="ghost"
+            <Pressable
+              className="size-6 items-center justify-center self-start rounded-full active:bg-border "
               onPress={() =>
                 props.onPressAction({
                   id: props.id,
@@ -77,7 +71,7 @@ export const AccountCard = memo((props: Props) => {
               }
             >
               <EllipsisIcon className="text-foreground " size={20} />
-            </Button>
+            </Pressable>
           </View>
         </View>
       </View>

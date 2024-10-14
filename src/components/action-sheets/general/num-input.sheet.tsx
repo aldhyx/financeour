@@ -75,7 +75,7 @@ const NumInputSheet = () => {
   const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
   const sheetReturnRef = useRef<SheetReturnData>();
   const { sheetRef, _closedCbRef } = useNumInputSheetContext();
-  const { colors, dark } = useThemeConfig();
+  const { colors } = useThemeConfig();
 
   const dismissHandler = () => {
     setRenderView('numpad');
@@ -100,7 +100,7 @@ const NumInputSheet = () => {
       backdropComponent={SheetBackdrop}
       handleComponent={HandleComponent}
       backgroundStyle={{
-        backgroundColor: dark ? colors.background : colors.secondary,
+        backgroundColor: colors.background,
       }}
       onDismiss={dismissHandler}
     >
