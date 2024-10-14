@@ -1,7 +1,9 @@
 import { FlashList } from '@shopify/flash-list';
+import dayjs from 'dayjs';
 import React from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 
+import { HorizontalMonthCalender } from '@/components/tools/horizontal-month-calendar';
 import { AlertCard } from '@/components/ui/cards/alert.card';
 import { TransactionCard } from '@/components/ui/cards/transaction.card';
 import { Text } from '@/components/ui/text';
@@ -33,7 +35,15 @@ const TransactionListScreen = () => {
   if (isEmptyData) return <EmptyDataScreen />;
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 pt-2">
+      <View className="mb-3 ">
+        <HorizontalMonthCalender
+          onPressMonth={(t) => {
+            Alert.alert(`${dayjs(t).format('MMMM YYYY')}`);
+          }}
+        />
+      </View>
+
       <FlashList
         data={data}
         renderItem={({ item }) => (
