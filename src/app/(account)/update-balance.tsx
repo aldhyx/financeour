@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
@@ -11,6 +11,7 @@ import {
 } from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
+import { HeaderBar } from '@/components/ui/header-bar';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
@@ -35,14 +36,26 @@ export default function UpdateAccountBalanceScreen() {
   if (!data) return null;
 
   return (
-    <NumInputSheetProvider>
-      <NumInputSheet />
-      <UpdateAccountBalanceForm
-        name={data.name}
-        id={data.id}
-        balance={data.balance}
+    <>
+      <Stack.Screen
+        options={{
+          title: data.name,
+          header({ options }) {
+            return <HeaderBar title={options.title} leftIcon="cancel" />;
+          },
+        }}
       />
-    </NumInputSheetProvider>
+
+      <NumInputSheetProvider>
+        <NumInputSheet />
+
+        <UpdateAccountBalanceForm
+          name={data.name}
+          id={data.id}
+          balance={data.balance}
+        />
+      </NumInputSheetProvider>
+    </>
   );
 }
 
@@ -95,12 +108,7 @@ function UpdateAccountBalanceForm(props: {
 
   return (
     <>
-      <View className="mb-4 bg-secondary p-4">
-        <Text className="text-lg font-bold">{props.name}</Text>
-        <Text className="text-sm">Dibuat pada 22 April 2025</Text>
-      </View>
-
-      <View className="px-4">
+      <View className="mt-2 px-4">
         <FormGroup errorMessage={errors.balance?.message}>
           <FormGroup.Label>Saldo saat ini</FormGroup.Label>
 

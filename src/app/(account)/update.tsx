@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
@@ -11,6 +11,7 @@ import {
 } from '@/components/action-sheets/account/choose-account-type.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
+import { HeaderBar } from '@/components/ui/header-bar';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
@@ -41,14 +42,25 @@ export default function UpdateAccountScreen() {
   if (!data) return null;
 
   return (
-    <AccountTypeSheetProvider>
-      <UpdateAccountForm
-        id={data.id}
-        name={data.name}
-        description={data.description}
-        type={data.type}
+    <>
+      <Stack.Screen
+        options={{
+          title: data.name,
+          header({ options }) {
+            return <HeaderBar title={options.title} leftIcon="cancel" />;
+          },
+        }}
       />
-    </AccountTypeSheetProvider>
+
+      <AccountTypeSheetProvider>
+        <UpdateAccountForm
+          id={data.id}
+          name={data.name}
+          description={data.description}
+          type={data.type}
+        />
+      </AccountTypeSheetProvider>
+    </>
   );
 }
 

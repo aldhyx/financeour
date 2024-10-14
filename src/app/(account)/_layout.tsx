@@ -28,25 +28,6 @@ const AccountLayout = () => (
         },
       }}
     />
-
-    <Stack.Screen
-      name="update"
-      options={{
-        title: 'Ubah akun',
-        header({ options }) {
-          return <HeaderBar title={options.title} leftIcon="cancel" />;
-        },
-      }}
-    />
-    <Stack.Screen
-      name="update-balance"
-      options={{
-        title: 'Sesuaikan saldo',
-        header({ options }) {
-          return <HeaderBar title={options.title} leftIcon="cancel" />;
-        },
-      }}
-    />
   </Stack>
 );
 
