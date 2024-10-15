@@ -24,10 +24,7 @@ import { getErrorMessage } from '@/lib/utils';
 
 export default function UpdateAccountBalanceScreen() {
   const searchParams = useLocalSearchParams<{
-    name?: string;
-    description?: string;
-    type?: string;
-    id?: string;
+    id: string;
   }>();
   const { data, isLoading, isError } = useAccountById(searchParams.id);
 
