@@ -40,6 +40,7 @@ export const TransactionCard = (props: Props) => {
   const dateString = dateToString(props.txDate);
   const router = useRouter();
 
+  console.log('TransactionCard');
   return (
     <Pressable
       className="active:opacity-50"

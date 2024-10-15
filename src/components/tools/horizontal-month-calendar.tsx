@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 import { FlatList } from 'react-native';
 
@@ -94,48 +94,51 @@ const MonthCard = ({
 
 const Separator = () => <View className="h-10 w-1" />;
 
-export const HorizontalMonthCalender = ({
-  onPressMonth,
-  selectedTimestamp,
-}: {
-  onPressMonth: (timestamp: number) => void;
-  /**
-   * Default {now month}
-   */
-  selectedTimestamp?: number;
-}) => {
-  const { calendarItems, currentMonthIndex } = useMemo(
-    generateCalendarData,
-    []
-  );
+export const HorizontalMonthCalender = memo(
+  ({
+    onPressMonth,
+    selectedTimestamp,
+  }: {
+    onPressMonth: (timestamp: number) => void;
+    /**
+     * Default {now month}
+     */
+    selectedTimestamp?: number;
+  }) => {
+    const { calendarItems, currentMonthIndex } = useMemo(
+      generateCalendarData,
+      []
+    );
 
-  return (
-    <FlatList
-      extraData={selectedTimestamp}
-      data={calendarItems}
-      renderItem={({ item, index }) => {
-        if (item.type === 'year') return <YearCard year={item.year} />;
+    console.log('render HorizontalMonthCalender');
+    return (
+      <FlatList
+        extraData={selectedTimestamp}
+        data={calendarItems}
+        renderItem={({ item, index }) => {
+          if (item.type === 'year') return <YearCard year={item.year} />;
 
-        return (
-          <MonthCard
-            timestamp={item.timestamp}
-            monthIndex={index}
-            currentMonthIndex={currentMonthIndex}
-            selectedTimestamp={selectedTimestamp}
-            onPress={onPressMonth}
-          />
-        );
-      }}
-      keyExtractor={(item, index) => `${item.type}-${item.year}-${index}`}
-      horizontal
-      getItemLayout={(_, index) => ({
-        length: 116, // card with
-        offset: index * (112 + 4), // card with + separator
-        index,
-      })}
-      initialScrollIndex={currentMonthIndex - 1}
-      showsHorizontalScrollIndicator={false}
-      ItemSeparatorComponent={Separator}
-    />
-  );
-};
+          return (
+            <MonthCard
+              timestamp={item.timestamp}
+              monthIndex={index}
+              currentMonthIndex={currentMonthIndex}
+              selectedTimestamp={selectedTimestamp}
+              onPress={onPressMonth}
+            />
+          );
+        }}
+        keyExtractor={(item, index) => `${item.type}-${item.year}-${index}`}
+        horizontal
+        getItemLayout={(_, index) => ({
+          length: 116, // card with
+          offset: index * (112 + 4), // card with + separator
+          index,
+        })}
+        initialScrollIndex={currentMonthIndex - 1}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={Separator}
+      />
+    );
+  }
+);
