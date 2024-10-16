@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import dayjs from 'dayjs';
-import React, { useCallback } from 'react';
-import { ActivityIndicator, Alert, Pressable, View } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, Pressable, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { HorizontalMonthCalender } from '@/components/tools/horizontal-month-calendar';
@@ -14,37 +14,52 @@ import { Tx, useTransactions } from '@/db/actions/transaction';
 import { useToggleVisible } from '@/hooks/use-toggle-visible';
 
 export default function TransactionListScreen() {
+  const [timestamp, setTimestamp] = useState(() => Date.now());
+  const month = dayjs(timestamp).month() + 1;
+  const year = dayjs(timestamp).year();
+
   const { data, isLoading, isError } = useTransactions({
-    limit: 5,
     orderBy: {
       column: 'datetime',
       mode: 'desc',
     },
+    datetime: { month, year },
   });
+
   if (isLoading) return <ActivityIndicator className="flex-1" />;
   if (isError) return <ErrorScreen />;
 
-  console.log('total data', data.length);
-  return <TransactionList data={data} />;
+  return (
+    <TransactionList
+      data={data}
+      currentTimestamp={timestamp}
+      setTimestamp={setTimestamp}
+    />
+  );
 }
 
-const TransactionList = ({ data }: { data: Tx[] }) => {
+type TransactionListProps = {
+  data: Tx[];
+  currentTimestamp: number;
+  setTimestamp: (ts: number) => void;
+};
+
+const TransactionList = ({
+  data,
+  currentTimestamp,
+  setTimestamp,
+}: TransactionListProps) => {
   const { contentAnimatedStyle, iconAnimatedStyle, toggleVisible } =
     useToggleVisible({ toggleElementHeight: 56 });
 
-  const changeMonthHandler = useCallback((timestamp: number) => {
-    Alert.alert(`${dayjs(timestamp).format('MMMM YYYY')}`);
-  }, []);
-
-  console.log('rerender');
   return (
     <View className="flex-1">
       <Pressable
         onPress={toggleVisible}
         className="flex-row items-center gap-2 px-4 py-2 active:opacity-50"
       >
-        <Text className="shrink text-xl font-semibold leading-tight">
-          Oktober 2024
+        <Text className="shrink text-2xl font-semibold leading-tight">
+          {dayjs(currentTimestamp).format('MMMM YYYY')}
         </Text>
 
         <Animated.View style={iconAnimatedStyle}>
@@ -54,7 +69,10 @@ const TransactionList = ({ data }: { data: Tx[] }) => {
 
       <Animated.View style={contentAnimatedStyle}>
         <View className="pb-4">
-          <HorizontalMonthCalender onPressMonth={changeMonthHandler} />
+          <HorizontalMonthCalender
+            selectedTimestamp={currentTimestamp}
+            onPressMonth={setTimestamp}
+          />
         </View>
       </Animated.View>
 
@@ -72,9 +90,6 @@ const TransactionList = ({ data }: { data: Tx[] }) => {
           />
         )}
         estimatedItemSize={data?.length || 1}
-        contentContainerStyle={{
-          paddingBottom: 120,
-        }}
         ItemSeparatorComponent={() => <View className="h-3" />}
         ListEmptyComponent={
           <View className="flex-1 px-4">

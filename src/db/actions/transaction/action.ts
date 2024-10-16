@@ -1,4 +1,4 @@
-import { asc, desc, eq } from 'drizzle-orm';
+import { asc, desc, eq, sql } from 'drizzle-orm';
 
 import { db } from '@/db/drizzle';
 import { accountTable, txTable } from '@/db/tables';
@@ -22,8 +22,16 @@ export const getTransactionById = async (id: string) => {
 };
 
 export const getTransactions: GetTransactions = async (filter = {}) => {
-  const { limit, orderBy } = filter;
+  const { limit, orderBy, datetime } = filter;
   const query = db.select().from(txTable);
+
+  if (datetime) {
+    const monthYear = `${datetime.month}${datetime.year}`;
+    query.where(
+      sql`
+      strftime('%m%Y', datetime(${txTable.datetime}, 'unixepoch')) = ${monthYear}`
+    );
+  }
 
   if (orderBy?.mode === 'asc') {
     query.orderBy(asc(txTable[orderBy.column]));

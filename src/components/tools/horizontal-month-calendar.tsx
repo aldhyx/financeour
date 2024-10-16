@@ -43,7 +43,7 @@ const generateCalendarData = () => {
 
 const YearCard = ({ year }: { year: number }) => {
   return (
-    <View className="h-10 w-28 justify-center rounded-2xl">
+    <View className="h-10 w-20 justify-center rounded-xl">
       <Text className="text-center">{year}</Text>
     </View>
   );
@@ -75,7 +75,7 @@ const MonthCard = ({
     >
       <View
         className={cn(
-          'h-10 w-28 justify-center rounded-2xl',
+          'h-10 w-20 justify-center rounded-xl',
           isSelected ? 'bg-primary' : 'bg-secondary'
         )}
       >
@@ -85,7 +85,7 @@ const MonthCard = ({
             isSelected && 'font-semibold text-primary-foreground'
           )}
         >
-          {dayjs(timestamp).format('MMMM')}
+          {dayjs(timestamp).format('MMM')}
         </Text>
       </View>
     </Pressable>
@@ -110,10 +110,8 @@ export const HorizontalMonthCalender = memo(
       []
     );
 
-    console.log('render HorizontalMonthCalender');
     return (
       <FlatList
-        extraData={selectedTimestamp}
         data={calendarItems}
         renderItem={({ item, index }) => {
           if (item.type === 'year') return <YearCard year={item.year} />;
@@ -131,8 +129,8 @@ export const HorizontalMonthCalender = memo(
         keyExtractor={(item, index) => `${item.type}-${item.year}-${index}`}
         horizontal
         getItemLayout={(_, index) => ({
-          length: 116, // card with
-          offset: index * (112 + 4), // card with + separator
+          length: 84, // card with
+          offset: index * (80 + 4), // card with + separator
           index,
         })}
         initialScrollIndex={currentMonthIndex - 1}

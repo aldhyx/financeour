@@ -14,7 +14,7 @@ export const txTable = sqliteTable(
       .$defaultFn(() => createId())
       .notNull()
       .primaryKey(),
-    datetime: int('datetime', { mode: 'timestamp_ms' }).notNull(),
+    datetime: int('datetime', { mode: 'timestamp' }).notNull(),
     type: text('type', { enum: txTypeEnum }).notNull(),
     amount: int('amount').notNull(),
     description: text('description'),

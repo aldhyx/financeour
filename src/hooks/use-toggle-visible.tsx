@@ -19,7 +19,7 @@ export function useToggleVisible({
 
   const toggleVisible = () => {
     // Rotate the icon between 0 and 180 degrees
-    rotation.value = withTiming(visible.current ? 0 : 180, { duration: 200 });
+    rotation.value = withTiming(visible.current ? 0 : 180, { duration: 300 });
     // Animate the height between 0 and 40
     height.value = withTiming(visible.current ? 0 : toggleElementHeight, {
       duration: 300,
