@@ -1,4 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  DateTimePickerAndroid,
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -145,6 +149,20 @@ const CreateTransactionForm = () => {
     }
   };
 
+  const dateChangeHandler = (event: DateTimePickerEvent, date?: Date) => {
+    if (date) {
+      setValue('datetime', date, { shouldValidate: true });
+    }
+  };
+
+  const showDatepicker = () => {
+    Keyboard.dismiss();
+    DateTimePickerAndroid.open({
+      value: datetime,
+      onChange: dateChangeHandler,
+      mode: 'date',
+    });
+  };
   return (
     <View className="px-4 pt-2">
       <View className="mb-4">
@@ -203,11 +221,13 @@ const CreateTransactionForm = () => {
 
       <FormGroup errorMessage={errors.datetime?.message}>
         <FormGroup.Label>Tanggal</FormGroup.Label>
-        <FormGroup.Input
-          placeholder="Pilih tanggal..."
-          value={datetimeString}
-          disabled
-        />
+        <Pressable className="active:opacity-50" onPress={showDatepicker}>
+          <FormGroup.Input
+            placeholder="Pilih tanggal..."
+            value={datetimeString}
+            disabled
+          />
+        </Pressable>
         <FormGroup.ErrorMessage />
       </FormGroup>
 
