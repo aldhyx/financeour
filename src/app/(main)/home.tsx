@@ -5,7 +5,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { Button } from '@/components/ui/button';
 import { AlertCard } from '@/components/ui/cards/alert.card';
 import { TransactionCard } from '@/components/ui/cards/transaction.card';
-import { PlusIcon, WalletIcon } from '@/components/ui/icon';
+import { ChevronRightIcon, PlusIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useAccounts, useTotalBalance } from '@/db/actions/account';
 import { useTransactions } from '@/db/actions/transaction';
@@ -25,12 +25,10 @@ function CurrentBalanceSection() {
           variant="link"
           size="sm"
           onPress={() => router.push('/(account)/')}
-          className="px-0"
+          className="flex-row gap-1 px-0"
         >
-          <View className="flex-row items-center gap-2">
-            <Text className="font-medium">Akun saya</Text>
-            <WalletIcon className="text-primary" size={20} />
-          </View>
+          <Text className="font-semibold">Akun saya</Text>
+          <ChevronRightIcon className="text-primary" size={18} />
         </Button>
       </View>
 
@@ -119,11 +117,12 @@ function RecentTransactionSection() {
   return (
     <>
       <View className="mb-1 flex-row items-baseline justify-between gap-1 px-4">
-        <Text className="font-semibold leading-none">Transaksi terbaru</Text>
+        <Text>Transaksi terbaru</Text>
 
         <Link asChild href="/(transaction)/list" push>
-          <Button variant="link" className="px-0" size="sm">
-            <Text>Semua transaksi</Text>
+          <Button variant="link" className="flex-row gap-1 px-0" size="sm">
+            <Text className="font-semibold">Semua transaksi</Text>
+            <ChevronRightIcon className="text-primary" size={18} />
           </Button>
         </Link>
       </View>

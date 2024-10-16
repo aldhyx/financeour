@@ -12,6 +12,7 @@ import {
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
+  CheckCircleIcon,
   CheckIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -69,6 +70,7 @@ iconWithClassName(ChevronRightIcon);
 iconWithClassName(PlusCircleIcon);
 iconWithClassName(ArrowBigDownIcon);
 iconWithClassName(ChevronDownIcon);
+iconWithClassName(CheckCircleIcon);
 
 export {
   AlertCircleIcon,
@@ -84,6 +86,7 @@ export {
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
+  CheckCircleIcon,
   CheckIcon,
   ChevronDownIcon,
   ChevronLeftIcon,

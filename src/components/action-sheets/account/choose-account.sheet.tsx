@@ -19,7 +19,7 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
-import { CheckIcon, WalletIcon } from '@/components/ui/icon';
+import { CheckCircleIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useAccounts } from '@/db/actions/account';
 import { useThemeConfig } from '@/hooks/use-theme-config';
@@ -133,14 +133,14 @@ const AccountSheet = () => {
               </View>
 
               <ScrollView>
-                <View className="gap-1 px-4">
+                <View className="gap-1">
                   <RadioGroup value={sheetData.accountId}>
                     {data.map((item) => (
                       <RadioGroupItem
                         key={item.id}
                         value={item.id}
                         onPress={() => pressRadioHandler(item.id, item.name)}
-                        className="rounded-xl bg-secondary p-4"
+                        className="h-14 border-b border-b-border"
                       >
                         <View>
                           <Text className="capita shrink font-semibold">
@@ -152,7 +152,10 @@ const AccountSheet = () => {
                         </View>
 
                         <RadioGroupIndicator>
-                          <CheckIcon size={24} className="text-foreground" />
+                          <CheckCircleIcon
+                            size={24}
+                            className="text-foreground"
+                          />
                         </RadioGroupIndicator>
                       </RadioGroupItem>
                     ))}

@@ -69,10 +69,7 @@ const MonthCard = ({
     : monthIndex === currentMonthIndex;
 
   return (
-    <Pressable
-      className={cn(!isSelected && 'active:opacity-50')}
-      onPress={() => onPress(timestamp)}
-    >
+    <Pressable className="active:opacity-50" onPress={() => onPress(timestamp)}>
       <View
         className={cn(
           'h-10 w-20 justify-center rounded-xl',

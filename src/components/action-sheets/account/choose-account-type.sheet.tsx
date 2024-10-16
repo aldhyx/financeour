@@ -18,7 +18,7 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
-import { CheckIcon, WalletIcon } from '@/components/ui/icon';
+import { CheckCircleIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { DEFAULT_ACCOUNT_TYPES } from '@/constants/app';
 import { useThemeConfig } from '@/hooks/use-theme-config';
@@ -131,21 +131,24 @@ const AccountTypeSheet = () => {
                 <Text>Pilih tipe akun</Text>
               </View>
 
-              <View className="gap-1 px-4">
+              <View className="gap-1">
                 <RadioGroup value={sheetData.accountType}>
                   {DEFAULT_ACCOUNT_TYPES.map((item) => (
                     <RadioGroupItem
                       key={item}
                       value={item}
                       onPress={pressRadioHandler}
-                      className="rounded-xl bg-secondary px-4"
+                      className="border-b border-b-border"
                     >
                       <Text className="shrink font-medium capitalize">
                         {item}
                       </Text>
 
                       <RadioGroupIndicator>
-                        <CheckIcon size={20} className="text-foreground" />
+                        <CheckCircleIcon
+                          size={24}
+                          className="text-foreground"
+                        />
                       </RadioGroupIndicator>
                     </RadioGroupItem>
                   ))}

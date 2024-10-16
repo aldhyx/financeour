@@ -34,7 +34,7 @@ const buttonVariants = cva('group flex items-center justify-center', {
   },
 });
 
-const buttonTextVariants = cva('text-base font-medium text-foreground', {
+const buttonTextVariants = cva('text-base font-semibold text-foreground', {
   variants: {
     variant: {
       default: 'text-primary-foreground',
