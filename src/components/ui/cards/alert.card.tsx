@@ -5,7 +5,7 @@ import { Text } from '@/components/ui/text';
 
 export const AlertCard = (props: { title: string; subTitle?: string }) => {
   return (
-    <View className="rounded-2xl border border-secondary p-3">
+    <View className="rounded-xl border border-secondary p-3">
       <View className="flex-row gap-2">
         <InfoIcon className="text-foreground" size={24} />
 

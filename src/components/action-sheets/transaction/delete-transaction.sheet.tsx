@@ -108,14 +108,14 @@ const DeleteTransactionSheet = () => {
 
               <View className="gap-1">
                 <Pressable
-                  className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
+                  className="h-12 items-center justify-center rounded-xl bg-secondary active:opacity-50"
                   onPress={removeAccountHandler(sheetData.id)}
                 >
                   <Text className="font-medium text-red-500">Hapus</Text>
                 </Pressable>
 
                 <Pressable
-                  className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
+                  className="h-12 items-center justify-center rounded-xl bg-secondary active:opacity-50"
                   onPress={() => {
                     sheetRef.current?.dismiss();
                   }}

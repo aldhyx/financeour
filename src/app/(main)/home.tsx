@@ -59,7 +59,7 @@ function FavoriteAccountSection() {
       {data.map((item) => (
         <View
           key={item.id}
-          className="h-20 min-w-40 shrink justify-center rounded-2xl bg-secondary px-3"
+          className="h-20 min-w-40 shrink justify-center rounded-xl bg-secondary px-3"
         >
           <Text numberOfLines={1} className="text-sm">
             {item.name}
@@ -74,7 +74,7 @@ function FavoriteAccountSection() {
         onPress={() => {
           push('/(account)/create');
         }}
-        className="h-20 min-w-16 items-center justify-center rounded-2xl px-2 active:bg-secondary"
+        className="h-20 min-w-16 items-center justify-center rounded-xl px-2 active:bg-secondary"
       >
         <PlusIcon className="text-muted-foreground" size={24} />
       </Pressable>
@@ -85,7 +85,7 @@ function FavoriteAccountSection() {
 function MonthlySummarySection() {
   return (
     <View className="flex-row gap-1 px-4">
-      <View className="h-24 w-full shrink justify-center rounded-2xl bg-secondary px-3">
+      <View className="h-24 w-full shrink justify-center rounded-xl bg-secondary px-3">
         <Text numberOfLines={1} className="text-sm">
           Pendapatan bulanan
         </Text>
@@ -93,7 +93,7 @@ function MonthlySummarySection() {
           Rp. 0
         </Text>
       </View>
-      <View className="h-24 w-full shrink justify-center rounded-2xl bg-secondary px-3">
+      <View className="h-24 w-full shrink justify-center rounded-xl bg-secondary px-3">
         <Text numberOfLines={1} className="text-sm">
           Pengeluaran bulanan
         </Text>

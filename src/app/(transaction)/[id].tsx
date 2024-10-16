@@ -75,7 +75,7 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
           },
         }}
       />
-      <View className={`rounded-2xl border border-dashed border-border py-4`}>
+      <View className={`rounded-xl border border-dashed border-border py-4`}>
         <View className="mb-2 px-3">
           <Text className="text-sm text-muted-foreground">Akun</Text>
           <View className="flex-row items-start">

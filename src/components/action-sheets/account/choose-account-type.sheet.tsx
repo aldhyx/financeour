@@ -138,7 +138,7 @@ const AccountTypeSheet = () => {
                       key={item}
                       value={item}
                       onPress={pressRadioHandler}
-                      className="rounded-2xl bg-secondary px-4"
+                      className="rounded-xl bg-secondary px-4"
                     >
                       <Text className="shrink font-medium capitalize">
                         {item}

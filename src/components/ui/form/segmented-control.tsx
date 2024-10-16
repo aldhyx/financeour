@@ -45,13 +45,13 @@ export const SegmentedControl = memo(
 
     return (
       <View
-        className="h-12 flex-row rounded-2xl bg-secondary"
+        className="h-12 flex-row rounded-xl bg-secondary"
         style={[
           { width: segmentedControlWidth, paddingLeft: innerPadding / 2 },
         ]}
       >
         <Animated.View
-          className="absolute rounded-xl bg-background"
+          className="absolute rounded-lg bg-background"
           style={[
             styles.activeBox,
             rStyle,

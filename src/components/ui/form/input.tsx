@@ -5,7 +5,7 @@ import { TextInput } from 'react-native';
 import { cn } from '@/lib/utils';
 
 const inputVariants = cva(
-  'group rounded-2xl border border-secondary bg-secondary px-3 text-base leading-tight text-foreground placeholder:text-muted-foreground',
+  'group rounded-xl border border-secondary bg-secondary px-3 text-base leading-tight text-foreground placeholder:text-muted-foreground',
   {
     variants: {
       size: {

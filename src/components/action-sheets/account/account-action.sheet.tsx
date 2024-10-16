@@ -126,7 +126,7 @@ const AccountActionSheet = () => {
               <View className="px-4 pb-4">
                 <Text className="mb-3 text-center">{sheetData.name}</Text>
 
-                <View className="mb-2 rounded-2xl bg-secondary">
+                <View className="mb-2 rounded-xl bg-secondary">
                   <Pressable
                     className="active:opacity-50"
                     onPress={changeAccountHandler(sheetData.id)}
@@ -150,7 +150,7 @@ const AccountActionSheet = () => {
                   </Pressable>
                 </View>
 
-                <View className="rounded-2xl bg-secondary">
+                <View className="rounded-xl bg-secondary">
                   <Pressable
                     className="active:opacity-50"
                     onPress={() => setRenderView('remove-confirm')}
@@ -176,14 +176,14 @@ const AccountActionSheet = () => {
 
                 <View className="gap-1">
                   <Pressable
-                    className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
+                    className="h-12 items-center justify-center rounded-xl bg-secondary active:opacity-50"
                     onPress={removeAccountHandler(sheetData.id)}
                   >
                     <Text className="font-medium text-red-500">Hapus</Text>
                   </Pressable>
 
                   <Pressable
-                    className="h-12 items-center justify-center rounded-2xl bg-secondary active:opacity-50"
+                    className="h-12 items-center justify-center rounded-xl bg-secondary active:opacity-50"
                     onPress={() => setRenderView('menu')}
                   >
                     <Text className="font-medium">Batalkan</Text>

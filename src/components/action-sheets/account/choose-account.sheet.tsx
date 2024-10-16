@@ -140,7 +140,7 @@ const AccountSheet = () => {
                         key={item.id}
                         value={item.id}
                         onPress={() => pressRadioHandler(item.id, item.name)}
-                        className="rounded-2xl bg-secondary p-4"
+                        className="rounded-xl bg-secondary p-4"
                       >
                         <View>
                           <Text className="capita shrink font-semibold">
