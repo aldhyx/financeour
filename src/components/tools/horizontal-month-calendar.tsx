@@ -1,21 +1,37 @@
+import { FlashList } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { memo, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
-import { FlatList } from 'react-native';
 
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 
-const generateCalendarData = () => {
+type CalendarItems =
+  | {
+      type: 'month';
+      year: number;
+      timestamp: number;
+    }
+  | {
+      type: 'year';
+      year: number;
+    };
+
+type GenerateCalendarData = () => {
+  currentMonthIndex: number;
+  calendarItems: CalendarItems[];
+};
+
+const generateCalendarData: GenerateCalendarData = () => {
   const now = dayjs();
   const nowYear = now.year();
   const nowMonth = now.month();
 
   const startYear = 2000;
-  const endYear = nowYear + 10;
+  const endYear = nowYear + 30;
   const totalYears = endYear - startYear + 1;
 
-  const calendarItems = [];
+  const calendarItems: CalendarItems[] = [];
 
   let currentMonthIndex = -1; // Initialize the current month index
   let index = 0; // Track the position during iteration
@@ -88,7 +104,6 @@ const MonthCard = ({
     </Pressable>
   );
 };
-
 const Separator = () => <View className="h-10 w-1" />;
 
 export const HorizontalMonthCalender = memo(
@@ -97,9 +112,6 @@ export const HorizontalMonthCalender = memo(
     selectedTimestamp,
   }: {
     onPressMonth: (timestamp: number) => void;
-    /**
-     * Default {now month}
-     */
     selectedTimestamp?: number;
   }) => {
     const { calendarItems, currentMonthIndex } = useMemo(
@@ -108,32 +120,33 @@ export const HorizontalMonthCalender = memo(
     );
 
     return (
-      <FlatList
-        data={calendarItems}
-        renderItem={({ item, index }) => {
-          if (item.type === 'year') return <YearCard year={item.year} />;
+      <View className="h-10">
+        <FlashList
+          data={calendarItems}
+          keyExtractor={(item, index) => `${item.type}-${item.year}-${index}`}
+          horizontal
+          extraData={selectedTimestamp}
+          renderItem={(props) => {
+            if (props.item.type === 'year') {
+              return <YearCard year={props.item.year} />;
+            }
 
-          return (
-            <MonthCard
-              timestamp={item.timestamp}
-              monthIndex={index}
-              currentMonthIndex={currentMonthIndex}
-              selectedTimestamp={selectedTimestamp}
-              onPress={onPressMonth}
-            />
-          );
-        }}
-        keyExtractor={(item, index) => `${item.type}-${item.year}-${index}`}
-        horizontal
-        getItemLayout={(_, index) => ({
-          length: 84, // card with
-          offset: index * (80 + 4), // card with + separator
-          index,
-        })}
-        initialScrollIndex={currentMonthIndex - 1}
-        showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={Separator}
-      />
+            return (
+              <MonthCard
+                timestamp={props.item.timestamp}
+                monthIndex={props.index}
+                currentMonthIndex={currentMonthIndex}
+                selectedTimestamp={selectedTimestamp}
+                onPress={onPressMonth}
+              />
+            );
+          }}
+          estimatedItemSize={84} // card with + separator
+          ItemSeparatorComponent={Separator}
+          showsHorizontalScrollIndicator={false}
+          initialScrollIndex={currentMonthIndex - 1}
+        />
+      </View>
     );
   }
 );

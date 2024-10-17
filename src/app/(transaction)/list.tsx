@@ -100,6 +100,8 @@ const TransactionList = ({
           </View>
         }
       />
+
+      <View className="h-12" />
     </View>
   );
 };
