@@ -1,13 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import {
-  createContext,
-  MutableRefObject,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from 'react';
+import { PropsWithChildren, useRef, useState } from 'react';
 import { View } from 'react-native';
 
 import { Calculator } from '@/components/tools/calculator';
@@ -17,70 +9,39 @@ import { Text } from '@/components/ui/text';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
 import { HandleComponent, SheetBackdrop } from '../sheet-backdrop';
+import { createSheetContext } from '../sheet-context';
 
 type SheetData = { value?: number };
 type SheetReturnData = { value: number } | undefined;
-type ClosedCbHandler = (val?: SheetReturnData) => void;
 
-type SheetContext = {
-  /**
-   * DO_NOT_USE_OUTSIDE!
-   * ONLY_USE_INTERNALLY_TO_STORE_CALLBACK_REF
-   */
-  _closedCbRef: MutableRefObject<ClosedCbHandler | null>;
-  sheetRef: MutableRefObject<BottomSheetModal | null>;
-  /**
-   * Use this to open & await for the return value when the sheet got demised
-   */
-  showSheetAsync: (data: SheetData) => Promise<SheetReturnData>;
-};
+const {
+  useSheetContext: useNumInputSheetContext,
+  useInternalSheetContext,
+  SheetProvider,
+  InternalSheetProvider,
+} = createSheetContext<SheetData, SheetReturnData>();
 
-const sheetContext = createContext<SheetContext | null>(null);
-
-const useNumInputSheetContext = () => {
-  const context = useContext(sheetContext);
-  if (!context)
-    throw new Error(
-      'useNumInputSheetContext must be used within NumInputSheetProvider'
-    );
-
-  return context;
-};
-
-const NumInputSheetProvider = (props: PropsWithChildren) => {
-  const sheetRef = useRef<BottomSheetModal | null>(null);
-  const closedCbRef = useRef<ClosedCbHandler | null>(null);
-
-  const showSheetAsync: SheetContext['showSheetAsync'] = useCallback(
-    async (data) =>
-      new Promise((resolve) => {
-        sheetRef.current?.present(data);
-
-        const closeCbHandler: ClosedCbHandler = (v) => resolve(v);
-        closedCbRef.current = closeCbHandler;
-      }),
-    []
-  );
-
+const NumInputSheetProvider = ({ children }: PropsWithChildren) => {
   return (
-    <sheetContext.Provider
-      value={{ sheetRef, showSheetAsync, _closedCbRef: closedCbRef }}
-    >
-      {props.children}
-    </sheetContext.Provider>
+    <InternalSheetProvider>
+      <SheetProvider>
+        <NumInputSheet />
+        {children}
+      </SheetProvider>
+    </InternalSheetProvider>
   );
 };
 
 const NumInputSheet = () => {
   const [renderView, setRenderView] = useState<'numpad' | 'calc'>('numpad');
   const sheetReturnRef = useRef<SheetReturnData>();
-  const { sheetRef, _closedCbRef } = useNumInputSheetContext();
+  const { sheetRef, closedCbRef, sheetData } = useInternalSheetContext();
   const { colors } = useThemeConfig();
 
   const dismissHandler = () => {
     setRenderView('numpad');
-    if (_closedCbRef.current) {
-      _closedCbRef.current(sheetReturnRef.current);
+    if (closedCbRef.current) {
+      closedCbRef.current(sheetReturnRef.current);
       // reset the state back to undefined
       sheetReturnRef.current = undefined;
     }
@@ -88,7 +49,6 @@ const NumInputSheet = () => {
 
   const pressDoneHandler = (value: number) => {
     sheetReturnRef.current = { value };
-
     sheetRef.current?.close();
   };
 
@@ -104,49 +64,43 @@ const NumInputSheet = () => {
       }}
       onDismiss={dismissHandler}
     >
-      {(_data) => {
-        const sheetData = _data?.data as SheetData;
+      <BottomSheetView>
+        <View className="pb-4">
+          {renderView === 'numpad' && (
+            <>
+              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
+                <Text className="font-bold">123</Text>
+                <Text>Numpad</Text>
+              </View>
+              <Numpad
+                onPressCalc={() => {
+                  setRenderView('calc');
+                }}
+                value={sheetData?.value}
+                onPressDone={pressDoneHandler}
+              />
+            </>
+          )}
 
-        return (
-          <BottomSheetView>
-            <View className="pb-4">
-              {renderView === 'numpad' && (
-                <>
-                  <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
-                    <Text className="font-bold">123</Text>
-                    <Text>Numpad</Text>
-                  </View>
-                  <Numpad
-                    onPressCalc={() => {
-                      setRenderView('calc');
-                    }}
-                    value={sheetData.value}
-                    onPressDone={pressDoneHandler}
-                  />
-                </>
-              )}
-
-              {renderView === 'calc' && (
-                <>
-                  <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
-                    <CalculatorIcon className="text-foreground" size={20} />
-                    <Text>Kalkulator</Text>
-                  </View>
-                  <Calculator
-                    onPressNumpad={() => {
-                      setRenderView('numpad');
-                    }}
-                    value={sheetData.value}
-                    onPressDone={pressDoneHandler}
-                  />
-                </>
-              )}
-            </View>
-          </BottomSheetView>
-        );
-      }}
+          {renderView === 'calc' && (
+            <>
+              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
+                <CalculatorIcon className="text-foreground" size={20} />
+                <Text>Kalkulator</Text>
+              </View>
+              <Calculator
+                onPressNumpad={() => {
+                  setRenderView('numpad');
+                }}
+                value={sheetData?.value}
+                onPressDone={pressDoneHandler}
+              />
+            </>
+          )}
+        </View>
+      </BottomSheetView>
     </BottomSheetModal>
   );
 };
 
-export { NumInputSheet, NumInputSheetProvider, useNumInputSheetContext };
+export { NumInputSheetProvider, useNumInputSheetContext };

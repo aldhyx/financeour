@@ -9,7 +9,6 @@ import {
   useAccountTypeSheetContext,
 } from '@/components/action-sheets/account/choose-account-type.sheet';
 import {
-  NumInputSheet,
   NumInputSheetProvider,
   useNumInputSheetContext,
 } from '@/components/action-sheets/general/num-input.sheet';
@@ -28,8 +27,6 @@ export default function CreateAccountScreen() {
   return (
     <NumInputSheetProvider>
       <AccountTypeSheetProvider>
-        <NumInputSheet />
-
         <CreateAccountForm />
       </AccountTypeSheetProvider>
     </NumInputSheetProvider>

@@ -14,7 +14,6 @@ import {
   useAccountSheetContext,
 } from '@/components/action-sheets/account/choose-account.sheet';
 import {
-  NumInputSheet,
   NumInputSheetProvider,
   useNumInputSheetContext,
 } from '@/components/action-sheets/general/num-input.sheet';
@@ -35,7 +34,6 @@ export default function CreateTransactionScreen() {
   return (
     <NumInputSheetProvider>
       <AccountSheetProvider>
-        <NumInputSheet />
         <CreateTransactionForm />
       </AccountSheetProvider>
     </NumInputSheetProvider>

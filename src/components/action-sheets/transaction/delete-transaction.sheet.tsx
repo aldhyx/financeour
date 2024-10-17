@@ -1,13 +1,6 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
-import React, {
-  createContext,
-  MutableRefObject,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useRef,
-} from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Pressable, View } from 'react-native';
 
 import {
@@ -18,62 +11,33 @@ import { Text } from '@/components/ui/text';
 import { useRemoveTransaction } from '@/db/actions/transaction';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
-type SheetData = { id: string };
+import { createSheetContext } from '../sheet-context';
 
-type SheetContext = {
-  showSheet: (data: SheetData) => void;
-};
+const {
+  useSheetContext: useDeleteTransactionSheetContext,
+  useInternalSheetContext,
+  SheetProvider,
+  InternalSheetProvider,
+} = createSheetContext<{ id: string }, null>();
 
-type SheetInternalContext = {
-  sheetRef: MutableRefObject<BottomSheetModal | null>;
-};
-
-const sheetContext = createContext<SheetContext | null>(null);
-const internalSheetContext = createContext<SheetInternalContext | null>(null);
-
-const useDeleteTransactionSheetContext = () => {
-  const context = useContext(sheetContext);
-  if (!context)
-    throw new Error(
-      'useDeleteTransactionSheetContext must be used within DeleteTransactionSheetProvider'
-    );
-
-  return context;
-};
-
-const useInternalSheetContext = () => {
-  const context = useContext(internalSheetContext);
-  if (!context) {
-    throw new Error(
-      'useInternalSheetContext must be used within DeleteTransactionSheetProvider'
-    );
-  }
-  return context;
-};
-
-const DeleteTransactionSheetProvider = (props: PropsWithChildren) => {
-  const sheetRef = useRef<BottomSheetModal | null>(null);
-
-  const showSheet: SheetContext['showSheet'] = useCallback((data) => {
-    sheetRef.current?.present(data);
-  }, []);
-
+const DeleteTransactionSheetProvider = ({ children }: PropsWithChildren) => {
   return (
-    <internalSheetContext.Provider value={{ sheetRef }}>
-      <sheetContext.Provider value={{ showSheet }}>
+    <InternalSheetProvider>
+      <SheetProvider>
         <DeleteTransactionSheet />
-        {props.children}
-      </sheetContext.Provider>
-    </internalSheetContext.Provider>
+        {children}
+      </SheetProvider>
+    </InternalSheetProvider>
   );
 };
 
 const DeleteTransactionSheet = () => {
-  const { sheetRef } = useInternalSheetContext();
+  const { sheetRef, sheetData } = useInternalSheetContext();
   const { colors } = useThemeConfig();
   const { mutateAsync: removeTransaction } = useRemoveTransaction();
 
-  const removeAccountHandler = (id: string) => async () => {
+  const removeAccountHandler = (id?: string) => async () => {
+    if (!id) return;
     try {
       await removeTransaction(id);
       sheetRef.current?.forceClose();
@@ -95,38 +59,32 @@ const DeleteTransactionSheet = () => {
       }}
       containerStyle={{ zIndex: 20 }}
     >
-      {(_data) => {
-        const sheetData = _data?.data as SheetData;
+      <BottomSheetView>
+        <View className="px-4 pb-4">
+          <Text className="mb-1 font-semibold">Hapus transaksi?</Text>
+          <Text className="mb-4">
+            Data transaksi akan dihapus dan tidak bisa dikembalikan!
+          </Text>
 
-        return (
-          <BottomSheetView>
-            <View className="px-4 pb-4">
-              <Text className="mb-1 font-semibold">Hapus transaksi?</Text>
-              <Text className="mb-4">
-                Data transaksi akan dihapus dan tidak bisa dikembalikan!
-              </Text>
+          <View className="gap-1">
+            <Pressable
+              className="h-14 items-center justify-center rounded-xl bg-secondary active:opacity-50"
+              onPress={removeAccountHandler(sheetData?.id)}
+            >
+              <Text className="font-medium text-red-500">Hapus</Text>
+            </Pressable>
 
-              <View className="gap-1">
-                <Pressable
-                  className="h-14 items-center justify-center rounded-xl bg-secondary active:opacity-50"
-                  onPress={removeAccountHandler(sheetData.id)}
-                >
-                  <Text className="font-medium text-red-500">Hapus</Text>
-                </Pressable>
-
-                <Pressable
-                  className="h-14 items-center justify-center rounded-xl bg-secondary active:opacity-50"
-                  onPress={() => {
-                    sheetRef.current?.dismiss();
-                  }}
-                >
-                  <Text className="font-medium">Batalkan</Text>
-                </Pressable>
-              </View>
-            </View>
-          </BottomSheetView>
-        );
-      }}
+            <Pressable
+              className="h-14 items-center justify-center rounded-xl bg-secondary active:opacity-50"
+              onPress={() => {
+                sheetRef.current?.dismiss();
+              }}
+            >
+              <Text className="font-medium">Batalkan</Text>
+            </Pressable>
+          </View>
+        </View>
+      </BottomSheetView>
     </BottomSheetModal>
   );
 };

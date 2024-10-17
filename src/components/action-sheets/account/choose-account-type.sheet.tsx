@@ -1,12 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import {
-  createContext,
-  MutableRefObject,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useRef,
-} from 'react';
+import { PropsWithChildren, useRef } from 'react';
 import { View } from 'react-native';
 
 import {
@@ -23,76 +16,32 @@ import { Text } from '@/components/ui/text';
 import { DEFAULT_ACCOUNT_TYPES } from '@/constants/app';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
+import { createSheetContext } from '../sheet-context';
+
 type SheetData = { accountType?: string };
 type SheetReturnData = { accountType: string } | undefined;
-type ClosedCbHandler = (val?: SheetReturnData) => void;
 
-type SheetContext = {
-  showSheetAsync: (data: SheetData) => Promise<SheetReturnData>;
-};
+const {
+  useSheetContext: useAccountTypeSheetContext,
+  useInternalSheetContext,
+  SheetProvider,
+  InternalSheetProvider,
+} = createSheetContext<SheetData, SheetReturnData>();
 
-type SheetInternalContext = {
-  /**
-   * DO_NOT_USE_OUTSIDE!
-   * ONLY_USE_INTERNALLY
-   */
-  closedCbRef: MutableRefObject<ClosedCbHandler | null>;
-  sheetRef: MutableRefObject<BottomSheetModal | null>;
-};
-
-const sheetContext = createContext<SheetContext | null>(null);
-const internalSheetContext = createContext<SheetInternalContext | null>(null);
-
-const useAccountTypeSheetContext = () => {
-  const context = useContext(sheetContext);
-  if (!context) {
-    throw new Error(
-      'useAccountTypeSheetContext must be used within AccountTypeSheetProvider'
-    );
-  }
-  return context;
-};
-
-const useInternalSheetContext = () => {
-  const context = useContext(internalSheetContext);
-  if (!context) {
-    throw new Error(
-      'useInternalSheetContext must be used within AccountTypeSheetProvider'
-    );
-  }
-  return context;
-};
-
-const AccountTypeSheetProvider = (props: PropsWithChildren) => {
-  const sheetRef = useRef<BottomSheetModal | null>(null);
-  const closedCbRef = useRef<ClosedCbHandler | null>(null);
-
-  const showSheetAsync: SheetContext['showSheetAsync'] = useCallback(
-    async (data) =>
-      new Promise((resolve) => {
-        sheetRef.current?.present(data);
-
-        const closeCbHandler: ClosedCbHandler = (v) => resolve(v);
-        closedCbRef.current = closeCbHandler;
-      }),
-    []
-  );
-
+const AccountTypeSheetProvider = ({ children }: PropsWithChildren) => {
   return (
-    <internalSheetContext.Provider
-      value={{ closedCbRef: closedCbRef, sheetRef }}
-    >
-      <sheetContext.Provider value={{ showSheetAsync }}>
+    <InternalSheetProvider>
+      <SheetProvider>
         <AccountTypeSheet />
-        {props.children}
-      </sheetContext.Provider>
-    </internalSheetContext.Provider>
+        {children}
+      </SheetProvider>
+    </InternalSheetProvider>
   );
 };
 
 const AccountTypeSheet = () => {
   const sheetReturnRef = useRef<SheetReturnData>();
-  const { sheetRef, closedCbRef } = useInternalSheetContext();
+  const { sheetRef, closedCbRef, sheetData } = useInternalSheetContext();
   const { colors } = useThemeConfig();
 
   const pressRadioHandler = (accountType: string) => {
@@ -121,43 +70,33 @@ const AccountTypeSheet = () => {
       }}
       containerStyle={{ zIndex: 20 }}
     >
-      {(_data) => {
-        const sheetData = _data?.data as SheetData;
-        return (
-          <BottomSheetView>
-            <View className="pb-3">
-              <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
-                <WalletIcon className="text-foreground" size={20} />
-                <Text>Pilih tipe akun</Text>
-              </View>
+      <BottomSheetView>
+        <View className="pb-3">
+          <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
+            <WalletIcon className="text-foreground" size={20} />
+            <Text>Pilih tipe akun</Text>
+          </View>
 
-              <View className="gap-1">
-                <RadioGroup value={sheetData.accountType}>
-                  {DEFAULT_ACCOUNT_TYPES.map((item) => (
-                    <RadioGroupItem
-                      key={item}
-                      value={item}
-                      onPress={pressRadioHandler}
-                      className="border-b border-b-border"
-                    >
-                      <Text className="shrink font-medium capitalize">
-                        {item}
-                      </Text>
+          <View className="gap-1">
+            <RadioGroup value={sheetData?.accountType}>
+              {DEFAULT_ACCOUNT_TYPES.map((item) => (
+                <RadioGroupItem
+                  key={item}
+                  value={item}
+                  onPress={pressRadioHandler}
+                  className="border-b border-b-border"
+                >
+                  <Text className="shrink font-medium capitalize">{item}</Text>
 
-                      <RadioGroupIndicator>
-                        <CheckCircleIcon
-                          size={24}
-                          className="text-foreground"
-                        />
-                      </RadioGroupIndicator>
-                    </RadioGroupItem>
-                  ))}
-                </RadioGroup>
-              </View>
-            </View>
-          </BottomSheetView>
-        );
-      }}
+                  <RadioGroupIndicator>
+                    <CheckCircleIcon size={24} className="text-foreground" />
+                  </RadioGroupIndicator>
+                </RadioGroupItem>
+              ))}
+            </RadioGroup>
+          </View>
+        </View>
+      </BottomSheetView>
     </BottomSheetModal>
   );
 };

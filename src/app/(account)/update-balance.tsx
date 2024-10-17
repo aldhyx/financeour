@@ -5,7 +5,6 @@ import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import {
-  NumInputSheet,
   NumInputSheetProvider,
   useNumInputSheetContext,
 } from '@/components/action-sheets/general/num-input.sheet';
@@ -44,8 +43,6 @@ export default function UpdateAccountBalanceScreen() {
       />
 
       <NumInputSheetProvider>
-        <NumInputSheet />
-
         <UpdateAccountBalanceForm
           name={data.name}
           id={data.id}
