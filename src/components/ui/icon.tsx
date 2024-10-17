@@ -23,11 +23,17 @@ import {
   EqualIcon,
   HomeIcon,
   InfoIcon,
+  LanguagesIcon,
   MinusIcon,
+  MoonIcon,
+  PaletteIcon,
   PencilIcon,
   PlusCircleIcon,
   PlusIcon,
+  SettingsIcon,
+  Smartphone,
   StarIcon,
+  SunIcon,
   Trash2Icon,
   TrashIcon,
   UserRoundIcon,
@@ -71,6 +77,12 @@ iconWithClassName(PlusCircleIcon);
 iconWithClassName(ArrowBigDownIcon);
 iconWithClassName(ChevronDownIcon);
 iconWithClassName(CheckCircleIcon);
+iconWithClassName(SettingsIcon);
+iconWithClassName(PaletteIcon);
+iconWithClassName(LanguagesIcon);
+iconWithClassName(Smartphone);
+iconWithClassName(MoonIcon);
+iconWithClassName(SunIcon);
 
 export {
   AlertCircleIcon,
@@ -97,11 +109,17 @@ export {
   EqualIcon,
   HomeIcon,
   InfoIcon,
+  LanguagesIcon,
   MinusIcon,
+  MoonIcon,
+  PaletteIcon,
   PencilIcon,
   PlusCircleIcon,
   PlusIcon,
+  SettingsIcon,
+  Smartphone,
   StarIcon,
+  SunIcon,
   Trash2Icon,
   TrashIcon,
   UserRoundIcon,

@@ -1,13 +1,16 @@
 import { Tabs, useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
+import { Button } from '@/components/ui/button';
 import { HeaderBar } from '@/components/ui/header-bar';
 import {
   ChartColumnBigIcon,
   ChartPieIcon,
   HomeIcon,
   PlusIcon,
+  SettingsIcon,
   UserRoundIcon,
 } from '@/components/ui/icon';
 import { translate } from '@/lib/i18n';
@@ -115,6 +118,25 @@ const TabsLayout = () => {
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="profile" />
           ),
+          header({ options }) {
+            return (
+              <HeaderBar
+                title={options.title}
+                rightIcon={
+                  <Link push href="/settings" asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon-md"
+                      rounded="full"
+                      style={{ right: -6 }}
+                    >
+                      <SettingsIcon size={20} className="text-foreground" />
+                    </Button>
+                  </Link>
+                }
+              />
+            );
+          },
         }}
       />
     </Tabs>
