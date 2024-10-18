@@ -39,9 +39,9 @@ export const AccountCard = memo((props: Props) => {
             </Text>
           </View>
 
-          <View className="flex-row gap-2">
+          <View className="flex-row gap-1">
             <Pressable
-              className="size-6 items-center justify-center self-start rounded-full active:bg-border "
+              className="size-8 items-center justify-center self-start rounded-full active:bg-border "
               onPress={() =>
                 props.onPressFavorite(props.id, !Boolean(props.isFavorite))
               }
@@ -56,7 +56,7 @@ export const AccountCard = memo((props: Props) => {
             </Pressable>
 
             <Pressable
-              className="size-6 items-center justify-center self-start rounded-full active:bg-border "
+              className="size-8 items-center justify-center self-start rounded-full active:bg-border "
               onPress={() =>
                 props.onPressAction({
                   id: props.id,

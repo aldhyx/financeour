@@ -77,7 +77,7 @@ function createSheetContext<T, R>() {
       async (data) =>
         new Promise((resolve) => {
           setSheetData(data);
-          sheetRef.current?.present(data);
+          sheetRef.current?.present();
 
           const closeCbHandler: ClosedCbHandler<R> = (v) => {
             resolve(v as R);
@@ -90,6 +90,7 @@ function createSheetContext<T, R>() {
 
     const showSheet: SheetContext<T, R>['showSheet'] = (data) => {
       sheetRef.current?.present(data);
+      setSheetData(data);
     };
 
     return (
