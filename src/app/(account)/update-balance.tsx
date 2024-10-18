@@ -104,7 +104,7 @@ function UpdateAccountBalanceForm(props: {
     <>
       <View className="mt-2 px-4">
         <FormGroup errorMessage={errors.balance?.message}>
-          <FormGroup.Label>Saldo saat ini</FormGroup.Label>
+          <FormGroup.Label>Current balance</FormGroup.Label>
 
           <View className="flex-row items-baseline justify-start gap-3">
             <Text className="text-2xl font-medium leading-none">Rp</Text>
@@ -131,9 +131,8 @@ function UpdateAccountBalanceForm(props: {
           onPress={submitHandler}
           disabled={isSubmitting}
           loading={isSubmitting}
-          className="mt-2"
         >
-          <Text>Simpan</Text>
+          <Text>Update balance</Text>
         </Button>
       </View>
     </>

@@ -31,7 +31,7 @@ export const AccountCard = memo((props: Props) => {
           <Text className="text-sm capitalize">{props.type}</Text>
         </View>
 
-        <View className="flex-row items-start justify-between gap-2 px-3 pb-4">
+        <View className="flex-row items-start justify-between gap-2 px-4 pb-4">
           <View className="shrink">
             <Text>{props.name}</Text>
             <Text className="text-xl font-semibold">
@@ -41,7 +41,7 @@ export const AccountCard = memo((props: Props) => {
 
           <View className="flex-row gap-1">
             <Pressable
-              className="size-8 items-center justify-center self-start rounded-full active:bg-border "
+              className="size-8 items-center justify-center self-start rounded-full active:bg-foreground/10"
               onPress={() =>
                 props.onPressFavorite(props.id, !Boolean(props.isFavorite))
               }
@@ -56,7 +56,7 @@ export const AccountCard = memo((props: Props) => {
             </Pressable>
 
             <Pressable
-              className="size-8 items-center justify-center self-start rounded-full active:bg-border "
+              className="size-8 items-center justify-center self-start rounded-full active:bg-foreground/10"
               onPress={() =>
                 props.onPressAction({
                   id: props.id,

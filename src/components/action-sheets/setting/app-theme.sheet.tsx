@@ -12,7 +12,6 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
-import { CheckCircleIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { APP_THEMES, useSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
@@ -55,8 +54,9 @@ const AppThemeSheet = () => {
     >
       <BottomSheetView className="flex-1">
         <View className="pb-4">
-          <Text className="mb-3 px-4">App theme</Text>
-
+          <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
+            Choose theme
+          </Text>
           <ScrollView>
             <RadioGroup value={selectedTheme.id}>
               {APP_THEMES.map(({ id, icon: Icon, label }) => (
@@ -67,16 +67,13 @@ const AppThemeSheet = () => {
                     sheetRef.current?.close();
                     setSelectedTheme(id);
                   }}
-                  className="border-b border-b-border"
                 >
-                  <View className="flex-row items-center gap-3">
+                  <View className="flex-row items-center gap-4">
                     <Icon size={20} className="text-foreground" />
                     <Text className="font-medium">{label}</Text>
                   </View>
 
-                  <RadioGroupIndicator>
-                    <CheckCircleIcon size={24} className="text-foreground" />
-                  </RadioGroupIndicator>
+                  <RadioGroupIndicator />
                 </RadioGroupItem>
               ))}
             </RadioGroup>

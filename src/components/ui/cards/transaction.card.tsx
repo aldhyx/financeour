@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
@@ -10,7 +11,6 @@ import {
 import { Text } from '@/components/ui/text';
 import { Tx } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { dateToString } from '@/lib/dayjs';
 
 type Props = {
   fromAccountName: Tx['fromAccountName'];
@@ -37,10 +37,9 @@ export const TransactionCard = (props: Props) => {
   const { maskCurrency } = useMaskCurrency();
   const TxIcon = txTypeIcons[props.txType];
   const txColor = txTypeColors[props.txType];
-  const dateString = dateToString(props.txDate);
+  const dateString = dayjs(props.txDate).format('dddd, D MMM YYYY');
   const router = useRouter();
 
-  console.log('TransactionCard');
   return (
     <Pressable
       className="active:opacity-50"
@@ -48,7 +47,7 @@ export const TransactionCard = (props: Props) => {
     >
       <View className="gap-1 px-4">
         <View className="flex-row justify-between gap-2 ">
-          <Text className="text-sm">Belanja</Text>
+          <Text className="text-sm">Shopping</Text>
           <Text className="text-sm">{dateString}</Text>
         </View>
 

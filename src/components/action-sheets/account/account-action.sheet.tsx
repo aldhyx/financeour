@@ -1,20 +1,19 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import React, { PropsWithChildren, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import {
   HandleComponent,
-  LineSeparator,
   SheetBackdrop,
 } from '@/components/action-sheets/sheet-backdrop';
+import { createSheetContext } from '@/components/action-sheets/sheet-context';
+import { Button } from '@/components/ui/button';
 import { PencilIcon, TrashIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useRemoveAccount } from '@/db/actions/account';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 import { constructSearchParams } from '@/lib/utils';
-
-import { createSheetContext } from '../sheet-context';
 
 type SheetData = { id: string; name: string };
 const {
@@ -84,70 +83,75 @@ const AccountActionSheet = () => {
       }}
     >
       <BottomSheetView>
+        <Text className="mb-4 border-b border-b-secondary pb-3 text-center text-sm font-bold">
+          {sheetData?.name}
+        </Text>
+
         {renderView === 'menu' && (
           <View className="px-4 pb-4">
-            <Text className="mb-3 text-center">{sheetData?.name}</Text>
-
-            <View className="mb-2 rounded-xl bg-secondary">
-              <Pressable
-                className="active:opacity-50"
+            <View className="gap-0.5">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="flex-row items-center justify-start gap-4 px-4"
                 onPress={changeAccountHandler(sheetData?.id)}
               >
-                <View className="h-14 flex-row items-center justify-between gap-4 px-4">
-                  <Text className="font-medium">Ubah akun</Text>
-                  <PencilIcon size={20} className="text-foreground" />
-                </View>
-              </Pressable>
+                <PencilIcon size={20} className="text-foreground" />
+                <Text>Edit account</Text>
+              </Button>
 
-              <LineSeparator />
-
-              <Pressable
-                className="active:opacity-50"
+              <Button
+                variant="secondary"
+                size="lg"
+                className="flex-row items-center justify-start gap-4 px-4"
                 onPress={changeAccountBalanceHandler(sheetData?.id)}
               >
-                <View className="h-14 flex-row items-center justify-between gap-4 px-4">
-                  <Text className="font-medium">Sesuaikan saldo</Text>
-                  <PencilIcon size={20} className="text-foreground" />
-                </View>
-              </Pressable>
-            </View>
+                <PencilIcon size={20} className="text-foreground" />
+                <Text>Adjust balance</Text>
+              </Button>
 
-            <View className="rounded-xl bg-secondary">
-              <Pressable
-                className="active:opacity-50"
+              <Button
+                variant="secondary-destructive"
+                size="lg"
+                className="flex-row items-center justify-start gap-4 px-4"
                 onPress={() => setRenderView('remove-confirm')}
               >
-                <View className="h-14 flex-row items-center justify-between gap-4 px-4">
-                  <Text className="font-medium text-red-600">Hapus akun</Text>
-                  <TrashIcon size={20} className="text-red-600" />
-                </View>
-              </Pressable>
+                <TrashIcon size={20} className="text-red-600" />
+                <Text>Delete account</Text>
+              </Button>
             </View>
           </View>
         )}
 
         {renderView === 'remove-confirm' && (
           <View className="px-4 pb-4">
-            <Text className="mb-1 font-medium">Hapus akun?</Text>
-            <Text className="mb-4">
-              Semua riwayat transaksi pada akun ini akan dihapus dan tidak bisa
-              dikembalikan!
+            <Text className="mb-2 text-xl font-bold">Delete account?</Text>
+            <Text className="mb-1">
+              All transaction history related to this account will be deleted
+              permanently.
+            </Text>
+            <Text className="mb-3 text-destructive">
+              This action cannot be undone.
             </Text>
 
-            <View className="gap-1">
-              <Pressable
-                className="h-14 items-center justify-center rounded-xl bg-secondary active:opacity-50"
+            <View className="gap-0.5">
+              <Button
+                variant="secondary-destructive"
+                size="lg"
+                className="flex-row items-center justify-center gap-4 px-4"
                 onPress={removeAccountHandler(sheetData?.id)}
               >
-                <Text className="font-medium text-red-500">Hapus</Text>
-              </Pressable>
+                <Text>Delete</Text>
+              </Button>
 
-              <Pressable
-                className="h-14 items-center justify-center rounded-xl bg-secondary active:opacity-50"
+              <Button
+                variant="secondary"
+                size="lg"
+                className="flex-row items-center justify-center gap-4 px-4"
                 onPress={() => setRenderView('menu')}
               >
-                <Text className="font-medium">Batalkan</Text>
-              </Pressable>
+                <Text>Cancel</Text>
+              </Button>
             </View>
           </View>
         )}

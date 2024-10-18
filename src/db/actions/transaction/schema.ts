@@ -73,7 +73,7 @@ export const insertTxFormSchema = insertTxSchema
       // same as type from insert scheme but we hold the label too
       transactionType: z
         .object({
-          key: z.enum(txTypeEnum),
+          id: z.enum(txTypeEnum),
           label: z.string(),
         })
         .required(),
@@ -95,7 +95,7 @@ export const insertTxFormSchema = insertTxSchema
   )
   .refine(
     (data) => {
-      const isTransfer = data.transactionType.key === 'tf';
+      const isTransfer = data.transactionType.id === 'tf';
       const hasToAccount = data.toAccount !== undefined;
 
       return !isTransfer || (isTransfer && hasToAccount);

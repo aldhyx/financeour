@@ -15,14 +15,14 @@ const AccountLayout = () => (
     <Stack.Screen
       name="index"
       options={{
-        title: 'Akun saya',
+        title: 'My accounts',
       }}
     />
 
     <Stack.Screen
       name="create"
       options={{
-        title: 'Tambah akun baru',
+        title: 'Add account',
         header({ options }) {
           return <HeaderBar title={options.title} leftIcon="cancel" />;
         },

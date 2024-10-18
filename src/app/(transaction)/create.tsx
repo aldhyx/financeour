@@ -19,7 +19,7 @@ import {
 } from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
-import { SegmentedControl } from '@/components/ui/form/segmented-control';
+import SegmentedControl from '@/components/ui/form/segmented-control';
 import { Text } from '@/components/ui/text';
 import { TRANSACTION_TYPES } from '@/constants/app';
 import {
@@ -74,7 +74,7 @@ const CreateTransactionForm = () => {
   const fromAccount = watch('fromAccount');
   const toAccount = watch('toAccount');
   const transactionType = watch('transactionType');
-  const isTransfer = transactionType.key === 'tf';
+  const isTransfer = transactionType.id === 'tf';
 
   const submitHandler = handleSubmit(async (data: Schema) => {
     try {
@@ -86,7 +86,7 @@ const CreateTransactionForm = () => {
         amount: data.amount,
         datetime: data.datetime,
         description: data.description,
-        type: data.transactionType.key,
+        type: data.transactionType.id,
       });
 
       router.back();
@@ -96,11 +96,6 @@ const CreateTransactionForm = () => {
       });
     }
   });
-
-  const txTypeChangeHandler = (option: (typeof TRANSACTION_TYPES)[0]) => {
-    setValue('transactionType', option);
-    if (option.key !== 'tf') setValue('toAccount', undefined);
-  };
 
   const showNumInputHandler = async () => {
     Keyboard.dismiss();
@@ -165,9 +160,12 @@ const CreateTransactionForm = () => {
     <View className="px-4 pt-2">
       <View className="mb-4">
         <SegmentedControl
-          options={TRANSACTION_TYPES}
-          selectedOption={transactionType}
-          onOptionPress={txTypeChangeHandler}
+          segments={TRANSACTION_TYPES}
+          defaultIndex={0}
+          onValueChange={(segment) => {
+            setValue('transactionType', segment);
+            if (segment.id !== 'tf') setValue('toAccount', undefined);
+          }}
         />
       </View>
 
@@ -188,13 +186,15 @@ const CreateTransactionForm = () => {
       </FormGroup>
 
       <FormGroup errorMessage={errors.fromAccount?.message}>
-        <FormGroup.Label>{isTransfer ? 'Dari akun' : 'Akun'}</FormGroup.Label>
+        <FormGroup.Label>
+          {isTransfer ? 'From account' : 'Account'}
+        </FormGroup.Label>
         <Pressable
           className="active:opacity-50"
           onPress={showFromAccountSheetHandler}
         >
           <FormGroup.Input
-            placeholder="Pilih akun..."
+            placeholder="Select account"
             disabled
             value={fromAccount?.name ?? ''}
           />
@@ -203,13 +203,13 @@ const CreateTransactionForm = () => {
 
       {isTransfer && (
         <FormGroup errorMessage={errors.toAccount?.message}>
-          <FormGroup.Label>Ke akun</FormGroup.Label>
+          <FormGroup.Label>To account</FormGroup.Label>
           <Pressable
             className="active:opacity-50"
             onPress={showToAccountSheetHandler}
           >
             <FormGroup.Input
-              placeholder="Pilih akun..."
+              placeholder="Select account"
               disabled
               value={toAccount?.name ?? ''}
             />
@@ -218,10 +218,10 @@ const CreateTransactionForm = () => {
       )}
 
       <FormGroup errorMessage={errors.datetime?.message}>
-        <FormGroup.Label>Tanggal</FormGroup.Label>
+        <FormGroup.Label>Date</FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={showDatepicker}>
           <FormGroup.Input
-            placeholder="Pilih tanggal..."
+            placeholder="Select date"
             value={datetimeString}
             disabled
           />
@@ -233,8 +233,8 @@ const CreateTransactionForm = () => {
         control={control}
         render={({ field }) => (
           <FormGroup errorMessage={errors.description?.message}>
-            <FormGroup.Label>Keterangan (opsional)</FormGroup.Label>
-            <FormGroup.Input placeholder="Isi keterangan..." {...field} />
+            <FormGroup.Label>Description (optional)</FormGroup.Label>
+            <FormGroup.Input placeholder="Enter description" {...field} />
             <FormGroup.ErrorMessage />
           </FormGroup>
         )}
@@ -249,9 +249,8 @@ const CreateTransactionForm = () => {
         onPress={submitHandler}
         disabled={isSubmitting}
         loading={isSubmitting}
-        className="mt-2"
       >
-        <Text>Simpan</Text>
+        <Text>Add transaction</Text>
       </Button>
     </View>
   );

@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import {
   AccountActionSheetProvider,
@@ -24,16 +24,6 @@ export default function MyAccountScreen() {
   if (isLoading) return <ActivityIndicator style={{ flex: 1 }} />;
   if (error) return <ErrorScreen />;
 
-  if (data.length === 0) {
-    return (
-      <View className="px-4 pt-2">
-        <AlertCard
-          title="Belum ada akun."
-          subTitle="Tambahkan akun pertama kamu untuk mulai kelola finansial bersama financeour."
-        />
-      </View>
-    );
-  }
   return (
     <AccountActionSheetProvider>
       <MyAccountList data={data} />
@@ -78,12 +68,22 @@ const MyAccountList = ({ data }: { data: Account[] }) => {
           />
         )}
         estimatedItemSize={data?.length || 1}
-        contentContainerStyle={{
-          paddingTop: 8,
-          paddingBottom: 120,
-        }}
+        contentContainerStyle={styles.contentContainerStyle}
         ItemSeparatorComponent={() => <View className="h-1" />}
+        ListEmptyComponent={
+          <AlertCard
+            title="No account found."
+            subTitle="You haven’t created an account yet. Get started by adding one now!"
+          />
+        }
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  contentContainerStyle: {
+    paddingTop: 8,
+    paddingBottom: 120,
+  },
+});

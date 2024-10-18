@@ -13,8 +13,8 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
-import { CheckCircleIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { ACCOUNT_TYPE_ICONS } from '@/constants/app';
 import { useAccounts } from '@/db/actions/account';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
@@ -72,39 +72,40 @@ const AccountSheet = () => {
     >
       <BottomSheetView className="flex-1">
         <View className="pb-4">
-          <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
-            <WalletIcon className="text-foreground" size={20} />
-            <Text>Pilih akun</Text>
-          </View>
+          <Text className="border-b border-b-secondary pb-3 text-center text-sm font-semibold">
+            Choose account
+          </Text>
 
           <ScrollView>
-            <View className="gap-1">
-              <RadioGroup value={sheetData?.accountId}>
-                {data.map((item) => (
+            <RadioGroup value={sheetData?.accountId}>
+              {data.map((item) => {
+                const Icon =
+                  ACCOUNT_TYPE_ICONS[item.type] ?? ACCOUNT_TYPE_ICONS.unknown;
+
+                return (
                   <RadioGroupItem
                     key={item.id}
                     value={item.id}
                     onPress={() => pressRadioHandler(item.id, item.name)}
-                    className="h-14 border-b border-b-border"
                   >
-                    <View>
-                      <Text className="capita shrink font-semibold">
-                        {item.name}
-                      </Text>
-                      <Text className="shrink text-sm capitalize">
-                        {item.type}
-                      </Text>
+                    <View className="flex-row items-center justify-center gap-4">
+                      <Icon className="text-foreground" size={20} />
+
+                      <View>
+                        <Text className="text-xs capitalize leading-tight text-muted-foreground">
+                          {item.type}
+                        </Text>
+                        <Text className="shrink pr-2 font-semibold capitalize">
+                          {item.name}
+                        </Text>
+                      </View>
                     </View>
 
-                    <RadioGroupIndicator>
-                      <CheckCircleIcon size={24} className="text-foreground" />
-                    </RadioGroupIndicator>
+                    <RadioGroupIndicator />
                   </RadioGroupItem>
-                ))}
-              </RadioGroup>
-              {/* Trick to show some item that hidden when scroll down */}
-              <View className="h-12" />
-            </View>
+                );
+              })}
+            </RadioGroup>
           </ScrollView>
         </View>
       </BottomSheetView>

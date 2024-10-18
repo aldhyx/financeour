@@ -50,7 +50,9 @@ const TransactionList = ({
   setTimestamp,
 }: TransactionListProps) => {
   const { contentAnimatedStyle, iconAnimatedStyle, toggleVisible } =
-    useToggleVisible({ toggleElementHeight: 56 });
+    useToggleVisible({
+      toggleElementHeight: 56, // 40 base height + 16 space height
+    });
 
   return (
     <View className="flex-1">
@@ -68,12 +70,10 @@ const TransactionList = ({
       </Pressable>
 
       <Animated.View style={contentAnimatedStyle}>
-        <View className="pb-4">
-          <HorizontalMonthCalender
-            selectedTimestamp={currentTimestamp}
-            onPressMonth={setTimestamp}
-          />
-        </View>
+        <HorizontalMonthCalender
+          selectedTimestamp={currentTimestamp}
+          onPressMonth={setTimestamp}
+        />
       </Animated.View>
 
       <FlashList
@@ -90,18 +90,19 @@ const TransactionList = ({
           />
         )}
         estimatedItemSize={data?.length || 1}
-        ItemSeparatorComponent={() => <View className="h-3" />}
+        ItemSeparatorComponent={() => <View className="h-2" />}
         ListEmptyComponent={
           <View className="flex-1 px-4">
             <AlertCard
-              title="Tidak ada data"
-              subTitle="Data transaksi akan ditampilkan disini."
+              title="No transactions yet "
+              subTitle="Your transactions will appear here, adjust your filters or add a new transaction "
             />
           </View>
         }
+        contentContainerStyle={{
+          paddingBottom: 16,
+        }}
       />
-
-      <View className="h-12" />
     </View>
   );
 };

@@ -17,21 +17,28 @@ import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  CoinsIcon,
+  CreditCard,
   DeleteIcon,
   DivideIcon,
   EllipsisIcon,
   EqualIcon,
+  EyeOffIcon,
+  FileQuestion,
   HomeIcon,
   InfoIcon,
+  LandmarkIcon,
   LanguagesIcon,
   MinusIcon,
   MoonIcon,
   PaletteIcon,
   PencilIcon,
+  PiggyBankIcon,
   PlusCircleIcon,
   PlusIcon,
   SettingsIcon,
   Smartphone,
+  SmartphoneNfc,
   StarIcon,
   SunIcon,
   Trash2Icon,
@@ -83,6 +90,13 @@ iconWithClassName(LanguagesIcon);
 iconWithClassName(Smartphone);
 iconWithClassName(MoonIcon);
 iconWithClassName(SunIcon);
+iconWithClassName(SmartphoneNfc);
+iconWithClassName(CoinsIcon);
+iconWithClassName(PiggyBankIcon);
+iconWithClassName(CreditCard);
+iconWithClassName(LandmarkIcon);
+iconWithClassName(FileQuestion);
+iconWithClassName(EyeOffIcon);
 
 export {
   AlertCircleIcon,
@@ -103,21 +117,28 @@ export {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  CoinsIcon,
+  CreditCard,
   DeleteIcon,
   DivideIcon,
   EllipsisIcon,
   EqualIcon,
+  EyeOffIcon,
+  FileQuestion,
   HomeIcon,
   InfoIcon,
+  LandmarkIcon,
   LanguagesIcon,
   MinusIcon,
   MoonIcon,
   PaletteIcon,
   PencilIcon,
+  PiggyBankIcon,
   PlusCircleIcon,
   PlusIcon,
   SettingsIcon,
   Smartphone,
+  SmartphoneNfc,
   StarIcon,
   SunIcon,
   Trash2Icon,

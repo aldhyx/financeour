@@ -46,12 +46,7 @@ FormGroup.Label = function Label(props: {
   children?: ReactNode;
 }) {
   return (
-    <Text
-      className={cn(
-        'text-foreground leading-none text-base mb-1',
-        props.className
-      )}
-    >
+    <Text className={cn('text-foreground leading-tight mb-1', props.className)}>
       {props.children}
     </Text>
   );
@@ -64,7 +59,7 @@ FormGroup.ErrorMessage = function ErrorMessage(props: { className?: string }) {
   return (
     <Text
       className={cn(
-        'text-destructive text-sm leading-none mt-2',
+        'text-destructive text-sm leading-tight mt-2',
         props.className
       )}
     >

@@ -115,21 +115,24 @@ function UpdateAccountForm(props: {
           control={control}
           render={({ field }) => (
             <FormGroup errorMessage={errors.name?.message}>
-              <FormGroup.Label>Nama</FormGroup.Label>
-              <FormGroup.Input placeholder="Isi nama akun..." {...field} />
+              <FormGroup.Label>Name</FormGroup.Label>
+              <FormGroup.Input
+                placeholder="e.g. Bank XY, Saving Wallet"
+                {...field}
+              />
             </FormGroup>
           )}
           name="name"
         />
 
         <FormGroup errorMessage={errors.type?.message}>
-          <FormGroup.Label>Tipe akun</FormGroup.Label>
+          <FormGroup.Label>Account type</FormGroup.Label>
           <Pressable
             className="active:opacity-50"
             onPress={pressChooseAccountHandler}
           >
             <FormGroup.Input
-              placeholder="Pilih tipe akun..."
+              placeholder="Select account type"
               disabled
               value={accountType}
             />
@@ -140,8 +143,11 @@ function UpdateAccountForm(props: {
           control={control}
           render={({ field }) => (
             <FormGroup errorMessage={errors.description?.message}>
-              <FormGroup.Label>Keterangan (opsional)</FormGroup.Label>
-              <FormGroup.Input placeholder="Isi keterangan..." {...field} />
+              <FormGroup.Label>Description (optional)</FormGroup.Label>
+              <FormGroup.Input
+                placeholder="e.g. Personal saving for vacation"
+                {...field}
+              />
               <FormGroup.ErrorMessage />
             </FormGroup>
           )}
@@ -156,9 +162,8 @@ function UpdateAccountForm(props: {
           onPress={submitHandler}
           disabled={isSubmitting}
           loading={isSubmitting}
-          className="mt-2"
         >
-          <Text>Simpan</Text>
+          <Text>Save changes</Text>
         </Button>
       </View>
     </>

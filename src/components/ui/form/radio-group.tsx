@@ -1,6 +1,7 @@
 import { createContext, PropsWithChildren, ReactNode, useContext } from 'react';
 import { Pressable, View } from 'react-native';
 
+import { CheckIcon } from '@/components/ui/icon';
 import { cn } from '@/lib/utils';
 
 type RadioGroupRootProps = {
@@ -56,10 +57,10 @@ const RadioGroupItem = ({
 
   return (
     <RadioItemContext.Provider value={{ itemValue }}>
-      <Pressable className="active:opacity-50" onPress={onPressHandler}>
+      <Pressable className="active:bg-secondary" onPress={onPressHandler}>
         <View
           className={cn(
-            'min-h-12 flex-row items-center justify-between gap-2 px-4',
+            'min-h-14 flex-row items-center justify-between gap-2 px-4',
             className
           )}
           {...otherProps}
@@ -83,7 +84,12 @@ const RadioGroupIndicator = (props: PropsWithChildren) => {
   const { value } = useRadioGroupContext();
   const { itemValue } = useRadioItemContext();
 
-  return itemValue === value ? <View {...props} /> : null;
+  if (props.children) return itemValue === value ? <View {...props} /> : null;
+  return itemValue === value ? (
+    <View>
+      <CheckIcon size={24} className="text-emerald-600" strokeWidth={3} />
+    </View>
+  ) : null;
 };
 
 export {

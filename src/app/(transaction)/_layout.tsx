@@ -18,7 +18,7 @@ const TransactionLayout = () => {
       <Stack.Screen
         name="create"
         options={{
-          title: 'Tambah transaksi',
+          title: 'Add transaction',
           header({ options }) {
             return <HeaderBar title={options.title} leftIcon="cancel" />;
           },
@@ -28,7 +28,7 @@ const TransactionLayout = () => {
       <Stack.Screen
         name="list"
         options={{
-          title: 'Semua transaksi',
+          title: 'Transaction list',
         }}
       />
     </Stack>

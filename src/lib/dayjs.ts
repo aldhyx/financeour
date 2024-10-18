@@ -7,7 +7,7 @@ import isToday from 'dayjs/plugin/isToday';
 export default function initializeDayJs() {
   dayjs.extend(isToday);
   // TODO: find how to adjust local by user device
-  dayjs.locale('id'); // use locale globally
+  dayjs.locale('en'); // use locale globally
 }
 
 /**

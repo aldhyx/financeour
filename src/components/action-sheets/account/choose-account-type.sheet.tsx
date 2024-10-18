@@ -1,5 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren, useRef } from 'react';
 import { View } from 'react-native';
 
 import {
@@ -11,9 +11,8 @@ import {
   RadioGroupIndicator,
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
-import { CheckCircleIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { DEFAULT_ACCOUNT_TYPES } from '@/constants/app';
+import { ACCOUNT_TYPES } from '@/constants/app';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
 import { createSheetContext } from '../sheet-context';
@@ -72,29 +71,27 @@ const AccountTypeSheet = () => {
     >
       <BottomSheetView>
         <View className="pb-3">
-          <View className="mb-3 flex-row items-center justify-start gap-2 px-4">
-            <WalletIcon className="text-foreground" size={20} />
-            <Text>Pilih tipe akun</Text>
-          </View>
+          <Text className="border-b border-b-secondary pb-3 text-center text-sm font-semibold">
+            Choose account type
+          </Text>
 
-          <View className="gap-1">
-            <RadioGroup value={sheetData?.accountType}>
-              {DEFAULT_ACCOUNT_TYPES.map((item) => (
-                <RadioGroupItem
-                  key={item}
-                  value={item}
-                  onPress={pressRadioHandler}
-                  className="border-b border-b-border"
-                >
-                  <Text className="shrink font-medium capitalize">{item}</Text>
-
-                  <RadioGroupIndicator>
-                    <CheckCircleIcon size={24} className="text-foreground" />
-                  </RadioGroupIndicator>
-                </RadioGroupItem>
-              ))}
-            </RadioGroup>
-          </View>
+          <RadioGroup value={sheetData?.accountType}>
+            {ACCOUNT_TYPES.map((item) => (
+              <RadioGroupItem
+                key={item.label}
+                value={item.label}
+                onPress={pressRadioHandler}
+              >
+                <View className="flex-row items-center gap-4">
+                  <item.icon size={20} className="text-foreground" />
+                  <Text className="shrink pr-2 font-semibold capitalize">
+                    {item.label}
+                  </Text>
+                </View>
+                <RadioGroupIndicator />
+              </RadioGroupItem>
+            ))}
+          </RadioGroup>
         </View>
       </BottomSheetView>
     </BottomSheetModal>
