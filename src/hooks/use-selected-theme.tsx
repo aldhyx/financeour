@@ -2,10 +2,17 @@ import { colorScheme, useColorScheme } from 'nativewind';
 import React from 'react';
 import { useMMKVString } from 'react-native-mmkv';
 
+import { MoonIcon, Smartphone, SunIcon } from '@/components/ui/icon';
 import { STORED_KEY } from '@/constants/local-storage-key';
 import { storage } from '@/lib/storage';
 
 export type ColorSchemeType = 'light' | 'dark' | 'system';
+
+export const APP_THEMES = [
+  { label: 'System default (auto)', id: 'system', icon: Smartphone },
+  { label: 'Light', id: 'light', icon: SunIcon },
+  { label: 'Dark', id: 'dark', icon: MoonIcon },
+] as const;
 
 /**
  * This hooks should only be used while selecting the theme
@@ -26,7 +33,9 @@ export const useSelectedTheme = () => {
     [setColorScheme, _setTheme]
   );
 
-  const selectedTheme = (_theme ?? 'system') as ColorSchemeType;
+  const theme = (_theme ?? 'system') as ColorSchemeType;
+  const selectedTheme =
+    APP_THEMES.find(({ id }) => id === theme) ?? APP_THEMES[0];
   return { selectedTheme, setSelectedTheme } as const;
 };
 

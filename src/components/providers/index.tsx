@@ -5,7 +5,6 @@ import {
   setStatusBarStyle,
 } from 'expo-status-bar';
 import React, { PropsWithChildren, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
@@ -30,7 +29,7 @@ export const Providers = (props: PropsWithChildren) => {
 
   return (
     <GestureHandlerRootView
-      style={styles.container}
+      style={{ backgroundColor: theme.colors.background, flex: 1 }}
       className={theme.dark ? `dark` : undefined}
     >
       <DevTools />
@@ -55,9 +54,3 @@ export const Providers = (props: PropsWithChildren) => {
     </GestureHandlerRootView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

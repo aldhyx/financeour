@@ -1,17 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import {
-  AccountTypeSheet,
   AccountTypeSheetProvider,
   useAccountTypeSheetContext,
 } from '@/components/action-sheets/account/choose-account-type.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
+import { HeaderBar } from '@/components/ui/header-bar';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import {
@@ -30,10 +30,7 @@ type Schema = z.infer<typeof schema>;
 
 export default function UpdateAccountScreen() {
   const searchParams = useLocalSearchParams<{
-    name?: string;
-    description?: string;
-    type?: string;
-    id?: string;
+    id: string;
   }>();
   const { data, isLoading, isError } = useAccountById(searchParams.id);
 
@@ -42,16 +39,25 @@ export default function UpdateAccountScreen() {
   if (!data) return null;
 
   return (
-    <AccountTypeSheetProvider>
-      <AccountTypeSheet />
-
-      <UpdateAccountForm
-        id={data.id}
-        name={data.name}
-        description={data.description}
-        type={data.type}
+    <>
+      <Stack.Screen
+        options={{
+          title: data.name,
+          header({ options }) {
+            return <HeaderBar title={options.title} leftIcon="cancel" />;
+          },
+        }}
       />
-    </AccountTypeSheetProvider>
+
+      <AccountTypeSheetProvider>
+        <UpdateAccountForm
+          id={data.id}
+          name={data.name}
+          description={data.description}
+          type={data.type}
+        />
+      </AccountTypeSheetProvider>
+    </>
   );
 }
 
@@ -61,8 +67,7 @@ function UpdateAccountForm(props: {
   type: string;
   id: string;
 }) {
-  const { sheetPresentAsync: showAccountTypeSheetAsync } =
-    useAccountTypeSheetContext();
+  const { showSheetAsync: showAccountTypeSheet } = useAccountTypeSheetContext();
 
   const router = useRouter();
   const { mutateAsync: updateAccount } = useUpdateAccount();
@@ -98,7 +103,7 @@ function UpdateAccountForm(props: {
 
   const pressChooseAccountHandler = async () => {
     Keyboard.dismiss();
-    const res = await showAccountTypeSheetAsync({ accountType });
+    const res = await showAccountTypeSheet({ accountType });
     if (!res) return;
     setValue('type', res.accountType, { shouldValidate: true });
   };
@@ -110,22 +115,24 @@ function UpdateAccountForm(props: {
           control={control}
           render={({ field }) => (
             <FormGroup errorMessage={errors.name?.message}>
-              <FormGroup.Label>Nama</FormGroup.Label>
-              <FormGroup.Input placeholder="Isi nama akun..." {...field} />
+              <FormGroup.Label>Name</FormGroup.Label>
+              <FormGroup.Input
+                placeholder="e.g. Bank XY, Saving Wallet"
+                {...field}
+              />
             </FormGroup>
           )}
           name="name"
         />
 
         <FormGroup errorMessage={errors.type?.message}>
-          <FormGroup.Label>Tipe akun</FormGroup.Label>
+          <FormGroup.Label>Account type</FormGroup.Label>
           <Pressable
             className="active:opacity-50"
             onPress={pressChooseAccountHandler}
           >
             <FormGroup.Input
-              placeholder="Pilih tipe akun..."
-              className="capitalize"
+              placeholder="Select account type"
               disabled
               value={accountType}
             />
@@ -136,8 +143,11 @@ function UpdateAccountForm(props: {
           control={control}
           render={({ field }) => (
             <FormGroup errorMessage={errors.description?.message}>
-              <FormGroup.Label>Keterangan (opsional)</FormGroup.Label>
-              <FormGroup.Input placeholder="Isi keterangan..." {...field} />
+              <FormGroup.Label>Description (optional)</FormGroup.Label>
+              <FormGroup.Input
+                placeholder="e.g. Personal saving for vacation"
+                {...field}
+              />
               <FormGroup.ErrorMessage />
             </FormGroup>
           )}
@@ -152,9 +162,8 @@ function UpdateAccountForm(props: {
           onPress={submitHandler}
           disabled={isSubmitting}
           loading={isSubmitting}
-          className="mt-2"
         >
-          <Text>Simpan</Text>
+          <Text>Save changes</Text>
         </Button>
       </View>
     </>

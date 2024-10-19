@@ -12,6 +12,7 @@ const buttonVariants = cva('group flex items-center justify-center', {
       outline: 'border border-input bg-background active:bg-accent',
       secondary: 'bg-secondary active:opacity-60',
       ghost: 'active:bg-accent active:opacity-60',
+      'secondary-destructive': 'bg-secondary active:opacity-80',
       link: 'active:opacity-60',
     },
     size: {
@@ -23,8 +24,9 @@ const buttonVariants = cva('group flex items-center justify-center', {
       'icon-lg': 'size-14',
     },
     rounded: {
-      default: 'rounded-2xl',
+      default: 'rounded-xl',
       full: 'rounded-full',
+      none: 'rounded-none',
     },
   },
   defaultVariants: {
@@ -34,21 +36,21 @@ const buttonVariants = cva('group flex items-center justify-center', {
   },
 });
 
-const buttonTextVariants = cva('text-base font-medium text-foreground', {
+const buttonTextVariants = cva('text-base font-semibold text-foreground', {
   variants: {
     variant: {
       default: 'text-primary-foreground',
-      destructive: 'text-destructive-foreground',
+      destructive: 'text-destructive-foreground dark:text-foreground',
       outline: 'group-active:text-accent-foreground',
-      secondary:
-        'text-secondary-foreground group-active:text-secondary-foreground',
+      secondary: 'text-secondary-foreground',
       ghost: 'group-active:text-accent-foreground',
-      link: 'text-primary',
+      link: 'font-medium text-primary',
+      'secondary-destructive': 'text-destructive ',
     },
     size: {
       default: '',
       sm: '',
-      lg: 'text-lg',
+      lg: '',
       icon: '',
       'icon-md': '',
       'icon-lg': '',

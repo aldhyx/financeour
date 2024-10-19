@@ -1,94 +1,80 @@
-import { memo } from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Dispatch, useState } from 'react';
+import { Pressable, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 
+import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 
-import { Text } from '../text';
-
-type SegmentedOption = {
-  key: string | any;
+type Segment = {
+  id: string;
   label: string;
 };
+type Props<T extends Segment> = {
+  segments: T[];
+  defaultIndex: number;
+  onValueChange: Dispatch<T>;
+};
+const SegmentedControl = <T extends Segment>(props: Props<T>) => {
+  const [selectedIndex, setSelectedIndex] = useState(props.defaultIndex);
 
-type SegmentedControlProps<T extends SegmentedOption> = {
-  options: T[];
-  selectedOption: T;
-  onOptionPress: (option: T) => void;
+  const { width: windowWidth } = useWindowDimensions();
+  const segmentWidth = (windowWidth - 32 - 8) / props.segments.length; // windowWidth - outer padding * 2 - inner padding * 2;
+
+  const styles = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: withTiming(selectedIndex * segmentWidth + 4, {
+          duration: 250,
+        }), // selectedIndex * segmentWidth + inner padding;
+      },
+    ],
+  }));
+
+  return (
+    <View
+      className={cn(
+        'h-12 flex-row rounded-full bg-secondary overflow-hidden px-1'
+      )}
+    >
+      <Animated.View
+        className={cn('absolute h-10 rounded-full bg-background top-1')}
+        style={[
+          {
+            width: segmentWidth,
+            // transform: [
+            //   {
+            //     translateX: 4,
+            //   },
+            // ],
+          },
+          styles,
+        ]}
+      />
+      {props.segments.map((segment, index) => {
+        const selected = selectedIndex === index;
+        return (
+          <Pressable
+            key={`${index}${segment}`}
+            className="active:opacity-50"
+            style={{ width: segmentWidth }}
+            onPress={() => {
+              props.onValueChange(segment);
+              setSelectedIndex(index);
+            }}
+          >
+            <View className="h-full items-center justify-center rounded-full">
+              <Text className={cn(selected ? 'font-semibold' : 'opacity-75')}>
+                {segment.label}
+              </Text>
+            </View>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
 };
 
-export const SegmentedControl = memo(
-  <T extends SegmentedOption>({
-    options,
-    onOptionPress,
-    selectedOption,
-  }: SegmentedControlProps<T>) => {
-    const { width: windowWidth } = useWindowDimensions();
-
-    const innerPadding = 8; // this is the SegmentedControl inner padding left + right (4+4)
-    const segmentedControlWidth = windowWidth - 32; // window width - outer left right padding * 2 (16*2)
-    const itemWidth = (segmentedControlWidth - innerPadding) / options.length;
-
-    const rStyle = useAnimatedStyle(() => {
-      return {
-        left: withTiming(
-          itemWidth *
-            options.findIndex((option) => option.key === selectedOption.key) +
-            innerPadding / 2
-        ),
-      };
-    });
-
-    return (
-      <View
-        className="mb-4 h-12 flex-row rounded-2xl bg-secondary"
-        style={[
-          { width: segmentedControlWidth, paddingLeft: innerPadding / 2 },
-        ]}
-      >
-        <Animated.View
-          className="absolute rounded-xl bg-background"
-          style={[
-            styles.activeBox,
-            rStyle,
-            {
-              width: itemWidth,
-            },
-          ]}
-        />
-        {options.map((option) => (
-          <TouchableOpacity
-            onPress={() => onOptionPress(option)}
-            style={[styles.segmentedItem, { width: itemWidth }]}
-            key={option.key}
-            activeOpacity={option.key === selectedOption.key ? 1 : 0.75}
-          >
-            <Text
-              className={cn(option.key !== selectedOption.key && 'opacity-70')}
-            >
-              {option.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
-  }
-);
-SegmentedControl.displayName = 'SegmentedControl';
-
-const styles = StyleSheet.create({
-  activeBox: {
-    height: 48 - 8, // container height - inner top & bottom padding
-    top: 4,
-    elevation: 1,
-  },
-  segmentedItem: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-  },
-});
+export default SegmentedControl;

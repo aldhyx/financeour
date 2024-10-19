@@ -34,7 +34,7 @@ export function useAccounts(filter: GetAccountsFilter = {}) {
   return query;
 }
 
-export function useAccountById(id?: string) {
+export function useAccountById(id: string) {
   const query = useQuery({
     queryKey: [QUERY_KEYS.GET_ACCOUNT_BY_ID, id],
     queryFn: ({ queryKey }) => getAccountById(queryKey[1]),

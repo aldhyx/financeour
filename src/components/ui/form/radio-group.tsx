@@ -1,5 +1,8 @@
 import { createContext, PropsWithChildren, ReactNode, useContext } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+
+import { CheckIcon } from '@/components/ui/icon';
+import { cn } from '@/lib/utils';
 
 type RadioGroupRootProps = {
   value?: string | null;
@@ -36,11 +39,13 @@ const RadioItemContext = createContext<RadioItemContextProps | null>(null);
 type RadioGroupItemProps = {
   value: string;
   onPress?: (val: string) => void;
+  className?: string;
 } & PropsWithChildren;
 
 const RadioGroupItem = ({
   value: itemValue,
   onPress,
+  className,
   ...otherProps
 }: RadioGroupItemProps) => {
   const { onChange } = useRadioGroupContext();
@@ -52,12 +57,15 @@ const RadioGroupItem = ({
 
   return (
     <RadioItemContext.Provider value={{ itemValue }}>
-      <TouchableOpacity onPress={onPressHandler}>
+      <Pressable className="active:bg-secondary" onPress={onPressHandler}>
         <View
-          className="min-h-14 flex-row items-center justify-between gap-2 border-b border-b-border px-4"
+          className={cn(
+            'min-h-14 flex-row items-center justify-between gap-2 px-4',
+            className
+          )}
           {...otherProps}
         />
-      </TouchableOpacity>
+      </Pressable>
     </RadioItemContext.Provider>
   );
 };
@@ -76,7 +84,12 @@ const RadioGroupIndicator = (props: PropsWithChildren) => {
   const { value } = useRadioGroupContext();
   const { itemValue } = useRadioItemContext();
 
-  return itemValue === value ? <View {...props} /> : null;
+  if (props.children) return itemValue === value ? <View {...props} /> : null;
+  return itemValue === value ? (
+    <View>
+      <CheckIcon size={24} className="text-emerald-600" strokeWidth={3} />
+    </View>
+  ) : null;
 };
 
 export {

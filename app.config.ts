@@ -67,6 +67,36 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ],
       },
     ],
+    [
+      '@react-native-community/datetimepicker',
+      {
+        android: {
+          datePicker: {
+            colorAccent: {
+              light: '#09090B',
+            },
+            textColorSecondaryInverse: {
+              light: '#ffffff',
+            },
+            textColorPrimaryInverse: {
+              light: '#ffffff',
+            },
+            windowBackground: {
+              light: '#ffffff',
+            },
+            textColor: {
+              light: '#09090B',
+            },
+            textColorPrimary: {
+              light: '#09090B',
+            },
+            colorControlActivated: {
+              light: '#09090B',
+            },
+          },
+        },
+      },
+    ],
   ],
   extra: {
     ...ClientEnv,

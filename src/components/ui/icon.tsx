@@ -2,6 +2,7 @@ import {
   AlertCircleIcon,
   AlertTriangleIcon,
   ArrowBigDown,
+  ArrowBigDownIcon,
   ArrowBigRight,
   ArrowBigRightIcon,
   ArrowBigUpIcon,
@@ -11,18 +12,35 @@ import {
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
+  CheckCircleIcon,
   CheckIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
+  CoinsIcon,
+  CreditCard,
   DeleteIcon,
   DivideIcon,
   EllipsisIcon,
   EqualIcon,
+  EyeOffIcon,
+  FileQuestion,
   HomeIcon,
   InfoIcon,
+  LandmarkIcon,
+  LanguagesIcon,
   MinusIcon,
+  MoonIcon,
+  PaletteIcon,
   PencilIcon,
+  PiggyBankIcon,
+  PlusCircleIcon,
   PlusIcon,
+  SettingsIcon,
+  Smartphone,
+  SmartphoneNfc,
   StarIcon,
+  SunIcon,
   Trash2Icon,
   TrashIcon,
   UserRoundIcon,
@@ -61,11 +79,30 @@ iconWithClassName(DivideIcon);
 iconWithClassName(MinusIcon);
 iconWithClassName(ArrowRightIcon);
 iconWithClassName(ArrowBigRightIcon);
+iconWithClassName(ChevronRightIcon);
+iconWithClassName(PlusCircleIcon);
+iconWithClassName(ArrowBigDownIcon);
+iconWithClassName(ChevronDownIcon);
+iconWithClassName(CheckCircleIcon);
+iconWithClassName(SettingsIcon);
+iconWithClassName(PaletteIcon);
+iconWithClassName(LanguagesIcon);
+iconWithClassName(Smartphone);
+iconWithClassName(MoonIcon);
+iconWithClassName(SunIcon);
+iconWithClassName(SmartphoneNfc);
+iconWithClassName(CoinsIcon);
+iconWithClassName(PiggyBankIcon);
+iconWithClassName(CreditCard);
+iconWithClassName(LandmarkIcon);
+iconWithClassName(FileQuestion);
+iconWithClassName(EyeOffIcon);
 
 export {
   AlertCircleIcon,
   AlertTriangleIcon,
   ArrowBigDown,
+  ArrowBigDownIcon,
   ArrowBigRight,
   ArrowBigRightIcon,
   ArrowBigUpIcon,
@@ -75,18 +112,35 @@ export {
   ChartColumnBigIcon,
   ChartPieIcon,
   CheckCircle2Icon,
+  CheckCircleIcon,
   CheckIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
+  CoinsIcon,
+  CreditCard,
   DeleteIcon,
   DivideIcon,
   EllipsisIcon,
   EqualIcon,
+  EyeOffIcon,
+  FileQuestion,
   HomeIcon,
   InfoIcon,
+  LandmarkIcon,
+  LanguagesIcon,
   MinusIcon,
+  MoonIcon,
+  PaletteIcon,
   PencilIcon,
+  PiggyBankIcon,
+  PlusCircleIcon,
   PlusIcon,
+  SettingsIcon,
+  Smartphone,
+  SmartphoneNfc,
   StarIcon,
+  SunIcon,
   Trash2Icon,
   TrashIcon,
   UserRoundIcon,

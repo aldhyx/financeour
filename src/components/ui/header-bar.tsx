@@ -38,7 +38,7 @@ export const HeaderBar = ({
 
   return (
     <View
-      className="h-14 flex-row items-center justify-between gap-4 px-4"
+      className="h-14 flex-row items-center justify-between gap-4 bg-background px-4"
       style={{ marginTop: top }}
     >
       <View

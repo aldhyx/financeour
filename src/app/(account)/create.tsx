@@ -5,12 +5,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, Pressable, View } from 'react-native';
 
 import {
-  AccountTypeSheet,
   AccountTypeSheetProvider,
   useAccountTypeSheetContext,
 } from '@/components/action-sheets/account/choose-account-type.sheet';
 import {
-  NumInputSheet,
   NumInputSheetProvider,
   useNumInputSheetContext,
 } from '@/components/action-sheets/general/num-input.sheet';
@@ -29,9 +27,6 @@ export default function CreateAccountScreen() {
   return (
     <NumInputSheetProvider>
       <AccountTypeSheetProvider>
-        <NumInputSheet />
-        <AccountTypeSheet />
-
         <CreateAccountForm />
       </AccountTypeSheetProvider>
     </NumInputSheetProvider>
@@ -39,10 +34,8 @@ export default function CreateAccountScreen() {
 }
 
 function CreateAccountForm() {
-  const { sheetPresentAsync: showAccountTypeSheetAsync } =
-    useAccountTypeSheetContext();
-  const { sheetPresentAsync: showNumInputSheetAsync } =
-    useNumInputSheetContext();
+  const { showSheetAsync: showAccountTypeSheet } = useAccountTypeSheetContext();
+  const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
 
   const router = useRouter();
   const { maskCurrency } = useMaskCurrency();
@@ -73,7 +66,7 @@ function CreateAccountForm() {
 
   const pressChooseAccountHandler = async () => {
     Keyboard.dismiss();
-    const res = await showAccountTypeSheetAsync({ accountType });
+    const res = await showAccountTypeSheet({ accountType });
     if (!res) return;
     setValue('type', res.accountType, { shouldValidate: true });
   };
@@ -91,22 +84,24 @@ function CreateAccountForm() {
         control={control}
         render={({ field }) => (
           <FormGroup errorMessage={errors.name?.message}>
-            <FormGroup.Label>Nama</FormGroup.Label>
-            <FormGroup.Input placeholder="Isi nama akun..." {...field} />
+            <FormGroup.Label>Name</FormGroup.Label>
+            <FormGroup.Input
+              placeholder="e.g. Bank XY, Saving Wallet"
+              {...field}
+            />
           </FormGroup>
         )}
         name="name"
       />
 
       <FormGroup errorMessage={errors.type?.message}>
-        <FormGroup.Label>Tipe akun</FormGroup.Label>
+        <FormGroup.Label>Account type</FormGroup.Label>
         <Pressable
           className="active:opacity-50"
           onPress={pressChooseAccountHandler}
         >
           <FormGroup.Input
-            placeholder="Pilih tipe akun..."
-            className="capitalize"
+            placeholder="Select account type"
             disabled
             value={accountType}
           />
@@ -114,14 +109,9 @@ function CreateAccountForm() {
       </FormGroup>
 
       <FormGroup errorMessage={errors.balance?.message}>
-        <FormGroup.Label>Saldo awal (opsional)</FormGroup.Label>
+        <FormGroup.Label>Current balance (optional)</FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={pressNumInputHandler}>
-          <FormGroup.Input
-            placeholder="Pilih tipe akun..."
-            className="capitalize"
-            disabled
-            value={maskCurrency(balance).maskedRaw}
-          />
+          <FormGroup.Input disabled value={maskCurrency(balance).masked} />
         </Pressable>
       </FormGroup>
 
@@ -129,8 +119,11 @@ function CreateAccountForm() {
         control={control}
         render={({ field }) => (
           <FormGroup errorMessage={errors.description?.message}>
-            <FormGroup.Label>Keterangan (opsional)</FormGroup.Label>
-            <FormGroup.Input placeholder="Isi keterangan..." {...field} />
+            <FormGroup.Label>Description (optional)</FormGroup.Label>
+            <FormGroup.Input
+              placeholder="e.g. Personal saving for vacation"
+              {...field}
+            />
             <FormGroup.ErrorMessage />
           </FormGroup>
         )}
@@ -145,9 +138,8 @@ function CreateAccountForm() {
         onPress={submitHandler}
         disabled={isSubmitting}
         loading={isSubmitting}
-        className="mt-2"
       >
-        <Text>Simpan</Text>
+        <Text>Add account</Text>
       </Button>
     </View>
   );

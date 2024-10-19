@@ -1,10 +1,12 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { FlashList } from '@shopify/flash-list';
-import { useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
-import { View } from 'react-native';
+import { Link } from 'expo-router';
+import React from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import AccountActionSheet from '@/components/action-sheets/account/account-action.sheet';
+import {
+  AccountActionSheetProvider,
+  useAccountActionSheetContext,
+} from '@/components/action-sheets/account/account-action.sheet';
 import { Button } from '@/components/ui/button';
 import { AccountCard } from '@/components/ui/cards/account.card';
 import { AlertCard } from '@/components/ui/cards/alert.card';
@@ -16,26 +18,28 @@ import {
   useUpdateAccount,
 } from '@/db/actions/account';
 
-type SelectedAccount = Pick<Account, 'id' | 'name'>;
-const defaultAccount: SelectedAccount = { id: '', name: '' };
+export default function MyAccountScreen() {
+  const { data, error, isLoading } = useAccounts();
 
-const MyAccountScreen = () => {
-  const router = useRouter();
-  const sheetRef = useRef<BottomSheetModal>(null);
-  const [selectedAccount, setSelectedAccount] =
-    useState<SelectedAccount>(defaultAccount);
-  const { data, error } = useAccounts();
+  if (isLoading) return <ActivityIndicator style={{ flex: 1 }} />;
+  if (error) return <ErrorScreen />;
+
+  return (
+    <AccountActionSheetProvider>
+      <MyAccountList data={data} />
+    </AccountActionSheetProvider>
+  );
+}
+
+const MyAccountList = ({ data }: { data: Account[] }) => {
+  const { showSheet: showActionSheet } = useAccountActionSheetContext();
   const { mutateAsync } = useUpdateAccount();
 
-  const addAccountHandler = () => router.push('/(account)/create');
-
   const actionHandler = (account: Account) => {
-    setSelectedAccount(account);
-    sheetRef.current?.present('test');
-  };
-
-  const detailAccountHandler = (id: string) => {
-    router.push(`/(account)/${id}`);
+    showActionSheet({
+      id: account.id,
+      name: account.name,
+    });
   };
 
   const toggleFavoriteHandler = async (id: string, isFavorite: boolean) => {
@@ -46,52 +50,40 @@ const MyAccountScreen = () => {
     }
   };
 
-  if (error) return <ErrorScreen />;
-
   return (
-    <>
-      <AccountActionSheet
-        name={selectedAccount.name}
-        id={selectedAccount.id}
-        ref={sheetRef}
-      />
-
-      <View className="flex-1 px-4 pt-2">
-        <Button
-          size="icon-lg"
-          className="absolute bottom-10 right-6 z-10"
-          onPress={addAccountHandler}
-        >
+    <View className="flex-1 px-4">
+      <Link push asChild href="/(account)/create">
+        <Button size="icon-lg" className="absolute bottom-10 right-6 z-10">
           <PlusIcon size={24} className="text-background" />
         </Button>
+      </Link>
 
-        <FlashList
-          data={data}
-          renderItem={({ item }) => (
-            <AccountCard
-              {...item}
-              onPressCard={detailAccountHandler}
-              onPressAction={actionHandler}
-              onPressFavorite={toggleFavoriteHandler}
-            />
-          )}
-          estimatedItemSize={data?.length || 1}
-          contentContainerStyle={{
-            paddingTop: 14,
-            paddingBottom: 120,
-          }}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-          ListEmptyComponent={
-            <AlertCard
-              title="Belum ada akun."
-              subTitle="Tambahkan akun pertama kamu untuk mulai kelola finansial bersama financeour."
-            />
-          }
-        />
-      </View>
-    </>
+      <FlashList
+        data={data}
+        renderItem={({ item }) => (
+          <AccountCard
+            {...item}
+            onPressAction={actionHandler}
+            onPressFavorite={toggleFavoriteHandler}
+          />
+        )}
+        estimatedItemSize={data?.length || 1}
+        contentContainerStyle={styles.contentContainerStyle}
+        ItemSeparatorComponent={() => <View className="h-1" />}
+        ListEmptyComponent={
+          <AlertCard
+            title="No account found."
+            subTitle="You haven’t created an account yet. Get started by adding one now!"
+          />
+        }
+      />
+    </View>
   );
 };
 
-export default MyAccountScreen;
+const styles = StyleSheet.create({
+  contentContainerStyle: {
+    paddingTop: 8,
+    paddingBottom: 120,
+  },
+});
