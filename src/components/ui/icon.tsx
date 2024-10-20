@@ -43,6 +43,8 @@ import {
   SunIcon,
   Trash2Icon,
   TrashIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
   UserRoundIcon,
   WalletIcon,
   XIcon,
@@ -97,6 +99,8 @@ iconWithClassName(CreditCard);
 iconWithClassName(LandmarkIcon);
 iconWithClassName(FileQuestion);
 iconWithClassName(EyeOffIcon);
+iconWithClassName(TrendingUpIcon);
+iconWithClassName(TrendingDownIcon);
 
 export {
   AlertCircleIcon,
@@ -143,6 +147,8 @@ export {
   SunIcon,
   Trash2Icon,
   TrashIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
   UserRoundIcon,
   WalletIcon,
   XIcon,
