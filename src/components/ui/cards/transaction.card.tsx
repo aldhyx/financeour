@@ -47,12 +47,12 @@ export const TransactionCard = (props: Props) => {
     >
       <View className="gap-1 px-4">
         <View className="flex-row justify-between gap-2 ">
-          <Text className="text-sm">Shopping</Text>
+          <Text className="text-sm text-muted-foreground">Shopping</Text>
           <Text className="text-sm">{dateString}</Text>
         </View>
 
         <View className="flex-row items-center justify-between gap-2">
-          <Text className="font-semibold">
+          <Text className="font-medium">
             {props.fromAccountName}
             {props.toAccountName && ` - ${props.toAccountName}`}
           </Text>

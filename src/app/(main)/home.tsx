@@ -16,7 +16,7 @@ function CurrentBalanceSection() {
   const { maskCurrency } = useMaskCurrency();
 
   return (
-    <View className="rounded-xl bg-secondary px-4 py-5">
+    <View className="rounded-xl bg-secondary px-4 py-6">
       <Pressable className="absolute right-2 top-2 size-12 items-center justify-center rounded-full active:bg-foreground/10">
         <EyeOffIcon className="text-primary" size={24} />
       </Pressable>
@@ -26,7 +26,7 @@ function CurrentBalanceSection() {
         {maskCurrency(data).masked}
       </Text>
 
-      <View className="my-3 h-px w-full bg-background" />
+      <View className="my-4 h-px w-full bg-background" />
 
       <View className="flex-row gap-4">
         <View className="w-full shrink justify-center rounded-xl">
@@ -61,7 +61,7 @@ function FavoriteAccountSection() {
   return (
     <ScrollView
       horizontal={true}
-      contentContainerStyle={{ columnGap: 4, paddingHorizontal: 16 }}
+      contentContainerStyle={{ columnGap: 8, paddingHorizontal: 16 }}
       accessibilityHint=""
       showsHorizontalScrollIndicator={false}
     >
@@ -125,7 +125,7 @@ function RecentTransactionSection() {
       )}
 
       {!isEmptyData && (
-        <View className="gap-2">
+        <View className="gap-3">
           {data.map((item) => (
             <TransactionCard
               key={item.id}
@@ -146,11 +146,11 @@ function RecentTransactionSection() {
 const HomeScreen = () => {
   return (
     <ScrollView className="flex-1 pb-1">
-      <View className="mb-1 px-4">
+      <View className="mb-2 px-4">
         <CurrentBalanceSection />
       </View>
 
-      <View className="mb-1 gap-1">
+      <View className="mb-2 gap-1">
         <FavoriteAccountSection />
       </View>
 

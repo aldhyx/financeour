@@ -55,7 +55,7 @@ const AppThemeSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            Choose theme
+            Choose a theme
           </Text>
           <ScrollView>
             <RadioGroup value={selectedTheme.id}>

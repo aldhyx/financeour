@@ -101,7 +101,7 @@ function CreateAccountForm() {
           onPress={pressChooseAccountHandler}
         >
           <FormGroup.Input
-            placeholder="Select account type"
+            placeholder="Choose account type"
             disabled
             value={accountType}
           />
