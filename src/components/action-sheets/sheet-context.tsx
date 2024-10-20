@@ -89,7 +89,7 @@ function createSheetContext<T, R>() {
     );
 
     const showSheet: SheetContext<T, R>['showSheet'] = (data) => {
-      sheetRef.current?.present(data);
+      sheetRef.current?.present();
       setSheetData(data);
     };
 

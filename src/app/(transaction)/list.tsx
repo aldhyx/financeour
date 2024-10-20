@@ -11,6 +11,7 @@ import { ChevronDownIcon } from '@/components/ui/icon';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
 import { Tx, useTransactions } from '@/db/actions/transaction';
+import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { useToggleVisible } from '@/hooks/use-toggle-visible';
 
 export default function TransactionListScreen() {
@@ -44,6 +45,41 @@ type TransactionListProps = {
   setTimestamp: (ts: number) => void;
 };
 
+const MonthlyTotalCard = (props: { data: Tx[] }) => {
+  const { maskCurrency } = useMaskCurrency();
+  const { expense, income } = props.data.reduce(
+    (acc, curr) => {
+      if (curr.type === 'in') {
+        acc.income += curr.amount;
+      }
+
+      if (curr.type === 'out') {
+        acc.expense += curr.amount;
+      }
+
+      return acc;
+    },
+    { income: 0, expense: 0 }
+  );
+
+  return (
+    <View className="mb-4 flex-row gap-2 px-4">
+      <View className="flex-1">
+        <Text>Total Income</Text>
+        <Text className="text-xl font-semibold leading-tight">
+          {maskCurrency(income).masked}
+        </Text>
+      </View>
+
+      <View className="flex-1">
+        <Text>Total Expense</Text>
+        <Text className="text-xl font-semibold leading-tight">
+          {maskCurrency(expense).masked}
+        </Text>
+      </View>
+    </View>
+  );
+};
 const TransactionList = ({
   data,
   currentTimestamp,
@@ -75,6 +111,8 @@ const TransactionList = ({
           onPressMonth={setTimestamp}
         />
       </Animated.View>
+
+      <MonthlyTotalCard data={data} />
 
       <FlashList
         data={data}
