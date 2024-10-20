@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import {
@@ -57,9 +57,8 @@ const AccountSheet = () => {
   const { sheetRef, closedCbRef, sheetData } = useInternalSheetContext();
   const { colors } = useThemeConfig();
   const { data } = useAccounts();
-  const { height } = useWindowDimensions();
-  const [searchValue, setSearchValue] = useState('');
-  const deferredSearchValue = useDeferredValue(searchValue);
+  const [searchQuery, setSearchQuery] = useState('');
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   const pressRadioHandler = (accountId: string, accountName: string) => {
     sheetReturnRef.current = { accountId, accountName };
@@ -71,17 +70,19 @@ const AccountSheet = () => {
       closedCbRef.current(sheetReturnRef.current);
       // reset the state back to undefined
       sheetReturnRef.current = undefined;
+      // reset the
+      setSearchQuery('');
     }
   };
 
   const filteredData = useMemo(() => {
-    const value = deferredSearchValue.toLowerCase();
+    const value = deferredSearchQuery.toLowerCase();
     return data.filter(
       (item) =>
         item.name.toLowerCase().includes(value.toLowerCase()) ||
         item.type.toLowerCase().includes(value.toLowerCase())
     );
-  }, [deferredSearchValue, data]);
+  }, [deferredSearchQuery, data]);
 
   const hasData = data.length > 0;
   const hasFilteredData = filteredData.length > 0;
@@ -92,10 +93,15 @@ const AccountSheet = () => {
       backdropComponent={SheetBackdrop}
       onDismiss={dismissHandler}
       handleComponent={HandleComponent}
-      maxDynamicContentSize={height / 1.5}
+      index={0}
+      snapPoints={['50%', '80%']}
+      keyboardBehavior="extend"
+      keyboardBlurBehavior="restore"
       backgroundStyle={{
         backgroundColor: colors.background,
       }}
+      // this help prevent app from crash when keyboard show up & try to dismiss the sheet by using gesture (pan down)
+      android_keyboardInputMode="adjustResize"
     >
       <BottomSheetView className="flex-1">
         <View className="pb-4">
@@ -117,7 +123,7 @@ const AccountSheet = () => {
               <BottomSheetTextInput
                 className={cn(inputVariants({ size: 'sm' }))}
                 placeholder="Search account..."
-                onChangeText={setSearchValue}
+                onChangeText={setSearchQuery}
               />
             </View>
           )}
