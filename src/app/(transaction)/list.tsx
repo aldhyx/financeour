@@ -90,7 +90,7 @@ const TransactionList = ({
           />
         )}
         estimatedItemSize={data?.length || 1}
-        ItemSeparatorComponent={() => <View className="h-2" />}
+        ItemSeparatorComponent={() => <View className="h-3" />}
         ListEmptyComponent={
           <View className="flex-1 px-4">
             <AlertCard

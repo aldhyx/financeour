@@ -69,7 +69,7 @@ const MyAccountList = ({ data }: { data: Account[] }) => {
         )}
         estimatedItemSize={data?.length || 1}
         contentContainerStyle={styles.contentContainerStyle}
-        ItemSeparatorComponent={() => <View className="h-1" />}
+        ItemSeparatorComponent={() => <View className="h-2" />}
         ListEmptyComponent={
           <AlertCard
             title="No account found."

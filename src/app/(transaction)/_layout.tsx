@@ -28,7 +28,7 @@ const TransactionLayout = () => {
       <Stack.Screen
         name="list"
         options={{
-          title: 'Transaction list',
+          title: 'Transaction history',
         }}
       />
     </Stack>

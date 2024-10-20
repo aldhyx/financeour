@@ -83,13 +83,13 @@ const AccountActionSheet = () => {
       }}
     >
       <BottomSheetView>
-        <Text className="mb-4 border-b border-b-secondary pb-3 text-center text-sm font-bold">
+        <Text className="mb-4 text-center text-sm font-bold">
           {sheetData?.name}
         </Text>
 
         {renderView === 'menu' && (
           <View className="px-4 pb-4">
-            <View className="gap-0.5">
+            <View className="gap-1">
               <Button
                 variant="secondary"
                 size="lg"
@@ -130,15 +130,14 @@ const AccountActionSheet = () => {
               All transaction history related to this account will be deleted
               permanently.
             </Text>
-            <Text className="mb-3 text-destructive">
+            <Text className="mb-3 text-red-600">
               This action cannot be undone.
             </Text>
 
-            <View className="gap-0.5">
+            <View className="gap-1">
               <Button
                 variant="secondary-destructive"
                 size="lg"
-                className="flex-row items-center justify-center gap-4 px-4"
                 onPress={removeAccountHandler(sheetData?.id)}
               >
                 <Text>Delete</Text>
@@ -147,7 +146,6 @@ const AccountActionSheet = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="flex-row items-center justify-center gap-4 px-4"
                 onPress={() => setRenderView('menu')}
               >
                 <Text>Cancel</Text>

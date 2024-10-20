@@ -12,7 +12,7 @@ const buttonVariants = cva('group flex items-center justify-center', {
       outline: 'border border-input bg-background active:bg-accent',
       secondary: 'bg-secondary active:opacity-60',
       ghost: 'active:bg-accent active:opacity-60',
-      'secondary-destructive': 'bg-secondary active:opacity-80',
+      'secondary-destructive': 'bg-secondary active:opacity-60',
       link: 'active:opacity-60',
     },
     size: {
@@ -45,7 +45,7 @@ const buttonTextVariants = cva('text-base font-semibold text-foreground', {
       secondary: 'text-secondary-foreground',
       ghost: 'group-active:text-accent-foreground',
       link: 'font-medium text-primary',
-      'secondary-destructive': 'text-destructive ',
+      'secondary-destructive': 'text-red-600 ',
     },
     size: {
       default: '',

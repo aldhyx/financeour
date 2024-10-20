@@ -25,11 +25,11 @@ export const Providers = (props: PropsWithChildren) => {
     setStatusBarBackgroundColor(theme.colors.background, true);
     setStatusBarStyle(theme.dark ? 'light' : 'dark', true);
     setAndroidNavigationBar(theme.dark ? 'dark' : 'light');
-  }, [theme.colors.background, theme.dark]);
+  }, [theme.dark]);
 
   return (
     <GestureHandlerRootView
-      style={{ backgroundColor: theme.colors.background, flex: 1 }}
+      style={{ flex: 1 }}
       className={theme.dark ? `dark` : undefined}
     >
       <DevTools />
