@@ -4,7 +4,6 @@ import { View } from 'react-native';
 
 import { Calculator } from '@/components/tools/calculator';
 import { Numpad } from '@/components/tools/numpad';
-import { CalculatorIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
@@ -68,10 +67,10 @@ const NumInputSheet = () => {
         <View className="pb-4">
           {renderView === 'numpad' && (
             <>
-              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
-                <Text className="font-bold">123</Text>
-                <Text>Numpad</Text>
-              </View>
+              <Text className="mb-3 text-center text-sm font-semibold">
+                Numpad
+              </Text>
+
               <Numpad
                 onPressCalc={() => {
                   setRenderView('calc');
@@ -84,10 +83,9 @@ const NumInputSheet = () => {
 
           {renderView === 'calc' && (
             <>
-              <View className="mb-2 flex-row items-center justify-start gap-2 px-4">
-                <CalculatorIcon className="text-foreground" size={20} />
-                <Text>Kalkulator</Text>
-              </View>
+              <Text className="mb-3 text-center text-sm font-semibold">
+                Calculator
+              </Text>
               <Calculator
                 onPressNumpad={() => {
                   setRenderView('numpad');
