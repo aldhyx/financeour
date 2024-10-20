@@ -10,9 +10,9 @@ import { Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import {
-  AccountSheetProvider,
-  useAccountSheetContext,
-} from '@/components/action-sheets/account/choose-account.sheet';
+  AccountListSheetProvider,
+  useAccountListSheetContext,
+} from '@/components/action-sheets/account/account-list.sheet';
 import {
   NumInputSheetProvider,
   useNumInputSheetContext,
@@ -33,9 +33,9 @@ import { getErrorMessage } from '@/lib/utils';
 export default function CreateTransactionScreen() {
   return (
     <NumInputSheetProvider>
-      <AccountSheetProvider>
+      <AccountListSheetProvider>
         <CreateTransactionForm />
-      </AccountSheetProvider>
+      </AccountListSheetProvider>
     </NumInputSheetProvider>
   );
 }
@@ -46,7 +46,8 @@ type Schema = z.infer<typeof insertTxFormSchema>;
 
 // eslint-disable-next-line max-lines-per-function
 const CreateTransactionForm = () => {
-  const { showSheetAsync: showAccountSheetAsync } = useAccountSheetContext();
+  const { showSheetAsync: showAccountSheetAsync } =
+    useAccountListSheetContext();
   const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
 
   const { mutateAsync: create } = useCreateTransaction();

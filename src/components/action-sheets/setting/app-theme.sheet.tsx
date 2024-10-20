@@ -55,7 +55,7 @@ const AppThemeSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            Choose a theme
+            Select app theme
           </Text>
           <ScrollView>
             <RadioGroup value={selectedTheme.id}>
@@ -70,7 +70,7 @@ const AppThemeSheet = () => {
                 >
                   <View className="flex-row items-center gap-4">
                     <Icon size={20} className="text-foreground" />
-                    <Text className="font-medium">{label}</Text>
+                    <Text className="font-semibold">{label}</Text>
                   </View>
 
                   <RadioGroupIndicator />
