@@ -1,5 +1,15 @@
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import React, { PropsWithChildren, useRef } from 'react';
+import {
+  BottomSheetModal,
+  BottomSheetTextInput,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import React, {
+  PropsWithChildren,
+  useDeferredValue,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -8,6 +18,8 @@ import {
   SheetBackdrop,
 } from '@/components/action-sheets/sheet-backdrop';
 import { createSheetContext } from '@/components/action-sheets/sheet-context';
+import { AlertCard } from '@/components/ui/cards/alert.card';
+import { inputVariants } from '@/components/ui/form/input';
 import {
   RadioGroup,
   RadioGroupIndicator,
@@ -17,6 +29,7 @@ import { Text } from '@/components/ui/text';
 import { ACCOUNT_TYPE_ICONS } from '@/constants/app';
 import { useAccounts } from '@/db/actions/account';
 import { useThemeConfig } from '@/hooks/use-theme-config';
+import { cn } from '@/lib/utils';
 
 type SheetData = { accountId?: string; accountName?: string };
 type SheetReturnData = { accountId: string; accountName: string } | undefined;
@@ -45,6 +58,8 @@ const AccountSheet = () => {
   const { colors } = useThemeConfig();
   const { data } = useAccounts();
   const { height } = useWindowDimensions();
+  const [searchValue, setSearchValue] = useState('');
+  const deferredSearchValue = useDeferredValue(searchValue);
 
   const pressRadioHandler = (accountId: string, accountName: string) => {
     sheetReturnRef.current = { accountId, accountName };
@@ -59,6 +74,18 @@ const AccountSheet = () => {
     }
   };
 
+  const filteredData = useMemo(() => {
+    const value = deferredSearchValue.toLowerCase();
+    return data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(value.toLowerCase()) ||
+        item.type.toLowerCase().includes(value.toLowerCase())
+    );
+  }, [deferredSearchValue, data]);
+
+  const hasData = data.length > 0;
+  const hasFilteredData = filteredData.length > 0;
+
   return (
     <BottomSheetModal
       ref={sheetRef}
@@ -72,13 +99,40 @@ const AccountSheet = () => {
     >
       <BottomSheetView className="flex-1">
         <View className="pb-4">
-          <Text className="border-b border-b-secondary pb-3 text-center text-sm font-semibold">
+          <Text className="mb-3 text-center text-sm font-semibold">
             Choose account
           </Text>
 
+          {!hasData && (
+            <View className="p-4">
+              <AlertCard
+                title="No account found"
+                subTitle="Create your first account & start manage your finance now."
+              />
+            </View>
+          )}
+
+          {hasData && (
+            <View className="mb-3 px-4">
+              <BottomSheetTextInput
+                className={cn(inputVariants({ size: 'sm' }))}
+                placeholder="Search account..."
+                onChangeText={setSearchValue}
+              />
+            </View>
+          )}
+
+          {hasData && !hasFilteredData && (
+            <View>
+              <Text className="text-center text-muted-foreground">
+                No account found.
+              </Text>
+            </View>
+          )}
+
           <ScrollView>
             <RadioGroup value={sheetData?.accountId}>
-              {data.map((item) => {
+              {filteredData.map((item) => {
                 const Icon =
                   ACCOUNT_TYPE_ICONS[item.type] ?? ACCOUNT_TYPE_ICONS.unknown;
 
