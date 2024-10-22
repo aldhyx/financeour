@@ -3,6 +3,7 @@ import {
   DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import dayjs from 'dayjs';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -27,7 +28,7 @@ import {
   useCreateTransaction,
 } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { dateToString, getToday } from '@/lib/dayjs';
+import { getToday } from '@/lib/dayjs/utils';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateTransactionScreen() {
@@ -71,7 +72,7 @@ const CreateTransactionForm = () => {
 
   const amount = watch('amount');
   const datetime = watch('datetime');
-  const datetimeString = dateToString(datetime);
+  const datetimeString = dayjs(datetime).format('dddd, D MMMM YYYY');
   const fromAccount = watch('fromAccount');
   const toAccount = watch('toAccount');
   const transactionType = watch('transactionType');

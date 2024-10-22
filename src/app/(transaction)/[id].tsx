@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -18,7 +19,6 @@ import { Text } from '@/components/ui/text';
 import { TRANSACTION_TYPES_LABEL } from '@/constants/app';
 import { Tx, useTransactionByID } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { dateToString } from '@/lib/dayjs';
 
 export default function DetailTransactionScreen() {
   const params = useLocalSearchParams<{ id: string }>();
@@ -102,7 +102,7 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
           <Text className="text-sm text-muted-foreground">
             Tanggal transaksi
           </Text>
-          <Text>{dateToString(tx.datetime)}</Text>
+          <Text>{dayjs(tx.datetime).format('dddd, D MMMM YYYY')}</Text>
         </View>
 
         <View className="mb-3 gap-1 px-3">

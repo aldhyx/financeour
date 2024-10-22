@@ -2,7 +2,7 @@ import { asc, eq, sum } from 'drizzle-orm';
 
 import { db } from '@/db/drizzle';
 import { accountTable, txTable } from '@/db/tables';
-import { getToday } from '@/lib/dayjs';
+import { getToday } from '@/lib/dayjs/utils';
 
 import type { InsertTx } from '../transaction';
 import type {
