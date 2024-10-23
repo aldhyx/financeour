@@ -45,7 +45,7 @@ const ThemeSetting = () => {
 
   return (
     <Pressable className="active:opacity-50" onPress={showSheet}>
-      <View className="flex-row items-center gap-3 rounded-xl bg-secondary p-4">
+      <View className="flex-row items-center gap-3 rounded-2xl bg-secondary p-4">
         <PaletteIcon size={24} className="text-foreground" />
         <View className="shrink">
           <Text className="font-semibold">App theme</Text>
@@ -61,7 +61,7 @@ const ThemeSetting = () => {
 const LanguageSetting = () => {
   return (
     <Pressable className="active:opacity-50">
-      <View className="flex-row items-center gap-3 rounded-xl bg-secondary p-4">
+      <View className="flex-row items-center gap-3 rounded-2xl bg-secondary p-4">
         <LanguagesIcon size={24} className="text-foreground" />
         <View className="shrink">
           <Text className="font-semibold">App language</Text>

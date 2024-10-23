@@ -19,7 +19,7 @@ export const AccountCard = memo((props: Props) => {
 
   return (
     <TouchableOpacity onPress={() => router.push(`/(account)/${props.id}`)}>
-      <View className="rounded-xl border border-secondary bg-secondary">
+      <View className="rounded-2xl border border-secondary bg-secondary">
         <View
           className="mb-2 self-start border border-secondary bg-background px-4 py-1"
           style={{
