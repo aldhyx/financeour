@@ -10,6 +10,9 @@ import {
 } from './action';
 import { GetTransactionsFilter } from './type';
 
+/**
+ * a hook used to get transaction by id
+ */
 export function useTransactionByID(id: string) {
   const query = useQuery({
     queryKey: [QUERY_KEYS.GET_TX_BY_ID, id],
@@ -19,7 +22,10 @@ export function useTransactionByID(id: string) {
   return query;
 }
 
-export function useTransactions(filter: GetTransactionsFilter) {
+/**
+ * a hook used to get transaction list, with default filter of 5 rows & order by column id descending
+ */
+export function useTransactions(filter: GetTransactionsFilter = {}) {
   const query = useQuery({
     queryKey: [QUERY_KEYS.GET_TXS, filter],
     queryFn: () => getTransactions(filter),
@@ -29,6 +35,9 @@ export function useTransactions(filter: GetTransactionsFilter) {
   return query;
 }
 
+/**
+ * a hook used to create transaction
+ */
 export function useCreateTransaction() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -48,6 +57,9 @@ export function useCreateTransaction() {
   return mutation;
 }
 
+/**
+ * a hook used to remove transaction by id
+ */
 export function useRemoveTransaction() {
   const queryClient = useQueryClient();
   const mutation = useMutation({

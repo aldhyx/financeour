@@ -22,27 +22,26 @@ export const getTransactionById = async (id: string) => {
 };
 
 export const getTransactions: GetTransactions = async (filter = {}) => {
-  const { limit, orderBy, datetime } = filter;
+  const { limit = 5, orderBy, datetime } = filter;
+  const orderByColumn = txTable[orderBy?.column || 'id'];
+  const orderByMode = orderBy?.mode || 'desc';
+
   const query = db.select().from(txTable);
 
   if (datetime) {
-    const monthYear = `${datetime.month}${datetime.year}`;
+    const { month, year } = datetime;
+    const monthYear = `${month}${year}`;
     query.where(
       sql`
       strftime('%m%Y', datetime(${txTable.datetime}, 'unixepoch')) = ${monthYear}`
     );
   }
 
-  if (orderBy?.mode === 'asc') {
-    query.orderBy(asc(txTable[orderBy.column]));
-  }
+  const result = await query
+    .orderBy(orderByMode === 'asc' ? asc(orderByColumn) : desc(orderByColumn))
+    .limit(limit);
 
-  if (orderBy?.mode === 'desc') {
-    query.orderBy(desc(txTable[orderBy.column]));
-  }
-
-  if (limit) query.limit(limit);
-  return await query;
+  return result;
 };
 
 const makeTransaction: MakeTransaction = async (sourceBalance, values) => {

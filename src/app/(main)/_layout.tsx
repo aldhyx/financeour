@@ -71,7 +71,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="home"
         options={{
-          title: translate('bottom_nav.home'),
+          title: 'Financeour',
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="home" />

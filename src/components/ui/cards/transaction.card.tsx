@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
@@ -37,35 +36,28 @@ export const TransactionCard = (props: Props) => {
   const { maskCurrency } = useMaskCurrency();
   const TxIcon = txTypeIcons[props.txType];
   const txColor = txTypeColors[props.txType];
-  const dateString = dayjs(props.txDate).format('dddd, D MMM YYYY');
   const router = useRouter();
 
   return (
     <Pressable
-      className="active:opacity-50"
+      className="justify-center p-4 active:opacity-50"
       onPress={() => router.push(`/(transaction)/${props.txId}`)}
     >
-      <View className="gap-1 px-4">
-        <View className="flex-row justify-between gap-2 ">
-          <Text className="text-sm text-muted-foreground">Shopping</Text>
-          <Text className="text-sm">{dateString}</Text>
-        </View>
-
-        <View className="flex-row items-center justify-between gap-2">
-          <Text className="font-medium">
+      <View className="flex-row items-center justify-between gap-4">
+        <View className="shrink flex-row items-center gap-2">
+          <Text>🛍️</Text>
+          <Text className="shrink font-medium" numberOfLines={1}>
             {props.fromAccountName}
             {props.toAccountName && ` - ${props.toAccountName}`}
           </Text>
+        </View>
 
-          <View className="flex-row items-center gap-1">
-            <Text
-              className={`text-forefill-foreground font-semibold ${txColor}`}
-            >
-              {maskCurrency(props.txAmount).masked}
-            </Text>
+        <View className="flex-row items-center gap-1">
+          <Text className={`text-forefill-foreground font-semibold ${txColor}`}>
+            {maskCurrency(props.txAmount).masked}
+          </Text>
 
-            <TxIcon size={20} className={`${txColor}`} />
-          </View>
+          <TxIcon size={20} className={`${txColor}`} />
         </View>
       </View>
     </Pressable>

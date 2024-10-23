@@ -80,6 +80,7 @@ const MonthlyTotalCard = (props: { data: Tx[] }) => {
     </View>
   );
 };
+
 const TransactionList = ({
   data,
   currentTimestamp,
@@ -114,33 +115,32 @@ const TransactionList = ({
 
       <MonthlyTotalCard data={data} />
 
-      <FlashList
-        data={data}
-        renderItem={({ item }) => (
-          <TransactionCard
-            key={item.id}
-            fromAccountName={item.fromAccountName}
-            toAccountName={item.toAccountName}
-            txAmount={item.amount}
-            txType={item.type}
-            txDate={item.datetime}
-            txId={item.id}
-          />
-        )}
-        estimatedItemSize={data?.length || 1}
-        ItemSeparatorComponent={() => <View className="h-3" />}
-        ListEmptyComponent={
-          <View className="flex-1 px-4">
-            <AlertCard
-              title="No transactions yet "
-              subTitle="Your transactions will appear here, adjust your filters or add a new transaction "
+      <View className="mx-4 flex-1 rounded-2xl bg-secondary">
+        <FlashList
+          data={data}
+          renderItem={({ item }) => (
+            <TransactionCard
+              key={item.id}
+              fromAccountName={item.fromAccountName}
+              toAccountName={item.toAccountName}
+              txAmount={item.amount}
+              txType={item.type}
+              txDate={item.datetime}
+              txId={item.id}
             />
-          </View>
-        }
-        contentContainerStyle={{
-          paddingBottom: 16,
-        }}
-      />
+          )}
+          estimatedItemSize={data?.length || 1}
+          ItemSeparatorComponent={() => <View className="h-px bg-background" />}
+          ListEmptyComponent={
+            <View className="flex-1 px-4">
+              <AlertCard
+                title="No transactions yet "
+                subTitle="Your transactions will appear here, adjust your filters or add a new transaction "
+              />
+            </View>
+          }
+        />
+      </View>
     </View>
   );
 };

@@ -9,10 +9,16 @@ export type TxColumn = keyof z.infer<typeof selectTxSchema>;
 
 export type GetTransactionsFilter =
   | {
+      /**
+       * Default to id-desc
+       */
       orderBy?: {
         column: TxColumn;
         mode: 'asc' | 'desc';
       };
+      /**
+       * Default to 5 rows
+       */
       limit?: number;
       datetime?: {
         month: number;
