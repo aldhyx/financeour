@@ -24,7 +24,7 @@ const buttonVariants = cva('group flex items-center justify-center', {
       'icon-lg': 'size-14',
     },
     rounded: {
-      default: 'rounded-xl',
+      default: 'rounded-2xl',
       full: 'rounded-full',
       none: 'rounded-none',
     },

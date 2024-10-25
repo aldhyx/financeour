@@ -35,13 +35,13 @@ type SheetData = { accountId?: string; accountName?: string };
 type SheetReturnData = { accountId: string; accountName: string } | undefined;
 
 const {
-  useSheetContext: useAccountSheetContext,
+  useSheetContext: useAccountListSheetContext,
   useInternalSheetContext,
   SheetProvider,
   InternalSheetProvider,
 } = createSheetContext<SheetData, SheetReturnData>();
 
-const AccountSheetProvider = ({ children }: PropsWithChildren) => {
+const AccountListSheetProvider = ({ children }: PropsWithChildren) => {
   return (
     <InternalSheetProvider>
       <SheetProvider>
@@ -106,7 +106,7 @@ const AccountSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="mb-3 text-center text-sm font-semibold">
-            Choose account
+            Select an account
           </Text>
 
           {!hasData && (
@@ -173,4 +173,4 @@ const AccountSheet = () => {
   );
 };
 
-export { AccountSheetProvider, useAccountSheetContext };
+export { AccountListSheetProvider, useAccountListSheetContext };

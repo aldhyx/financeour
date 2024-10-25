@@ -5,9 +5,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, Pressable, View } from 'react-native';
 
 import {
-  AccountTypeSheetProvider,
-  useAccountTypeSheetContext,
-} from '@/components/action-sheets/account/choose-account-type.sheet';
+  AccountTypeListSheetProvider,
+  useAccountTypeListSheetContext,
+} from '@/components/action-sheets/account/account-type-list.sheet';
 import {
   NumInputSheetProvider,
   useNumInputSheetContext,
@@ -26,15 +26,16 @@ import { getErrorMessage } from '@/lib/utils';
 export default function CreateAccountScreen() {
   return (
     <NumInputSheetProvider>
-      <AccountTypeSheetProvider>
+      <AccountTypeListSheetProvider>
         <CreateAccountForm />
-      </AccountTypeSheetProvider>
+      </AccountTypeListSheetProvider>
     </NumInputSheetProvider>
   );
 }
 
 function CreateAccountForm() {
-  const { showSheetAsync: showAccountTypeSheet } = useAccountTypeSheetContext();
+  const { showSheetAsync: showAccountTypeSheet } =
+    useAccountTypeListSheetContext();
   const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
 
   const router = useRouter();
@@ -64,7 +65,7 @@ function CreateAccountForm() {
     }
   });
 
-  const pressChooseAccountHandler = async () => {
+  const selectAccountHandler = async () => {
     Keyboard.dismiss();
     const res = await showAccountTypeSheet({ accountType });
     if (!res) return;
@@ -96,12 +97,9 @@ function CreateAccountForm() {
 
       <FormGroup errorMessage={errors.type?.message}>
         <FormGroup.Label>Account type</FormGroup.Label>
-        <Pressable
-          className="active:opacity-50"
-          onPress={pressChooseAccountHandler}
-        >
+        <Pressable className="active:opacity-50" onPress={selectAccountHandler}>
           <FormGroup.Input
-            placeholder="Choose account type"
+            placeholder="Select account type"
             disabled
             value={accountType}
           />

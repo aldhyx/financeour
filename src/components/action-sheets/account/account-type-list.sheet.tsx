@@ -21,13 +21,13 @@ type SheetData = { accountType?: string };
 type SheetReturnData = { accountType: string } | undefined;
 
 const {
-  useSheetContext: useAccountTypeSheetContext,
+  useSheetContext: useAccountTypeListSheetContext,
   useInternalSheetContext,
   SheetProvider,
   InternalSheetProvider,
 } = createSheetContext<SheetData, SheetReturnData>();
 
-const AccountTypeSheetProvider = ({ children }: PropsWithChildren) => {
+const AccountTypeListSheetProvider = ({ children }: PropsWithChildren) => {
   return (
     <InternalSheetProvider>
       <SheetProvider>
@@ -72,7 +72,7 @@ const AccountTypeSheet = () => {
       <BottomSheetView>
         <View className="pb-3">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-semibold">
-            Choose account type
+            Select account type
           </Text>
 
           <RadioGroup value={sheetData?.accountType}>
@@ -98,4 +98,4 @@ const AccountTypeSheet = () => {
   );
 };
 
-export { AccountTypeSheetProvider, useAccountTypeSheetContext };
+export { AccountTypeListSheetProvider, useAccountTypeListSheetContext };

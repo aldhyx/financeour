@@ -2,34 +2,10 @@ import dayjs from 'dayjs';
 
 import {
   dateIsSunday,
-  dateToString,
   getToday,
   getTomorrow,
   getYesterday,
-  stringToDate,
-} from '@/lib/dayjs';
-
-describe('dateToString', () => {
-  it('should format a date to string using the default template', () => {
-    const date = new Date('2024-09-20');
-    const formattedDate = dateToString(date);
-    expect(formattedDate).toBe('Friday, 20 September 2024');
-  });
-
-  it('should format a date to string using a provided template', () => {
-    const date = new Date('2024-09-20');
-    const formattedDate = dateToString(date, 'YYYY-MM-DD');
-    expect(formattedDate).toBe('2024-09-20');
-  });
-});
-
-describe('stringToDate', () => {
-  it('should convert a string to a Date object', () => {
-    const dateStr = '2024-09-20';
-    const date = stringToDate(dateStr);
-    expect(date).toBeInstanceOf(Date);
-  });
-});
+} from '@/lib/dayjs/utils';
 
 describe('dateIsSunday', () => {
   it('should return true if the date is a Sunday', () => {

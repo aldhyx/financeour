@@ -6,9 +6,9 @@ import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import {
-  AccountTypeSheetProvider,
-  useAccountTypeSheetContext,
-} from '@/components/action-sheets/account/choose-account-type.sheet';
+  AccountTypeListSheetProvider,
+  useAccountTypeListSheetContext,
+} from '@/components/action-sheets/account/account-type-list.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { HeaderBar } from '@/components/ui/header-bar';
@@ -49,14 +49,14 @@ export default function UpdateAccountScreen() {
         }}
       />
 
-      <AccountTypeSheetProvider>
+      <AccountTypeListSheetProvider>
         <UpdateAccountForm
           id={data.id}
           name={data.name}
           description={data.description}
           type={data.type}
         />
-      </AccountTypeSheetProvider>
+      </AccountTypeListSheetProvider>
     </>
   );
 }
@@ -67,7 +67,8 @@ function UpdateAccountForm(props: {
   type: string;
   id: string;
 }) {
-  const { showSheetAsync: showAccountTypeSheet } = useAccountTypeSheetContext();
+  const { showSheetAsync: showAccountTypeSheet } =
+    useAccountTypeListSheetContext();
 
   const router = useRouter();
   const { mutateAsync: updateAccount } = useUpdateAccount();
@@ -101,7 +102,7 @@ function UpdateAccountForm(props: {
     }
   });
 
-  const pressChooseAccountHandler = async () => {
+  const selectAccountTypeHandler = async () => {
     Keyboard.dismiss();
     const res = await showAccountTypeSheet({ accountType });
     if (!res) return;
@@ -129,7 +130,7 @@ function UpdateAccountForm(props: {
           <FormGroup.Label>Account type</FormGroup.Label>
           <Pressable
             className="active:opacity-50"
-            onPress={pressChooseAccountHandler}
+            onPress={selectAccountTypeHandler}
           >
             <FormGroup.Input
               placeholder="Select account type"

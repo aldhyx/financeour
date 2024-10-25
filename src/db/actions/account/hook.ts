@@ -15,7 +15,7 @@ import { GetAccountsFilter } from './type';
 
 export function useTotalBalance() {
   const query = useQuery({
-    queryKey: [QUERY_KEYS.GET_TOTAL_BALANCE],
+    queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
     queryFn: getTotalBalance,
   });
 
@@ -23,11 +23,9 @@ export function useTotalBalance() {
 }
 
 export function useAccounts(filter: GetAccountsFilter = {}) {
-  const { byFavorite = false } = filter;
-
   const query = useQuery({
-    queryKey: [QUERY_KEYS.GET_ACCOUNTS, byFavorite],
-    queryFn: () => getAccounts({ byFavorite }),
+    queryKey: [QUERY_KEYS.ACCOUNT_LIST, filter],
+    queryFn: () => getAccounts(filter),
     initialData: [],
   });
 
@@ -36,7 +34,7 @@ export function useAccounts(filter: GetAccountsFilter = {}) {
 
 export function useAccountById(id: string) {
   const query = useQuery({
-    queryKey: [QUERY_KEYS.GET_ACCOUNT_BY_ID, id],
+    queryKey: [QUERY_KEYS.ACCOUNT_BY_ID, id],
     queryFn: ({ queryKey }) => getAccountById(queryKey[1]),
     initialData: null,
   });
@@ -49,9 +47,9 @@ export function useCreateAccount() {
   const mutation = useMutation({
     mutationFn: createAccount,
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_ACCOUNTS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_TOTAL_BALANCE],
+        queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
     },
   });
@@ -64,9 +62,10 @@ export function useUpdateAccount() {
   const mutation = useMutation({
     mutationFn: updateAccount,
     onSuccess(_, variables) {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_ACCOUNTS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_ACCOUNT_BY_ID, variables.id],
+        queryKey: [QUERY_KEYS.ACCOUNT_BY_ID, variables.id],
+        exact: true,
       });
     },
   });
@@ -79,15 +78,20 @@ export function useUpdateAccountBalance() {
   const mutation = useMutation({
     mutationFn: updateAccountBalance,
     onSuccess(_, variables) {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_ACCOUNTS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_ACCOUNT_BY_ID, variables.id],
+        queryKey: [QUERY_KEYS.ACCOUNT_BY_ID, variables.id],
         exact: true,
       });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_TOTAL_BALANCE],
+        queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TXS] });
+
+      // Invalidate recent transaction in main/home.tsx
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TX_LIST, { limit: 5 }],
+        exact: true,
+      });
     },
   });
 
@@ -99,15 +103,14 @@ export function useRemoveAccount() {
   const mutation = useMutation({
     mutationFn: removeAccount,
     onSuccess(_, id) {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_ACCOUNTS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
       queryClient.removeQueries({
-        queryKey: [QUERY_KEYS.GET_ACCOUNT_BY_ID, id],
+        queryKey: [QUERY_KEYS.ACCOUNT_BY_ID, id],
         exact: true,
       });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_TOTAL_BALANCE],
+        queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
-      // todo refresh recent transaction key
     },
   });
 

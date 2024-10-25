@@ -59,7 +59,7 @@ const generateCalendarData: GenerateCalendarData = () => {
 
 const YearCard = ({ year }: { year: number }) => {
   return (
-    <View className="h-10 w-20 justify-center rounded-xl">
+    <View className="h-10 w-20 justify-center rounded-full">
       <Text className="text-center">{year}</Text>
     </View>
   );
@@ -88,7 +88,7 @@ const MonthCard = ({
     <Pressable className="active:opacity-50" onPress={() => onPress(timestamp)}>
       <View
         className={cn(
-          'h-10 w-20 justify-center rounded-xl',
+          'h-10 w-20 justify-center rounded-full',
           isSelected ? 'bg-primary' : 'bg-secondary'
         )}
       >

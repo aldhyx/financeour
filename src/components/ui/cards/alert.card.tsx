@@ -11,7 +11,7 @@ export const AlertCard = (props: {
 }) => {
   return (
     <View
-      className={cn('rounded-xl border border-secondary p-4', props.className)}
+      className={cn('rounded-2xl border border-secondary p-4', props.className)}
     >
       <View className="flex-row gap-2">
         <InfoIcon className="text-foreground" size={24} />

@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -18,7 +19,6 @@ import { Text } from '@/components/ui/text';
 import { TRANSACTION_TYPES_LABEL } from '@/constants/app';
 import { Tx, useTransactionByID } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { dateToString } from '@/lib/dayjs';
 
 export default function DetailTransactionScreen() {
   const params = useLocalSearchParams<{ id: string }>();
@@ -63,7 +63,7 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
     <View className="px-4 pt-2">
       <Stack.Screen
         options={{
-          title: 'Rincian transaksi',
+          title: 'Detail transaction',
           header({ options }) {
             return (
               <HeaderBar
@@ -75,9 +75,9 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
           },
         }}
       />
-      <View className={`rounded-xl border border-dashed border-border py-4`}>
+      <View className={`rounded-2xl border border-dashed border-border py-4`}>
         <View className="mb-2 px-3">
-          <Text className="text-sm text-muted-foreground">Akun</Text>
+          <Text className="text-sm text-muted-foreground">Account</Text>
           <View className="flex-row items-start">
             <Text className="text-lg font-bold">{tx.fromAccountName}</Text>
 
@@ -100,24 +100,24 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
 
         <View className="mb-3 gap-1 px-3">
           <Text className="text-sm text-muted-foreground">
-            Tanggal transaksi
+            Transaction date
           </Text>
-          <Text>{dateToString(tx.datetime)}</Text>
+          <Text>{dayjs(tx.datetime).format('dddd, D MMMM YYYY')}</Text>
         </View>
 
         <View className="mb-3 gap-1 px-3">
           <Text className="text-sm text-muted-foreground">Kategori</Text>
-          <Text>Belanja</Text>
+          <Text>Shopping</Text>
         </View>
 
         <View className="gap-1 px-3">
-          <Text className="text-sm text-muted-foreground">Keterangan</Text>
+          <Text className="text-sm text-muted-foreground">Description</Text>
           <Text>{tx.description || '-'}</Text>
         </View>
       </View>
 
       <Text className="mt-4 text-center text-xs text-muted-foreground">
-        Dibuat pada: {tx.createdAt}
+        Created at: {tx.createdAt}
       </Text>
     </View>
   );

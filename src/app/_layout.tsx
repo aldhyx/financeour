@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { Providers } from '@/components/providers';
 import { useLoadDB } from '@/hooks/use-load-db';
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
-import initializeDayJs from '@/lib/dayjs';
+import { initializeDayJs } from '@/lib/dayjs/index';
 
 export {
   // Catch any errors thrown by the Layout component.

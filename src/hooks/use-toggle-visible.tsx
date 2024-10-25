@@ -14,8 +14,8 @@ export function useToggleVisible({
   toggleElementHeight?: number;
 } = {}) {
   const visible = useRef(defaultVisible || false);
-  const rotation = useSharedValue(0); // Rotation value for the icon
-  const height = useSharedValue(0); // Height value for the toggle content
+  const rotation = useSharedValue(defaultVisible ? 180 : 0); // Rotation value for the icon
+  const height = useSharedValue(defaultVisible ? toggleElementHeight : 0); // Height value for the toggle content
 
   const toggleVisible = () => {
     // Rotate the icon between 0 and 180 degrees

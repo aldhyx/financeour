@@ -62,7 +62,7 @@ const DeleteTransactionSheet = () => {
     >
       <BottomSheetView>
         <View className="px-4 pb-4">
-          <Text className="mb-2 text-xl font-bold">Delete transaction?</Text>
+          <Text className="mb-1 text-xl font-bold">Delete transaction?</Text>
           <Text className="mb-3 text-red-600">
             This action cannot be undone.
           </Text>

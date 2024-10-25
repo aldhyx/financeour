@@ -5,7 +5,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { Button } from '@/components/ui/button';
 import { AlertCard } from '@/components/ui/cards/alert.card';
 import { TransactionCard } from '@/components/ui/cards/transaction.card';
-import { ChevronRightIcon, EyeOffIcon, PlusIcon } from '@/components/ui/icon';
+import { ChevronRightIcon, EyeOffIcon, WalletIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useAccounts, useTotalBalance } from '@/db/actions/account';
 import { useTransactions } from '@/db/actions/transaction';
@@ -16,7 +16,7 @@ function CurrentBalanceSection() {
   const { maskCurrency } = useMaskCurrency();
 
   return (
-    <View className="rounded-xl bg-secondary px-4 py-6">
+    <View className="rounded-2xl bg-secondary px-4 py-6">
       <Pressable className="absolute right-2 top-2 size-12 items-center justify-center rounded-full active:bg-foreground/10">
         <EyeOffIcon className="text-primary" size={24} />
       </Pressable>
@@ -29,7 +29,7 @@ function CurrentBalanceSection() {
       <View className="my-4 h-px w-full bg-background" />
 
       <View className="flex-row gap-4">
-        <View className="w-full shrink justify-center rounded-xl">
+        <View className="w-full shrink justify-center">
           <Text numberOfLines={1} className="text-sm">
             Monthly Income
           </Text>
@@ -37,7 +37,7 @@ function CurrentBalanceSection() {
             Rp. 0
           </Text>
         </View>
-        <View className="w-full shrink justify-center rounded-xl">
+        <View className="w-full shrink justify-center">
           <Text numberOfLines={1} className="text-sm">
             Monthly Expense
           </Text>
@@ -68,7 +68,7 @@ function FavoriteAccountSection() {
       {data.map((item) => (
         <View
           key={item.id}
-          className="h-20 min-w-40 shrink justify-center rounded-xl bg-secondary px-3"
+          className="h-20 min-w-40 shrink justify-center rounded-2xl bg-secondary px-4"
         >
           <Text numberOfLines={1} className="text-sm">
             {item.name}
@@ -81,11 +81,11 @@ function FavoriteAccountSection() {
 
       <Pressable
         onPress={() => {
-          push('/(account)/create');
+          push('/(account)/');
         }}
-        className="h-20 min-w-16 items-center justify-center rounded-xl border border-dashed border-border px-2 active:bg-secondary"
+        className="h-20 min-w-16 items-center justify-center rounded-2xl border border-dashed border-border px-2 active:bg-secondary"
       >
-        <PlusIcon className="text-muted-foreground" size={24} />
+        <WalletIcon className="text-muted-foreground" size={24} />
       </Pressable>
     </ScrollView>
   );
@@ -94,12 +94,7 @@ function FavoriteAccountSection() {
 function RecentTransactionSection() {
   const { data, isLoading } = useTransactions({
     limit: 5,
-    orderBy: {
-      column: 'datetime',
-      mode: 'desc',
-    },
   });
-
   const isEmptyData = !isLoading && data.length === 0;
 
   return (
@@ -125,17 +120,19 @@ function RecentTransactionSection() {
       )}
 
       {!isEmptyData && (
-        <View className="gap-3">
-          {data.map((item) => (
-            <TransactionCard
-              key={item.id}
-              fromAccountName={item.fromAccountName}
-              toAccountName={item.toAccountName}
-              txAmount={item.amount}
-              txType={item.type}
-              txDate={item.datetime}
-              txId={item.id}
-            />
+        <View className="mx-4 rounded-2xl bg-secondary">
+          {data.map((item, index) => (
+            <View key={item.id}>
+              {index > 0 && <View className="h-px bg-background" />}
+              <TransactionCard
+                fromAccountName={item.fromAccountName}
+                toAccountName={item.toAccountName}
+                txAmount={item.amount}
+                txType={item.type}
+                txDate={item.datetime}
+                txId={item.id}
+              />
+            </View>
           ))}
         </View>
       )}

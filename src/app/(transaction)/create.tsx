@@ -3,6 +3,7 @@ import {
   DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import dayjs from 'dayjs';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -10,9 +11,9 @@ import { Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
 import {
-  AccountSheetProvider,
-  useAccountSheetContext,
-} from '@/components/action-sheets/account/choose-account.sheet';
+  AccountListSheetProvider,
+  useAccountListSheetContext,
+} from '@/components/action-sheets/account/account-list.sheet';
 import {
   NumInputSheetProvider,
   useNumInputSheetContext,
@@ -27,15 +28,15 @@ import {
   useCreateTransaction,
 } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { dateToString, getToday } from '@/lib/dayjs';
+import { getToday } from '@/lib/dayjs/utils';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateTransactionScreen() {
   return (
     <NumInputSheetProvider>
-      <AccountSheetProvider>
+      <AccountListSheetProvider>
         <CreateTransactionForm />
-      </AccountSheetProvider>
+      </AccountListSheetProvider>
     </NumInputSheetProvider>
   );
 }
@@ -46,7 +47,8 @@ type Schema = z.infer<typeof insertTxFormSchema>;
 
 // eslint-disable-next-line max-lines-per-function
 const CreateTransactionForm = () => {
-  const { showSheetAsync: showAccountSheetAsync } = useAccountSheetContext();
+  const { showSheetAsync: showAccountSheetAsync } =
+    useAccountListSheetContext();
   const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
 
   const { mutateAsync: create } = useCreateTransaction();
@@ -70,7 +72,7 @@ const CreateTransactionForm = () => {
 
   const amount = watch('amount');
   const datetime = watch('datetime');
-  const datetimeString = dateToString(datetime);
+  const datetimeString = dayjs(datetime).format('dddd, D MMMM YYYY');
   const fromAccount = watch('fromAccount');
   const toAccount = watch('toAccount');
   const transactionType = watch('transactionType');
