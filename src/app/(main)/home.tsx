@@ -92,7 +92,9 @@ function FavoriteAccountSection() {
 }
 
 function RecentTransactionSection() {
-  const { data, isLoading } = useTransactions();
+  const { data, isLoading } = useTransactions({
+    limit: 5,
+  });
   const isEmptyData = !isLoading && data.length === 0;
 
   return (

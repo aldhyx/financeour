@@ -5,18 +5,37 @@ import { QUERY_KEYS } from '@/constants/query-key';
 import {
   createTransaction,
   getTransactionById,
+  getTransactionGroupedByDay,
   getTransactions,
   removeTransaction,
 } from './action';
-import { GetTransactionsFilter } from './type';
+import {
+  GetTransactionGroupedByDayFilter,
+  GetTransactionsFilter,
+} from './type';
 
 /**
  * a hook used to get transaction by id
  */
 export function useTransactionByID(id: string) {
   const query = useQuery({
-    queryKey: [QUERY_KEYS.GET_TX_BY_ID, id],
+    queryKey: [QUERY_KEYS.TX_BY_ID, id],
     queryFn: () => getTransactionById(id),
+  });
+
+  return query;
+}
+
+/**
+ * a hook used to get transaction list grouped by day, with default filter to today month & year
+ */
+export function useTransactionGroupedByDay(
+  filter: GetTransactionGroupedByDayFilter = {}
+) {
+  const query = useQuery({
+    queryKey: [QUERY_KEYS.TX_LIST_GROUPED_BY_DAY, filter],
+    queryFn: () => getTransactionGroupedByDay(filter),
+    initialData: [],
   });
 
   return query;
@@ -27,7 +46,7 @@ export function useTransactionByID(id: string) {
  */
 export function useTransactions(filter: GetTransactionsFilter = {}) {
   const query = useQuery({
-    queryKey: [QUERY_KEYS.GET_TXS, filter],
+    queryKey: [QUERY_KEYS.TX_LIST, filter],
     queryFn: () => getTransactions(filter),
     initialData: [],
   });
@@ -44,13 +63,17 @@ export function useCreateTransaction() {
     mutationFn: createTransaction,
     onSuccess(_) {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_ACCOUNTS],
+        queryKey: [QUERY_KEYS.ACCOUNT_LIST],
       });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_TOTAL_BALANCE],
+        queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
 
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TXS] });
+      // Invalidate recent transaction in main/home.tsx
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TX_LIST, { limit: 5 }],
+        exact: true,
+      });
     },
   });
 
@@ -66,16 +89,19 @@ export function useRemoveTransaction() {
     mutationFn: removeTransaction,
     onSuccess(_, id) {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_ACCOUNTS],
+        queryKey: [QUERY_KEYS.ACCOUNT_LIST],
       });
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_TOTAL_BALANCE],
+        queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
 
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TXS] });
       queryClient.removeQueries({
-        queryKey: [QUERY_KEYS.GET_TX_BY_ID, id],
+        queryKey: [QUERY_KEYS.TX_BY_ID, id],
         exact: true,
+      });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TX_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TX_LIST_GROUPED_BY_DAY],
       });
     },
   });

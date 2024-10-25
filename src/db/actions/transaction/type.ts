@@ -7,18 +7,39 @@ export type InsertTx = Omit<z.infer<typeof insertTxSchema>, 'createdAt' | 'id'>;
 export type UpdateTx = Partial<InsertTx>;
 export type TxColumn = keyof z.infer<typeof selectTxSchema>;
 
+export type GetTransactionGroupedByDayFilter =
+  | {
+      /**
+       * Default to today month & year
+       */
+      datetime?: {
+        month: number;
+        year: number;
+      };
+    }
+  | undefined;
+export type GetTransactionGroupedByDay = (
+  filter: GetTransactionGroupedByDayFilter
+) => Promise<
+  (
+    | string // used as grouped title
+    | (Tx & {
+        // used to track start & end of grouped data
+        isStart: boolean;
+        isEnd: boolean;
+      })
+  )[]
+>;
+
 export type GetTransactionsFilter =
   | {
       /**
-       * Default to id-desc
+       * Default to datetime-desc
        */
       orderBy?: {
         column: TxColumn;
         mode: 'asc' | 'desc';
       };
-      /**
-       * Default to 5 rows
-       */
       limit?: number;
       datetime?: {
         month: number;

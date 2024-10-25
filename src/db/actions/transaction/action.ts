@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { asc, desc, eq, sql } from 'drizzle-orm';
 
 import { db } from '@/db/drizzle';
@@ -10,6 +11,7 @@ import {
 } from './schema';
 import type {
   CreateTransaction,
+  GetTransactionGroupedByDay,
   GetTransactions,
   MakeTransaction,
   MakeTransferTransaction,
@@ -21,9 +23,55 @@ export const getTransactionById = async (id: string) => {
   return result.length === 0 ? null : result[0];
 };
 
+export const getTransactionGroupedByDay: GetTransactionGroupedByDay = async (
+  filter = {}
+) => {
+  const month = filter.datetime?.month || dayjs().month() + 1;
+  const year = filter.datetime?.year || dayjs().year();
+  const monthYear = `${month}${year}`;
+
+  const items = await db
+    .select()
+    .from(txTable)
+    .where(
+      sql`
+    strftime('%m%Y', datetime(${txTable.datetime}, 'unixepoch')) = ${monthYear}`
+    )
+    .orderBy(desc(txTable.datetime));
+
+  let currentDate;
+  let lastItem;
+  const result = [];
+
+  for (const item of items) {
+    const date = dayjs(item.datetime).format('dddd, D MMMM YYYY');
+    const isDiffDate = currentDate !== date;
+
+    if (isDiffDate) {
+      // if diff date, mark the last item as the end of its group
+      if (lastItem && typeof lastItem !== 'string') {
+        lastItem.isEnd = true;
+      }
+
+      currentDate = date;
+      result.push(date); // used as group title
+      result.push({ ...item, isStart: true, isEnd: false }); // new group starts
+    } else {
+      result.push({ ...item, isStart: false, isEnd: false });
+    }
+
+    lastItem = result[result.length - 1]; // store last item to modify later
+  }
+
+  // Mark the last item as the end of the group
+  if (lastItem && typeof lastItem !== 'string') lastItem.isEnd = true;
+
+  return result;
+};
+
 export const getTransactions: GetTransactions = async (filter = {}) => {
-  const { limit = 5, orderBy, datetime } = filter;
-  const orderByColumn = txTable[orderBy?.column || 'id'];
+  const { limit, orderBy, datetime } = filter;
+  const orderByColumn = txTable[orderBy?.column || 'datetime'];
   const orderByMode = orderBy?.mode || 'desc';
 
   const query = db.select().from(txTable);
@@ -37,9 +85,11 @@ export const getTransactions: GetTransactions = async (filter = {}) => {
     );
   }
 
-  const result = await query
-    .orderBy(orderByMode === 'asc' ? asc(orderByColumn) : desc(orderByColumn))
-    .limit(limit);
+  if (limit) query.limit(limit);
+
+  const result = await query.orderBy(
+    orderByMode === 'asc' ? asc(orderByColumn) : desc(orderByColumn)
+  );
 
   return result;
 };
