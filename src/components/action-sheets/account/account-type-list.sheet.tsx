@@ -72,7 +72,7 @@ const AccountTypeSheet = () => {
       <BottomSheetView>
         <View className="pb-3">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-semibold">
-            select account type
+            Select account type
           </Text>
 
           <RadioGroup value={sheetData?.accountType}>

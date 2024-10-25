@@ -106,7 +106,7 @@ const AccountSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="mb-3 text-center text-sm font-semibold">
-            select an account
+            Select an account
           </Text>
 
           {!hasData && (
