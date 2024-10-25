@@ -24,7 +24,7 @@ export default function TransactionListScreen() {
   const { contentAnimatedStyle, iconAnimatedStyle, toggleVisible } =
     useToggleVisible({
       toggleElementHeight: 56, // 40 base height + 16 space height
-      defaultVisible: true,
+      defaultVisible: false,
     });
 
   return (

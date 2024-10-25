@@ -1,6 +1,13 @@
 import { FlashList } from '@shopify/flash-list';
 import dayjs from 'dayjs';
-import React, { memo, useMemo } from 'react';
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Pressable, View } from 'react-native';
 
 import { Text } from '@/components/ui/text';
@@ -19,6 +26,7 @@ type CalendarItems =
 
 type GenerateCalendarData = () => {
   currentMonthIndex: number;
+  initialScrollIndex: number;
   calendarItems: CalendarItems[];
 };
 
@@ -54,7 +62,11 @@ const generateCalendarData: GenerateCalendarData = () => {
     }
   }
 
-  return { calendarItems, currentMonthIndex };
+  return {
+    calendarItems,
+    currentMonthIndex,
+    initialScrollIndex: currentMonthIndex - 1,
+  };
 };
 
 const YearCard = ({ year }: { year: number }) => {
@@ -76,7 +88,7 @@ const MonthCard = ({
   monthIndex: number;
   currentMonthIndex: number;
   selectedTimestamp?: number;
-  onPress: (t: number) => void;
+  onPress: (t: number, i: number) => void;
 }) => {
   if (!timestamp) return null;
 
@@ -85,7 +97,10 @@ const MonthCard = ({
     : monthIndex === currentMonthIndex;
 
   return (
-    <Pressable className="active:opacity-50" onPress={() => onPress(timestamp)}>
+    <Pressable
+      className="active:opacity-50"
+      onPress={() => onPress(timestamp, monthIndex)}
+    >
       <View
         className={cn(
           'h-10 w-20 justify-center rounded-full',
@@ -104,7 +119,6 @@ const MonthCard = ({
     </Pressable>
   );
 };
-const Separator = () => <View className="h-10 w-1" />;
 
 export const HorizontalMonthCalender = memo(
   ({
@@ -114,18 +128,45 @@ export const HorizontalMonthCalender = memo(
     onPressMonth: (timestamp: number) => void;
     selectedTimestamp?: number;
   }) => {
-    const { calendarItems, currentMonthIndex } = useMemo(
+    const { calendarItems, currentMonthIndex, initialScrollIndex } = useMemo(
       generateCalendarData,
       []
+    );
+    const [loaded, setLoaded] = useState(false);
+    const ref = useRef<FlashList<CalendarItems>>(null);
+
+    useEffect(() => {
+      // Will be trigger twice, when first component mount & flashlist loaded
+      // when flashlist loaded, scroll to initial index with no animation
+      if (loaded) {
+        ref.current?.scrollToIndex({
+          index: initialScrollIndex,
+        });
+      }
+    }, [loaded, initialScrollIndex]);
+
+    const pressItemHandler = useCallback(
+      (timestamp: number, itemIndex: number) => {
+        ref.current?.scrollToIndex({
+          index: itemIndex - 1,
+          animated: true,
+        });
+        onPressMonth(timestamp);
+      },
+      [onPressMonth]
     );
 
     return (
       <View className="h-10">
         <FlashList
+          ref={ref}
+          onLoad={() => {
+            setLoaded(true);
+          }}
           data={calendarItems}
           keyExtractor={(item, index) => `${item.type}-${item.year}-${index}`}
           horizontal
-          extraData={selectedTimestamp}
+          extraData={{ selectedTimestamp, currentMonthIndex, pressItemHandler }}
           renderItem={(props) => {
             if (props.item.type === 'year') {
               return <YearCard year={props.item.year} />;
@@ -135,16 +176,18 @@ export const HorizontalMonthCalender = memo(
               <MonthCard
                 timestamp={props.item.timestamp}
                 monthIndex={props.index}
-                currentMonthIndex={currentMonthIndex}
-                selectedTimestamp={selectedTimestamp}
-                onPress={onPressMonth}
+                currentMonthIndex={props.extraData.currentMonthIndex}
+                selectedTimestamp={props.extraData.selectedTimestamp}
+                onPress={props.extraData.pressItemHandler}
               />
             );
           }}
           estimatedItemSize={84} // card with + separator
-          ItemSeparatorComponent={Separator}
+          ItemSeparatorComponent={() => <View className="h-10 w-1" />}
           showsHorizontalScrollIndicator={false}
-          initialScrollIndex={currentMonthIndex - 1}
+          // NOTE: idk why this make the scroll item shake at first render, so the trick is using useEffect + useRef + loaded state
+          // estimatedFirstItemOffset={84 * initialScrollIndex}
+          // initialScrollIndex={initialScrollIndex}
         />
       </View>
     );
