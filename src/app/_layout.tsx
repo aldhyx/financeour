@@ -1,13 +1,28 @@
 import '../../global.css';
 
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import {
+  setStatusBarBackgroundColor,
+  setStatusBarStyle,
+} from 'expo-status-bar';
+import { PropsWithChildren, useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
 
-import { Providers } from '@/components/providers';
+import { DevTools } from '@/components/dev-tools';
+import { QueryClientProvider } from '@/components/providers/query-provider';
 import { useLoadDB } from '@/hooks/use-load-db';
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
+import { useThemeConfig } from '@/hooks/use-theme-config';
+import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
 import { initializeDayJs } from '@/lib/dayjs/index';
 
 export {
@@ -21,12 +36,48 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
-// load saved theme from local storage
+// initialize app theme
 loadSelectedTheme();
-
-// init dayjs
+// initialize dayjs
 initializeDayJs();
+
+// Register all provider here
+const Providers = (props: PropsWithChildren) => {
+  const theme = useThemeConfig();
+
+  useEffect(() => {
+    setStatusBarBackgroundColor(theme.colors.background, true);
+    setStatusBarStyle(theme.dark ? 'light' : 'dark', true);
+    setAndroidNavigationBar(theme.dark ? 'dark' : 'light');
+  }, [theme.dark]);
+
+  return (
+    <GestureHandlerRootView
+      style={{ flex: 1 }}
+      className={theme.dark ? `dark` : undefined}
+    >
+      <DevTools />
+      <SafeAreaProvider
+        // A weird behavior:
+        // when navigating from screen -> tabs
+        // the app will show a flicker
+        // cause by this safeAreaProvider that has a white bg on dark theme, so we have to override using app colors
+        style={{ backgroundColor: theme.colors.background }}
+        initialMetrics={initialWindowMetrics}
+      >
+        <QueryClientProvider>
+          <KeyboardProvider>
+            <ThemeProvider value={theme}>
+              <BottomSheetModalProvider>
+                {props.children}
+              </BottomSheetModalProvider>
+            </ThemeProvider>
+          </KeyboardProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+};
 
 export default function RootLayout() {
   const [fontLoaded, error] = useFonts({
