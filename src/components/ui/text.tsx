@@ -4,16 +4,12 @@ import * as React from 'react';
 import { Text as RNText } from 'react-native';
 import { cn } from 'src/lib/utils';
 
-import { translate, TxKeyPath } from '@/lib/i18n';
-
-type Props = SlottableTextProps & {
-  tx?: TxKeyPath;
-};
+type Props = SlottableTextProps;
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 
 const Text = React.forwardRef<TextRef, Props>(
-  ({ className, asChild = false, children, tx, ...props }, ref) => {
+  ({ className, asChild = false, children, ...props }, ref) => {
     const textClass = React.useContext(TextClassContext);
     const Component = asChild ? Slot.Text : RNText;
 
@@ -27,7 +23,7 @@ const Text = React.forwardRef<TextRef, Props>(
         ref={ref}
         {...props}
       >
-        {tx ? translate(tx) : children}
+        {children}
       </Component>
     );
   }

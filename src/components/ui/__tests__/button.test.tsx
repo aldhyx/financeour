@@ -4,13 +4,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 
-// Mocking the translate function
-jest.mock('@/lib/i18n', () => ({
-  translate: jest.fn((key) => {
-    return `translated: ${key}`;
-  }),
-}));
-
 describe('Button component ', () => {
   it('should render correctly', () => {
     render(

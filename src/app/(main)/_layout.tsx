@@ -13,7 +13,6 @@ import {
   SettingsIcon,
   UserRoundIcon,
 } from '@/components/ui/icon';
-import { translate } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
 const tabIcons = {
@@ -82,7 +81,6 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="report"
         options={{
-          title: translate('bottom_nav.report'),
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="reports" />
@@ -102,7 +100,6 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="budget"
         options={{
-          title: translate('bottom_nav.budget'),
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="budgets" />
@@ -113,7 +110,6 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          title: translate('bottom_nav.profile'),
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="profile" />
