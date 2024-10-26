@@ -50,7 +50,7 @@ import {
   XIcon,
 } from 'lucide-react-native';
 
-import { iconWithClassName } from '@/lib/icon-with-classname';
+import { iconWithClassName } from '@/lib/utils';
 
 iconWithClassName(HomeIcon);
 iconWithClassName(ChartColumnBigIcon);
