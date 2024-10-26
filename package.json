@@ -13,7 +13,7 @@
   },
   "packageManager": "pnpm@9.8.0",
   "scripts": {
-    "start": "cross-env EXPO_NO_DOTENV=1 expo start",
+    "start": "cross-env EXPO_NO_DOTENV=1 expo start --dev-client",
     "prebuild": "cross-env EXPO_NO_DOTENV=1 pnpm expo prebuild --clean",
     "android": "cross-env EXPO_NO_DOTENV=1 expo run:android",
     "ios": "cross-env EXPO_NO_DOTENV=1 expo run:ios",
@@ -44,6 +44,7 @@
     "prepare": "husky",
     "apk:generate-release": "./scripts/generate-release-apk",
     "apk:install": "./scripts/install-apk",
+    "apk:all": "pnpm run apk:generate-release && pnpm run apk:install",
     "db:migrate": "npx drizzle-kit generate"
   },
   "expo": {
