@@ -14,7 +14,7 @@ import {
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
 import { Text } from '@/components/ui/text';
-import { useSelectedTheme } from '@/hooks/use-selected-theme';
+import { useSelectedLanguage } from '@/hooks/use-selected-language';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
 import { createSheetContext } from '../sheet-context';
@@ -23,24 +23,25 @@ const {
   InternalSheetProvider,
   SheetProvider,
   useInternalSheetContext,
-  useSheetContext: useAppThemeSheetContext,
+  useSheetContext: useAppLanguageSheetContext,
 } = createSheetContext();
 
-const AppThemeSheetProvider = (props: PropsWithChildren) => {
+const AppLanguageSheetProvider = (props: PropsWithChildren) => {
   return (
     <InternalSheetProvider>
       <SheetProvider>
-        <AppThemeSheet />
+        <AppLanguageSheet />
         {props.children}
       </SheetProvider>
     </InternalSheetProvider>
   );
 };
 
-const AppThemeSheet = () => {
+const AppLanguageSheet = () => {
   const { sheetRef } = useInternalSheetContext();
   const { colors } = useThemeConfig();
-  const { selectedTheme, setSelectedTheme, appThemes } = useSelectedTheme();
+  const { languages, selectedLanguage, setSelectedLanguage } =
+    useSelectedLanguage();
 
   return (
     <BottomSheetModal
@@ -56,22 +57,26 @@ const AppThemeSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            <Trans>Select app theme</Trans>
+            <Trans>Select app language</Trans>
           </Text>
           <ScrollView>
-            <RadioGroup value={selectedTheme.id}>
-              {appThemes.map(({ id, icon: Icon, label }) => (
+            <RadioGroup value={selectedLanguage.code}>
+              {languages.map((language) => (
                 <RadioGroupItem
-                  key={id}
-                  value={id}
+                  key={language.code}
+                  value={language.code}
                   onPress={() => {
                     sheetRef.current?.close();
-                    setSelectedTheme(id);
+                    setSelectedLanguage(language);
                   }}
                 >
                   <View className="flex-row items-center gap-4">
-                    <Icon size={20} className="text-foreground" />
-                    <Text className="font-semibold">{label}</Text>
+                    <View className="w-6">
+                      <Text className="font-bold uppercase leading-tight">
+                        {language.code}
+                      </Text>
+                    </View>
+                    <Text className="font-semibold">{language.name}</Text>
                   </View>
 
                   <RadioGroupIndicator />
@@ -85,4 +90,4 @@ const AppThemeSheet = () => {
   );
 };
 
-export { AppThemeSheetProvider, useAppThemeSheetContext };
+export { AppLanguageSheetProvider, useAppLanguageSheetContext };

@@ -1,20 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, Pressable, View } from 'react-native';
 
-import {
-  AccountTypeListSheetProvider,
-  useAccountTypeListSheetContext,
-} from '@/components/action-sheets/account/account-type-list.sheet';
-import {
-  NumInputSheetProvider,
-  useNumInputSheetContext,
-} from '@/components/action-sheets/general/num-input.sheet';
+import { useAccountTypeListSheetContext } from '@/components/action-sheets/account/account-type-list.sheet';
+import { useNumInputSheetContext } from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { Text } from '@/components/ui/text';
+import {
+  ACCOUNT_TYPE_ID,
+  getAccountTypeLabel,
+} from '@/constants/account-types';
 import {
   InsertAccount,
   insertAccountSchema,
@@ -24,16 +24,11 @@ import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateAccountScreen() {
-  return (
-    <NumInputSheetProvider>
-      <AccountTypeListSheetProvider>
-        <CreateAccountForm />
-      </AccountTypeListSheetProvider>
-    </NumInputSheetProvider>
-  );
+  return <CreateAccountForm />;
 }
 
 function CreateAccountForm() {
+  const { _ } = useLingui();
   const { showSheetAsync: showAccountTypeSheet } =
     useAccountTypeListSheetContext();
   const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
@@ -49,10 +44,14 @@ function CreateAccountForm() {
     setError,
     setValue,
   } = useForm<InsertAccount>({
+    defaultValues: {
+      type: ACCOUNT_TYPE_ID.cash,
+    },
     resolver: zodResolver(insertAccountSchema),
   });
   const balance = watch('balance');
   const accountType = watch('type');
+  const accountTypeLabel = getAccountTypeLabel(accountType);
 
   const submitHandler = handleSubmit(async (data: InsertAccount) => {
     try {
@@ -85,9 +84,11 @@ function CreateAccountForm() {
         control={control}
         render={({ field }) => (
           <FormGroup errorMessage={errors.name?.message}>
-            <FormGroup.Label>Name</FormGroup.Label>
+            <FormGroup.Label>
+              <Trans>Name</Trans>
+            </FormGroup.Label>
             <FormGroup.Input
-              placeholder="e.g. Bank XY, Saving Wallet"
+              placeholder={_(msg`e.g. Bank XY, Saving Wallet`)}
               {...field}
             />
           </FormGroup>
@@ -96,18 +97,22 @@ function CreateAccountForm() {
       />
 
       <FormGroup errorMessage={errors.type?.message}>
-        <FormGroup.Label>Account type</FormGroup.Label>
+        <FormGroup.Label>
+          <Trans>Account type</Trans>
+        </FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={selectAccountHandler}>
           <FormGroup.Input
-            placeholder="Select account type"
+            placeholder={_(msg`Select account type`)}
             disabled
-            value={accountType}
+            value={_(accountTypeLabel)}
           />
         </Pressable>
       </FormGroup>
 
       <FormGroup errorMessage={errors.balance?.message}>
-        <FormGroup.Label>Current balance (optional)</FormGroup.Label>
+        <FormGroup.Label>
+          <Trans>Current balance (optional)</Trans>
+        </FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={pressNumInputHandler}>
           <FormGroup.Input disabled value={maskCurrency(balance).masked} />
         </Pressable>
@@ -117,9 +122,11 @@ function CreateAccountForm() {
         control={control}
         render={({ field }) => (
           <FormGroup errorMessage={errors.description?.message}>
-            <FormGroup.Label>Description (optional)</FormGroup.Label>
+            <FormGroup.Label>
+              <Trans>Description (optional)</Trans>
+            </FormGroup.Label>
             <FormGroup.Input
-              placeholder="e.g. Personal saving for vacation"
+              placeholder={_(msg`e.g. Personal saving for vacation`)}
               {...field}
             />
             <FormGroup.ErrorMessage />
@@ -137,7 +144,9 @@ function CreateAccountForm() {
         disabled={isSubmitting}
         loading={isSubmitting}
       >
-        <Text>Add account</Text>
+        <Text>
+          <Trans>Add account</Trans>
+        </Text>
       </Button>
     </View>
   );

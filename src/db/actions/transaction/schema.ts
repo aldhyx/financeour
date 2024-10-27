@@ -71,12 +71,7 @@ export const insertTxFormSchema = insertTxSchema
   .merge(
     z.object({
       // same as type from insert scheme but we hold the label too
-      transactionType: z
-        .object({
-          id: z.enum(txTypeEnum),
-          label: z.string(),
-        })
-        .required(),
+      transactionTypeId: z.enum(txTypeEnum),
       // same as account_id from insert scheme but we hold the name too
       fromAccount: z
         .object({
@@ -95,7 +90,7 @@ export const insertTxFormSchema = insertTxSchema
   )
   .refine(
     (data) => {
-      const isTransfer = data.transactionType.id === 'tf';
+      const isTransfer = data.transactionTypeId === 'tf';
       const hasToAccount = data.toAccount !== undefined;
 
       return !isTransfer || (isTransfer && hasToAccount);

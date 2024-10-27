@@ -3,6 +3,8 @@ import {
   BottomSheetTextInput,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import React, {
   PropsWithChildren,
   useDeferredValue,
@@ -26,7 +28,7 @@ import {
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
 import { Text } from '@/components/ui/text';
-import { ACCOUNT_TYPE_ICONS } from '@/constants/app';
+import { getAccountTypeIcon } from '@/constants/account-types';
 import { useAccounts } from '@/db/actions/account';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 import { cn } from '@/lib/utils';
@@ -53,6 +55,7 @@ const AccountListSheetProvider = ({ children }: PropsWithChildren) => {
 };
 
 const AccountSheet = () => {
+  const { _ } = useLingui();
   const sheetReturnRef = useRef<SheetReturnData>();
   const { sheetRef, closedCbRef, sheetData } = useInternalSheetContext();
   const { colors } = useThemeConfig();
@@ -106,14 +109,16 @@ const AccountSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="mb-3 text-center text-sm font-semibold">
-            Select an account
+            <Trans>Select an account</Trans>
           </Text>
 
           {!hasData && (
             <View className="p-4">
               <AlertCard
-                title="No account found"
-                subTitle="Create your first account & start manage your finance now."
+                title={_(msg`No account found`)}
+                subTitle={_(
+                  msg`Create your first account & start manage your finance now.`
+                )}
               />
             </View>
           )}
@@ -122,7 +127,7 @@ const AccountSheet = () => {
             <View className="mb-3 px-4">
               <BottomSheetTextInput
                 className={cn(inputVariants({ size: 'sm' }))}
-                placeholder="Search account..."
+                placeholder={_(msg`Search account...`)}
                 onChangeText={setSearchQuery}
               />
             </View>
@@ -131,7 +136,7 @@ const AccountSheet = () => {
           {hasData && !hasFilteredData && (
             <View>
               <Text className="text-center text-muted-foreground">
-                No account found.
+                <Trans>No account found.</Trans>
               </Text>
             </View>
           )}
@@ -139,8 +144,7 @@ const AccountSheet = () => {
           <ScrollView>
             <RadioGroup value={sheetData?.accountId}>
               {filteredData.map((item) => {
-                const Icon =
-                  ACCOUNT_TYPE_ICONS[item.type] ?? ACCOUNT_TYPE_ICONS.unknown;
+                const Icon = getAccountTypeIcon(item.type);
 
                 return (
                   <RadioGroupItem

@@ -1,4 +1,5 @@
-import { Dispatch, useState } from 'react';
+import { Trans as TransLazy } from '@lingui/react';
+import React, { Dispatch, useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -8,15 +9,27 @@ import Animated, {
 import { Text } from '@/components/ui/text';
 import { cn } from '@/lib/utils';
 
+/**
+ * Refers to return type msg
+ */
+type MessageDescriptor = {
+  id: string;
+  comment?: string;
+  message?: string;
+  values?: Record<string, unknown>;
+};
+
 type Segment = {
   id: string;
-  label: string;
+  label: MessageDescriptor;
 };
+
 type Props<T extends Segment> = {
   segments: T[];
   defaultIndex: number;
   onValueChange: Dispatch<T>;
 };
+
 const SegmentedControl = <T extends Segment>(props: Props<T>) => {
   const [selectedIndex, setSelectedIndex] = useState(props.defaultIndex);
 
@@ -44,11 +57,6 @@ const SegmentedControl = <T extends Segment>(props: Props<T>) => {
         style={[
           {
             width: segmentWidth,
-            // transform: [
-            //   {
-            //     translateX: 4,
-            //   },
-            // ],
           },
           styles,
         ]}
@@ -67,7 +75,7 @@ const SegmentedControl = <T extends Segment>(props: Props<T>) => {
           >
             <View className="h-full items-center justify-center rounded-full">
               <Text className={cn(selected ? 'font-semibold' : 'opacity-75')}>
-                {segment.label}
+                <TransLazy id={segment.label.id} />
               </Text>
             </View>
           </Pressable>

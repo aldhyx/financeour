@@ -1,5 +1,5 @@
 import { colorScheme, useColorScheme } from 'nativewind';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useMMKVString } from 'react-native-mmkv';
 
 import { MoonIcon, Smartphone, SunIcon } from '@/components/ui/icon';
@@ -8,11 +8,16 @@ import { storage } from '@/lib/storage';
 
 export type ColorSchemeType = 'light' | 'dark' | 'system';
 
-export const APP_THEMES = [
-  { label: 'System default (auto)', id: 'system', icon: Smartphone },
+const APP_THEMES = [
+  { label: 'System (auto)', id: 'system', icon: Smartphone },
   { label: 'Light', id: 'light', icon: SunIcon },
   { label: 'Dark', id: 'dark', icon: MoonIcon },
 ] as const;
+
+/**
+ * We use system as default app theme
+ */
+const DEFAULT_APP_THEME = APP_THEMES[0];
 
 /**
  * This hooks should only be used while selecting the theme
@@ -23,26 +28,35 @@ export const APP_THEMES = [
  */
 export const useSelectedTheme = () => {
   const { setColorScheme } = useColorScheme();
-  const [_theme, _setTheme] = useMMKVString(STORED_KEY.COLOR_SCHEMA, storage);
+  const [_colorSchema, storeColorSchema] = useMMKVString(
+    STORED_KEY.COLOR_SCHEMA,
+    storage
+  );
 
   const setSelectedTheme = React.useCallback(
     (t: ColorSchemeType) => {
       setColorScheme(t);
-      _setTheme(t);
+      storeColorSchema(t);
     },
-    [setColorScheme, _setTheme]
+    [setColorScheme, storeColorSchema]
   );
 
-  const theme = (_theme ?? 'system') as ColorSchemeType;
-  const selectedTheme =
-    APP_THEMES.find(({ id }) => id === theme) ?? APP_THEMES[0];
-  return { selectedTheme, setSelectedTheme } as const;
+  const selectedTheme = useMemo(() => {
+    const storedColorSchema = (_colorSchema ?? 'system') as ColorSchemeType;
+    const selected = APP_THEMES.find(({ id }) => id === storedColorSchema);
+    return selected ?? DEFAULT_APP_THEME;
+  }, [_colorSchema]);
+
+  return { selectedTheme, setSelectedTheme, appThemes: APP_THEMES };
 };
 
-// To be used in the root file to load the selected theme from MMKV
+/**
+ * Used in the root to initialize theme from persisted store, fallback to system theme
+ */
 export const loadSelectedTheme = () => {
   const theme = storage.getString(STORED_KEY.COLOR_SCHEMA);
-  if (theme !== undefined) {
-    colorScheme.set(theme as ColorSchemeType);
+  if (theme && typeof theme === 'string') {
+    const selectedTheme = APP_THEMES.find(({ id }) => id === theme);
+    colorScheme.set(selectedTheme ? selectedTheme.id : 'system');
   }
 };

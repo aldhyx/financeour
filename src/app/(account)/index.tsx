@@ -1,12 +1,11 @@
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import {
-  AccountActionSheetProvider,
-  useAccountActionSheetContext,
-} from '@/components/action-sheets/account/account-action.sheet';
+import { useAccountActionSheetContext } from '@/components/action-sheets/account/account-action.sheet';
 import { Button } from '@/components/ui/button';
 import { AccountCard } from '@/components/ui/cards/account.card';
 import { AlertCard } from '@/components/ui/cards/alert.card';
@@ -24,14 +23,11 @@ export default function MyAccountScreen() {
   if (isLoading) return <ActivityIndicator style={{ flex: 1 }} />;
   if (error) return <ErrorScreen />;
 
-  return (
-    <AccountActionSheetProvider>
-      <MyAccountList data={data} />
-    </AccountActionSheetProvider>
-  );
+  return <MyAccountList data={data} />;
 }
 
 const MyAccountList = ({ data }: { data: Account[] }) => {
+  const { _ } = useLingui();
   const { showSheet: showActionSheet } = useAccountActionSheetContext();
   const { mutateAsync } = useUpdateAccount();
 
@@ -72,8 +68,10 @@ const MyAccountList = ({ data }: { data: Account[] }) => {
         ItemSeparatorComponent={() => <View className="h-2" />}
         ListEmptyComponent={
           <AlertCard
-            title="No account found."
-            subTitle="You haven’t created an account yet. Get started by adding one now!"
+            title={_(msg`No account found`)}
+            subTitle={_(
+              msg`You haven’t created an account yet. Get started by adding one now!`
+            )}
           />
         }
       />

@@ -1,11 +1,10 @@
-const path = require('path');
-
 module.exports = {
   extends: [
     'expo',
     'prettier',
     'plugin:tailwindcss/recommended',
     'plugin:drizzle/all',
+    'plugin:lingui/recommended',
   ],
   plugins: [
     'unicorn',
@@ -59,40 +58,6 @@ module.exports = {
     'simple-import-sort/exports': 'error', // Export configuration for `eslint-plugin-simple-import-sort`
   },
   overrides: [
-    // Configuration for  translations files (i18next)
-    {
-      files: ['src/translations/*.json'],
-      extends: ['plugin:i18n-json/recommended'],
-      rules: {
-        'i18n-json/valid-message-syntax': [
-          2,
-          {
-            syntax: path.resolve('./scripts/i18next-syntax-validation.js'),
-          },
-        ],
-        'i18n-json/valid-json': 2,
-        'i18n-json/sorted-keys': [
-          2,
-          {
-            order: 'asc',
-            indentSpaces: 2,
-          },
-        ],
-        'i18n-json/identical-keys': [
-          2,
-          {
-            filePath: path.resolve('./src/translations/en-us.json'),
-          },
-        ],
-        'prettier/prettier': [
-          0,
-          {
-            singleQuote: true,
-            endOfLine: 'auto',
-          },
-        ],
-      },
-    },
     {
       // Configuration for testing files
       files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],

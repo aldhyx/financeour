@@ -2,7 +2,7 @@ import { count } from 'drizzle-orm';
 import { ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
 import { useState } from 'react';
 
-import { ACCOUNT_TYPES } from '@/constants/app';
+import { ACCOUNT_TYPE_ID } from '@/constants/account-types';
 import { STORED_KEY } from '@/constants/local-storage-key';
 import * as storage from '@/lib/storage';
 
@@ -45,17 +45,17 @@ export const seedDefaultAccount = async (db: ExpoSQLiteDatabase) => {
   return await db.insert(accountTable).values([
     {
       name: 'My Wallet',
-      type: ACCOUNT_TYPES[0].label,
+      type: ACCOUNT_TYPE_ID.cash,
       isFavorite: true,
     },
     {
       name: 'Bank XYZ',
-      type: ACCOUNT_TYPES[1].label,
+      type: ACCOUNT_TYPE_ID.bank,
       isFavorite: true,
     },
     {
       name: 'Paypal',
-      type: ACCOUNT_TYPES[2].label,
+      type: ACCOUNT_TYPE_ID.ewallet,
     },
   ]);
 };

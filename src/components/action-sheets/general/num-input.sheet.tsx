@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { Trans } from '@lingui/macro';
 import { PropsWithChildren, useRef, useState } from 'react';
 import { View } from 'react-native';
 
@@ -68,7 +69,7 @@ const NumInputSheet = () => {
           {renderView === 'numpad' && (
             <>
               <Text className="mb-3 text-center text-sm font-semibold">
-                Numpad
+                <Trans>Numpad</Trans>
               </Text>
 
               <Numpad
@@ -84,7 +85,7 @@ const NumInputSheet = () => {
           {renderView === 'calc' && (
             <>
               <Text className="mb-3 text-center text-sm font-semibold">
-                Calculator
+                <Trans>Calculator</Trans>
               </Text>
               <Calculator
                 onPressNumpad={() => {

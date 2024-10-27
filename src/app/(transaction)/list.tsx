@@ -1,3 +1,5 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { FlashList } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
@@ -55,6 +57,7 @@ export default function TransactionListScreen() {
 }
 
 const TransactionList = ({ timestamp }: { timestamp: number }) => {
+  const { _ } = useLingui();
   const month = dayjs(timestamp).month() + 1;
   const year = dayjs(timestamp).year();
 
@@ -76,8 +79,10 @@ const TransactionList = ({ timestamp }: { timestamp: number }) => {
         ListEmptyComponent={
           <View className="px-4">
             <AlertCard
-              title="No transactions yet "
-              subTitle="Your transactions will appear here, adjust your filters or add a new transaction "
+              title={_(msg`No transactions yet`)}
+              subTitle={_(
+                msg`Your transactions will appear here, adjust your filters or add a new transaction.`
+              )}
             />
           </View>
         }
@@ -148,14 +153,18 @@ const MonthlySummarizeCard = ({
   return (
     <View className="mb-4 flex-row gap-2 px-4">
       <View className="flex-1">
-        <Text>Total Income</Text>
+        <Text>
+          <Trans>Total Income</Trans>
+        </Text>
         <Text className="text-xl font-semibold leading-tight">
           {maskCurrency(income).masked}
         </Text>
       </View>
 
       <View className="flex-1">
-        <Text>Total Expense</Text>
+        <Text>
+          <Trans>Total Expense</Trans>
+        </Text>
         <Text className="text-xl font-semibold leading-tight">
           {maskCurrency(expense).masked}
         </Text>

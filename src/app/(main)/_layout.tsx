@@ -1,3 +1,5 @@
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Tabs, useRouter } from 'expo-router';
 import { Link } from 'expo-router';
 import React from 'react';
@@ -13,9 +15,7 @@ import {
   SettingsIcon,
   UserRoundIcon,
 } from '@/components/ui/icon';
-import { translate } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
-
 const tabIcons = {
   home: HomeIcon,
   profile: UserRoundIcon,
@@ -55,6 +55,7 @@ const TabBarIcon = (props: {
 };
 
 const TabsLayout = () => {
+  const { _ } = useLingui();
   return (
     <Tabs
       screenOptions={{
@@ -82,7 +83,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="report"
         options={{
-          title: translate('bottom_nav.report'),
+          title: _(msg`Report`),
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="reports" />
@@ -102,7 +103,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="budget"
         options={{
-          title: translate('bottom_nav.budget'),
+          title: _(msg`Budgeting`),
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="budgets" />
@@ -113,7 +114,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          title: translate('bottom_nav.profile'),
+          title: _(msg`Profile`),
           tabBarShowLabel: false,
           tabBarIcon: (props) => (
             <TabBarIcon focused={props.focused} icon="profile" />

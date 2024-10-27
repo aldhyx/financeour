@@ -1,0 +1,323 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-10-26 16:29+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: id\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: src/components/action-sheets/account/account-type-list.sheet.tsx:76
+msgid "Select account type"
+msgstr "Pilih tipe akun"
+
+#: src/app/(transaction)/[id].tsx:79
+#: src/app/(transaction)/create.tsx:174
+msgid "Account"
+msgstr "Akun"
+
+#: src/app/(account)/create.tsx:101
+#: src/app/(account)/update.tsx:132
+msgid "Account type"
+msgstr "Tipe akun"
+
+#: src/app/(account)/_layout.tsx:30
+#: src/app/(account)/create.tsx:148
+msgid "Add account"
+msgstr "Tambah akun"
+
+#: src/app/(transaction)/_layout.tsx:25
+#: src/app/(transaction)/create.tsx:247
+msgid "Add transaction"
+msgstr "Tambah transaksi"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:114
+msgid "Adjust balance"
+msgstr "Sesuaikan saldo"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:139
+msgid "All transaction history related to this account will be deleted permanently."
+msgstr ""
+
+#: src/constants/account-types.ts:43
+msgid "Bank"
+msgstr "Bank"
+
+#: src/app/(main)/_layout.tsx:106
+msgid "Budgeting"
+msgstr "Anggaran"
+
+#: src/components/action-sheets/general/num-input.sheet.tsx:88
+msgid "Calculator"
+msgstr "Kalkulator"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:165
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:92
+msgid "Cancel"
+msgstr "Batal"
+
+#: src/constants/account-types.ts:42
+msgid "Cash"
+msgstr "Kas"
+
+#: src/app/(transaction)/[id].tsx:110
+msgid "Category"
+msgstr "Kategori"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:120
+msgid "Create your first account & start manage your finance now."
+msgstr ""
+
+#: src/app/(transaction)/[id].tsx:124
+msgid "Created at: {0}"
+msgstr "Dibuat pada: {0}"
+
+#: src/app/(account)/update-balance.tsx:104
+msgid "Current balance"
+msgstr "Saldo saat ini"
+
+#: src/app/(account)/create.tsx:114
+msgid "Current balance (optional)"
+msgstr "Saldo saat ini (opsional)"
+
+#: src/app/(transaction)/create.tsx:208
+msgid "Date"
+msgstr "Tanggal"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:155
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:80
+msgid "Delete"
+msgstr "Hapus"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:126
+msgid "Delete account"
+msgstr "Hapus akun"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:136
+msgid "Delete account?"
+msgstr "Hapus akun?"
+
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:67
+msgid "Delete transaction?"
+msgstr "Hapu transaksi?"
+
+#: src/app/(transaction)/[id].tsx:117
+msgid "Description"
+msgstr "Keterangan"
+
+#: src/app/(account)/create.tsx:126
+#: src/app/(account)/update.tsx:151
+#: src/app/(transaction)/create.tsx:225
+msgid "Description (optional)"
+msgstr "Keterangan (opsional)"
+
+#: src/app/(transaction)/[id].tsx:64
+msgid "Detail transaction"
+msgstr "Rincian transaksi"
+
+#: src/constants/account-types.ts:45
+msgid "E-Money"
+msgstr ""
+
+#: src/constants/account-types.ts:44
+msgid "E-Wallet"
+msgstr "Dompet digital"
+
+#: src/app/(account)/create.tsx:91
+#: src/app/(account)/update.tsx:122
+msgid "e.g. Bank XY, Saving Wallet"
+msgstr "contoh: Bank XY, Tabungan"
+
+#: src/app/(account)/create.tsx:129
+#: src/app/(account)/update.tsx:154
+msgid "e.g. Personal saving for vacation"
+msgstr "contoh: Tabungan pribadi untuk liburan"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:102
+msgid "Edit account"
+msgstr "Ubah akun"
+
+#: src/app/(transaction)/create.tsx:228
+msgid "Enter description"
+msgstr ""
+
+#: src/constants/transaction-types.ts:36
+msgid "Expense"
+msgstr "Pengeluaran"
+
+#: src/app/(transaction)/create.tsx:174
+msgid "From account"
+msgstr "Dari akun"
+
+#: src/constants/transaction-types.ts:35
+msgid "Income"
+msgstr "Pendapatan"
+
+#: src/app/settings.tsx:73
+msgid "Language"
+msgstr "Bahasa"
+
+#: src/app/(main)/home.tsx:46
+msgid "Monthly Expense"
+msgstr "Pengeluaran Bulanan"
+
+#: src/app/(main)/home.tsx:38
+msgid "Monthly Income"
+msgstr "Pemasukan Bulanan"
+
+#: src/app/(account)/_layout.tsx:23
+msgid "My accounts"
+msgstr "Akun saya"
+
+#: src/app/(account)/create.tsx:88
+#: src/app/(account)/update.tsx:119
+msgid "Name"
+msgstr "Nama"
+
+#: src/app/(account)/index.tsx:71
+#: src/components/action-sheets/account/account-list.sheet.tsx:118
+msgid "No account found"
+msgstr "Tidak ada akun"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:139
+msgid "No account found."
+msgstr "Tidak ada akun."
+
+#: src/app/(main)/home.tsx:124
+msgid "No recent transactions"
+msgstr "Tidak ada transaksi terbaru"
+
+#: src/app/(transaction)/list.tsx:82
+msgid "No transactions yet"
+msgstr "Tidak ada transaksi"
+
+#: src/components/action-sheets/general/num-input.sheet.tsx:72
+msgid "Numpad"
+msgstr ""
+
+#: src/components/ui/screen/error-screen.tsx:12
+msgid "Oops! Something went wrong"
+msgstr ""
+
+#: src/constants/account-types.ts:47
+msgid "Others"
+msgstr "Lainnya"
+
+#: src/constants/account-types.ts:46
+msgid "Piggy-Bank"
+msgstr "Celengan"
+
+#: src/components/ui/screen/error-screen.tsx:15
+msgid "Please try again or contact support if the problem persists."
+msgstr ""
+
+#: src/app/(main)/_layout.tsx:117
+#: src/app/settings.tsx:23
+msgid "Profile"
+msgstr "Profil"
+
+#: src/app/(main)/home.tsx:108
+msgid "Recent transactions"
+msgstr "Transaksi terbaru"
+
+#: src/app/(main)/home.tsx:125
+msgid "Recent transactions will appear here."
+msgstr "Transaksi terbaru akan tampil disini."
+
+#: src/app/(main)/_layout.tsx:86
+msgid "Report"
+msgstr "Laporan"
+
+#: src/app/(account)/update.tsx:173
+msgid "Save changes"
+msgstr "Simpan perubahan"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:130
+msgid "Search account..."
+msgstr "Cari akun..."
+
+#: src/app/(transaction)/create.tsx:181
+#: src/app/(transaction)/create.tsx:198
+msgid "Select account"
+msgstr "Pilih akun"
+
+#: src/app/(account)/create.tsx:105
+#: src/app/(account)/update.tsx:139
+msgid "Select account type"
+msgstr "Pilih tipe akun"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:112
+msgid "Select an account"
+msgstr "Pilih akun"
+
+#: src/components/action-sheets/setting/app-language.sheet.tsx:60
+msgid "Select app language"
+msgstr "Pilih bahasa aplikasi"
+
+#: src/components/action-sheets/setting/app-theme.sheet.tsx:59
+msgid "Select app theme"
+msgstr "Pilih tema aplikasi"
+
+#: src/app/(transaction)/create.tsx:212
+msgid "Select date"
+msgstr "Pilih tanggal"
+
+#: src/app/settings.tsx:52
+msgid "Theme"
+msgstr "Tema"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:145
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:70
+msgid "This action cannot be undone."
+msgstr "Aksi ini tidak bisa dibatalkan."
+
+#: src/app/(transaction)/create.tsx:191
+msgid "To account"
+msgstr "Ke akun"
+
+#: src/app/(main)/home.tsx:27
+msgid "Total balance"
+msgstr "Jumlah saldo"
+
+#: src/app/(transaction)/list.tsx:166
+msgid "Total Expense"
+msgstr "Jumlah Pengeluaran"
+
+#: src/app/(transaction)/list.tsx:157
+msgid "Total Income"
+msgstr "Jumlah Pendapatan"
+
+#: src/app/(transaction)/[id].tsx:103
+msgid "Transaction date"
+msgstr "Tanggal transaksi"
+
+#: src/app/(transaction)/_layout.tsx:35
+msgid "Transaction history"
+msgstr "Riwayat transaksi"
+
+#: src/constants/transaction-types.ts:37
+msgid "Transfer"
+msgstr ""
+
+#: src/app/(account)/update-balance.tsx:134
+msgid "Update balance"
+msgstr "Ubah saldo"
+
+#: src/app/(main)/home.tsx:114
+msgid "View all"
+msgstr "Lihat semua"
+
+#: src/app/(account)/index.tsx:73
+msgid "You haven’t created an account yet. Get started by adding one now!"
+msgstr ""
+
+#: src/app/(transaction)/list.tsx:84
+msgid "Your transactions will appear here, adjust your filters or add a new transaction."
+msgstr ""

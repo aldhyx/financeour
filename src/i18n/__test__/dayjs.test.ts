@@ -5,7 +5,7 @@ import {
   getToday,
   getTomorrow,
   getYesterday,
-} from '@/lib/dayjs/utils';
+} from '../dayjs-helpers';
 
 describe('dateIsSunday', () => {
   it('should return true if the date is a Sunday', () => {
