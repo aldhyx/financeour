@@ -9,5 +9,6 @@ docs/
 cli/
 assets/
 
-# This thow unknown error when run eslint, so I ignore it
-src/lib/i18n/types.ts
+# i18n compiled files
+src/i18n/locales/_build/',
+src/i18n/locales/**/*.js',

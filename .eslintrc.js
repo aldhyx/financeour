@@ -4,6 +4,7 @@ module.exports = {
     'prettier',
     'plugin:tailwindcss/recommended',
     'plugin:drizzle/all',
+    'plugin:lingui/recommended',
   ],
   plugins: [
     'unicorn',
