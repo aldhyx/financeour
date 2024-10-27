@@ -5,10 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
-import {
-  AccountTypeListSheetProvider,
-  useAccountTypeListSheetContext,
-} from '@/components/action-sheets/account/account-type-list.sheet';
+import { useAccountTypeListSheetContext } from '@/components/action-sheets/account/account-type-list.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { HeaderBar } from '@/components/ui/header-bar';
@@ -49,14 +46,12 @@ export default function UpdateAccountScreen() {
         }}
       />
 
-      <AccountTypeListSheetProvider>
-        <UpdateAccountForm
-          id={data.id}
-          name={data.name}
-          description={data.description}
-          type={data.type}
-        />
-      </AccountTypeListSheetProvider>
+      <UpdateAccountForm
+        id={data.id}
+        name={data.name}
+        description={data.description}
+        type={data.type}
+      />
     </>
   );
 }

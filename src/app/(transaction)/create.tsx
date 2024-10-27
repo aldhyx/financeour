@@ -10,14 +10,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
-import {
-  AccountListSheetProvider,
-  useAccountListSheetContext,
-} from '@/components/action-sheets/account/account-list.sheet';
-import {
-  NumInputSheetProvider,
-  useNumInputSheetContext,
-} from '@/components/action-sheets/general/num-input.sheet';
+import { useAccountListSheetContext } from '@/components/action-sheets/account/account-list.sheet';
+import { useNumInputSheetContext } from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import SegmentedControl from '@/components/ui/form/segmented-control';
@@ -32,13 +26,7 @@ import { getToday } from '@/lib/dayjs/utils';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateTransactionScreen() {
-  return (
-    <NumInputSheetProvider>
-      <AccountListSheetProvider>
-        <CreateTransactionForm />
-      </AccountListSheetProvider>
-    </NumInputSheetProvider>
-  );
+  return <CreateTransactionForm />;
 }
 
 const defaultTransactionType = TRANSACTION_TYPES[0];

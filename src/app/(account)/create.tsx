@@ -4,14 +4,8 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, Pressable, View } from 'react-native';
 
-import {
-  AccountTypeListSheetProvider,
-  useAccountTypeListSheetContext,
-} from '@/components/action-sheets/account/account-type-list.sheet';
-import {
-  NumInputSheetProvider,
-  useNumInputSheetContext,
-} from '@/components/action-sheets/general/num-input.sheet';
+import { useAccountTypeListSheetContext } from '@/components/action-sheets/account/account-type-list.sheet';
+import { useNumInputSheetContext } from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { Text } from '@/components/ui/text';
@@ -24,13 +18,7 @@ import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateAccountScreen() {
-  return (
-    <NumInputSheetProvider>
-      <AccountTypeListSheetProvider>
-        <CreateAccountForm />
-      </AccountTypeListSheetProvider>
-    </NumInputSheetProvider>
-  );
+  return <CreateAccountForm />;
 }
 
 function CreateAccountForm() {

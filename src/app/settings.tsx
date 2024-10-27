@@ -3,14 +3,8 @@ import { Stack } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
-import {
-  AppLanguageSheetProvider,
-  useAppLanguageSheetContext,
-} from '@/components/action-sheets/setting/app-language.sheet';
-import {
-  AppThemeSheetProvider,
-  useAppThemeSheetContext,
-} from '@/components/action-sheets/setting/app-theme.sheet';
+import { useAppLanguageSheetContext } from '@/components/action-sheets/setting/app-language.sheet';
+import { useAppThemeSheetContext } from '@/components/action-sheets/setting/app-theme.sheet';
 import { HeaderBar } from '@/components/ui/header-bar';
 import { LanguagesIcon, PaletteIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
@@ -30,14 +24,8 @@ export default function SettingsScreen() {
       />
 
       <View className="gap-2 pt-2">
-        {/*  ToDO: move all sheet root provider to sheet provider */}
-        <AppThemeSheetProvider>
-          <ThemeSetting />
-        </AppThemeSheetProvider>
-
-        <AppLanguageSheetProvider>
-          <LanguageSetting />
-        </AppLanguageSheetProvider>
+        <ThemeSetting />
+        <LanguageSetting />
       </View>
 
       <Text className="py-6 text-center text-muted-foreground">

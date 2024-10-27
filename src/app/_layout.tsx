@@ -18,6 +18,7 @@ import {
 } from 'react-native-safe-area-context';
 
 import { DevTools } from '@/components/dev-tools';
+import BottomSheetRootProvider from '@/components/providers/bottom-sheet-root-provider';
 import I18nProvider from '@/components/providers/i18n-provider';
 import { QueryClientProvider } from '@/components/providers/query-provider';
 import { useLoadDB } from '@/hooks/use-load-db';
@@ -74,7 +75,9 @@ const Providers = (props: PropsWithChildren) => {
             <KeyboardProvider>
               <ThemeProvider value={theme}>
                 <BottomSheetModalProvider>
-                  {props.children}
+                  <BottomSheetRootProvider>
+                    {props.children}
+                  </BottomSheetRootProvider>
                 </BottomSheetModalProvider>
               </ThemeProvider>
             </KeyboardProvider>

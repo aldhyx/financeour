@@ -4,10 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
 import { z } from 'zod';
 
-import {
-  NumInputSheetProvider,
-  useNumInputSheetContext,
-} from '@/components/action-sheets/general/num-input.sheet';
+import { useNumInputSheetContext } from '@/components/action-sheets/general/num-input.sheet';
 import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import { HeaderBar } from '@/components/ui/header-bar';
@@ -42,13 +39,11 @@ export default function UpdateAccountBalanceScreen() {
         }}
       />
 
-      <NumInputSheetProvider>
-        <UpdateAccountBalanceForm
-          name={data.name}
-          id={data.id}
-          balance={data.balance}
-        />
-      </NumInputSheetProvider>
+      <UpdateAccountBalanceForm
+        name={data.name}
+        id={data.id}
+        balance={data.balance}
+      />
     </>
   );
 }

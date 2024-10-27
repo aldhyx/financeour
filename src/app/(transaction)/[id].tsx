@@ -3,10 +3,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
-import {
-  DeleteTransactionSheetProvider,
-  useDeleteTransactionSheetContext,
-} from '@/components/action-sheets/transaction/delete-transaction.sheet';
+import { useDeleteTransactionSheetContext } from '@/components/action-sheets/transaction/delete-transaction.sheet';
 import { Button } from '@/components/ui/button';
 import {
   txTypeColors,
@@ -28,12 +25,9 @@ export default function DetailTransactionScreen() {
   if (isLoading) return <ActivityIndicator style={{ flex: 1 }} />;
   if (!data) return null;
 
-  return (
-    <DeleteTransactionSheetProvider>
-      <DetailTransaction data={data} />
-    </DeleteTransactionSheetProvider>
-  );
+  return <DetailTransaction data={data} />;
 }
+
 function DetailTransaction({ data: tx }: { data: Tx }) {
   const { showSheet: showDeleteTxSheet } = useDeleteTransactionSheetContext();
   const { maskCurrency } = useMaskCurrency();
