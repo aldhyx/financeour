@@ -18,13 +18,14 @@ import {
 } from 'react-native-safe-area-context';
 
 import { DevTools } from '@/components/dev-tools';
+import I18nProvider from '@/components/providers/i18n-provider';
 import { QueryClientProvider } from '@/components/providers/query-provider';
 import { useLoadDB } from '@/hooks/use-load-db';
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
+import { loadSelectedLocale } from '@/i18n/i18n';
 import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
 import { initializeDayJs } from '@/lib/dayjs/index';
-
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -38,8 +39,10 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 // initialize app theme
 loadSelectedTheme();
-// initialize dayjs
+// initialize dayjs, TODO: load this after load locals
 initializeDayJs();
+// initialize locale
+loadSelectedLocale();
 
 // Register all provider here
 const Providers = (props: PropsWithChildren) => {
@@ -49,6 +52,7 @@ const Providers = (props: PropsWithChildren) => {
     setStatusBarBackgroundColor(theme.colors.background, true);
     setStatusBarStyle(theme.dark ? 'light' : 'dark', true);
     setAndroidNavigationBar(theme.dark ? 'dark' : 'light');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme.dark]);
 
   return (
@@ -65,15 +69,17 @@ const Providers = (props: PropsWithChildren) => {
         style={{ backgroundColor: theme.colors.background }}
         initialMetrics={initialWindowMetrics}
       >
-        <QueryClientProvider>
-          <KeyboardProvider>
-            <ThemeProvider value={theme}>
-              <BottomSheetModalProvider>
-                {props.children}
-              </BottomSheetModalProvider>
-            </ThemeProvider>
-          </KeyboardProvider>
-        </QueryClientProvider>
+        <I18nProvider>
+          <QueryClientProvider>
+            <KeyboardProvider>
+              <ThemeProvider value={theme}>
+                <BottomSheetModalProvider>
+                  {props.children}
+                </BottomSheetModalProvider>
+              </ThemeProvider>
+            </KeyboardProvider>
+          </QueryClientProvider>
+        </I18nProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

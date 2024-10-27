@@ -3,6 +3,11 @@ import type { LucideIcon } from 'lucide-react-native';
 import { cssInterop } from 'nativewind';
 import { twMerge } from 'tailwind-merge';
 
+export function removeDuplicateArray<T>(arr: T[]): T[] {
+  const s = new Set(arr);
+  return [...s];
+}
+
 export function iconWithClassName(icon: LucideIcon) {
   cssInterop(icon, {
     className: {

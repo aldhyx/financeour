@@ -4,12 +4,17 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 
 import {
+  AppLanguageSheetProvider,
+  useAppLanguageSheetContext,
+} from '@/components/action-sheets/setting/app-language.sheet';
+import {
   AppThemeSheetProvider,
   useAppThemeSheetContext,
 } from '@/components/action-sheets/setting/app-theme.sheet';
 import { HeaderBar } from '@/components/ui/header-bar';
 import { LanguagesIcon, PaletteIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { useSelectedLanguage } from '@/hooks/use-selected-language';
 import { useSelectedTheme } from '@/hooks/use-selected-theme';
 
 export default function SettingsScreen() {
@@ -25,11 +30,14 @@ export default function SettingsScreen() {
       />
 
       <View className="gap-2 pt-2">
+        {/*  ToDO: move all sheet root provider to sheet provider */}
         <AppThemeSheetProvider>
           <ThemeSetting />
         </AppThemeSheetProvider>
 
-        <LanguageSetting />
+        <AppLanguageSheetProvider>
+          <LanguageSetting />
+        </AppLanguageSheetProvider>
       </View>
 
       <Text className="py-6 text-center text-muted-foreground">
@@ -59,14 +67,17 @@ const ThemeSetting = () => {
 };
 
 const LanguageSetting = () => {
+  const { showSheet } = useAppLanguageSheetContext();
+  const { selectedLanguage } = useSelectedLanguage();
+
   return (
-    <Pressable className="active:opacity-50">
+    <Pressable className="active:opacity-50" onPress={showSheet}>
       <View className="flex-row items-center gap-3 rounded-2xl bg-secondary p-4">
         <LanguagesIcon size={24} className="text-foreground" />
         <View className="shrink">
           <Text className="font-semibold">App language</Text>
           <Text className="text-sm text-muted-foreground">
-            English (device's language)
+            {selectedLanguage.name}
           </Text>
         </View>
       </View>
