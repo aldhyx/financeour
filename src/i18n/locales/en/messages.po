@@ -13,14 +13,311 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#: src/components/action-sheets/account/account-type-list.sheet.tsx:76
+msgid "Select account type"
+msgstr "Select account type"
+
+#: src/app/(transaction)/[id].tsx:79
+#: src/app/(transaction)/create.tsx:174
+msgid "Account"
+msgstr "Account"
+
+#: src/app/(account)/create.tsx:101
+#: src/app/(account)/update.tsx:132
+msgid "Account type"
+msgstr "Account type"
+
+#: src/app/(account)/_layout.tsx:30
+#: src/app/(account)/create.tsx:148
+msgid "Add account"
+msgstr "Add account"
+
+#: src/app/(transaction)/_layout.tsx:25
+#: src/app/(transaction)/create.tsx:247
+msgid "Add transaction"
+msgstr "Add transaction"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:114
+msgid "Adjust balance"
+msgstr "Adjust balance"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:139
+msgid "All transaction history related to this account will be deleted permanently."
+msgstr "All transaction history related to this account will be deleted permanently."
+
+#: src/constants/account-types.ts:43
+msgid "Bank"
+msgstr "Bank"
+
 #: src/app/(main)/_layout.tsx:106
 msgid "Budgeting"
 msgstr "Budgeting"
 
+#: src/components/action-sheets/general/num-input.sheet.tsx:88
+msgid "Calculator"
+msgstr "Calculator"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:165
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:92
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/constants/account-types.ts:42
+msgid "Cash"
+msgstr "Cash"
+
+#: src/app/(transaction)/[id].tsx:110
+msgid "Category"
+msgstr "Category"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:120
+msgid "Create your first account & start manage your finance now."
+msgstr "Create your first account & start manage your finance now."
+
+#: src/app/(transaction)/[id].tsx:124
+msgid "Created at: {0}"
+msgstr "Created at: {0}"
+
+#: src/app/(account)/update-balance.tsx:104
+msgid "Current balance"
+msgstr "Current balance"
+
+#: src/app/(account)/create.tsx:114
+msgid "Current balance (optional)"
+msgstr "Current balance (optional)"
+
+#: src/app/(transaction)/create.tsx:208
+msgid "Date"
+msgstr "Date"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:155
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:80
+msgid "Delete"
+msgstr "Delete"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:126
+msgid "Delete account"
+msgstr "Delete account"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:136
+msgid "Delete account?"
+msgstr "Delete account?"
+
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:67
+msgid "Delete transaction?"
+msgstr "Delete transaction?"
+
+#: src/app/(transaction)/[id].tsx:117
+msgid "Description"
+msgstr "Description"
+
+#: src/app/(account)/create.tsx:126
+#: src/app/(account)/update.tsx:151
+#: src/app/(transaction)/create.tsx:225
+msgid "Description (optional)"
+msgstr "Description (optional)"
+
+#: src/app/(transaction)/[id].tsx:64
+msgid "Detail transaction"
+msgstr "Detail transaction"
+
+#: src/constants/account-types.ts:45
+msgid "E-Money"
+msgstr "E-Money"
+
+#: src/constants/account-types.ts:44
+msgid "E-Wallet"
+msgstr "E-Wallet"
+
+#: src/app/(account)/create.tsx:91
+#: src/app/(account)/update.tsx:122
+msgid "e.g. Bank XY, Saving Wallet"
+msgstr "e.g. Bank XY, Saving Wallet"
+
+#: src/app/(account)/create.tsx:129
+#: src/app/(account)/update.tsx:154
+msgid "e.g. Personal saving for vacation"
+msgstr "e.g. Personal saving for vacation"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:102
+msgid "Edit account"
+msgstr "Edit account"
+
+#: src/app/(transaction)/create.tsx:228
+msgid "Enter description"
+msgstr "Enter description"
+
+#: src/constants/transaction-types.ts:36
+msgid "Expense"
+msgstr "Expense"
+
+#: src/app/(transaction)/create.tsx:174
+msgid "From account"
+msgstr "From account"
+
+#: src/constants/transaction-types.ts:35
+msgid "Income"
+msgstr "Income"
+
+#: src/app/settings.tsx:73
+msgid "Language"
+msgstr "Language"
+
+#: src/app/(main)/home.tsx:46
+msgid "Monthly Expense"
+msgstr "Monthly Expense"
+
+#: src/app/(main)/home.tsx:38
+msgid "Monthly Income"
+msgstr "Monthly Income"
+
+#: src/app/(account)/_layout.tsx:23
+msgid "My accounts"
+msgstr "My accounts"
+
+#: src/app/(account)/create.tsx:88
+#: src/app/(account)/update.tsx:119
+msgid "Name"
+msgstr "Name"
+
+#: src/app/(account)/index.tsx:71
+#: src/components/action-sheets/account/account-list.sheet.tsx:118
+msgid "No account found"
+msgstr "No account found"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:139
+msgid "No account found."
+msgstr "No account found."
+
+#: src/app/(main)/home.tsx:124
+msgid "No recent transactions"
+msgstr "No recent transactions"
+
+#: src/app/(transaction)/list.tsx:82
+msgid "No transactions yet"
+msgstr "No transactions yet"
+
+#: src/components/action-sheets/general/num-input.sheet.tsx:72
+msgid "Numpad"
+msgstr "Numpad"
+
+#: src/components/ui/screen/error-screen.tsx:12
+msgid "Oops! Something went wrong"
+msgstr "Oops! Something went wrong"
+
+#: src/constants/account-types.ts:47
+msgid "Others"
+msgstr "Others"
+
+#: src/constants/account-types.ts:46
+msgid "Piggy-Bank"
+msgstr "Piggy-Bank"
+
+#: src/components/ui/screen/error-screen.tsx:15
+msgid "Please try again or contact support if the problem persists."
+msgstr "Please try again or contact support if the problem persists."
+
 #: src/app/(main)/_layout.tsx:117
+#: src/app/settings.tsx:23
 msgid "Profile"
 msgstr "Profile"
+
+#: src/app/(main)/home.tsx:108
+msgid "Recent transactions"
+msgstr "Recent transactions"
+
+#: src/app/(main)/home.tsx:125
+msgid "Recent transactions will appear here."
+msgstr "Recent transactions will appear here."
 
 #: src/app/(main)/_layout.tsx:86
 msgid "Report"
 msgstr "Report"
+
+#: src/app/(account)/update.tsx:173
+msgid "Save changes"
+msgstr "Save changes"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:130
+msgid "Search account..."
+msgstr "Search account..."
+
+#: src/app/(transaction)/create.tsx:181
+#: src/app/(transaction)/create.tsx:198
+msgid "Select account"
+msgstr "Select account"
+
+#: src/app/(account)/create.tsx:105
+#: src/app/(account)/update.tsx:139
+msgid "Select account type"
+msgstr "Select account type"
+
+#: src/components/action-sheets/account/account-list.sheet.tsx:112
+msgid "Select an account"
+msgstr "Select an account"
+
+#: src/components/action-sheets/setting/app-language.sheet.tsx:60
+msgid "Select app language"
+msgstr "Select app language"
+
+#: src/components/action-sheets/setting/app-theme.sheet.tsx:59
+msgid "Select app theme"
+msgstr "Select app theme"
+
+#: src/app/(transaction)/create.tsx:212
+msgid "Select date"
+msgstr "Select date"
+
+#: src/app/settings.tsx:52
+msgid "Theme"
+msgstr "Theme"
+
+#: src/components/action-sheets/account/account-action.sheet.tsx:145
+#: src/components/action-sheets/transaction/delete-transaction.sheet.tsx:70
+msgid "This action cannot be undone."
+msgstr "This action cannot be undone."
+
+#: src/app/(transaction)/create.tsx:191
+msgid "To account"
+msgstr "To account"
+
+#: src/app/(main)/home.tsx:27
+msgid "Total balance"
+msgstr "Total balance"
+
+#: src/app/(transaction)/list.tsx:166
+msgid "Total Expense"
+msgstr "Total Expense"
+
+#: src/app/(transaction)/list.tsx:157
+msgid "Total Income"
+msgstr "Total Income"
+
+#: src/app/(transaction)/[id].tsx:103
+msgid "Transaction date"
+msgstr "Transaction date"
+
+#: src/app/(transaction)/_layout.tsx:35
+msgid "Transaction history"
+msgstr "Transaction history"
+
+#: src/constants/transaction-types.ts:37
+msgid "Transfer"
+msgstr "Transfer"
+
+#: src/app/(account)/update-balance.tsx:134
+msgid "Update balance"
+msgstr "Update balance"
+
+#: src/app/(main)/home.tsx:114
+msgid "View all"
+msgstr "View all"
+
+#: src/app/(account)/index.tsx:73
+msgid "You haven’t created an account yet. Get started by adding one now!"
+msgstr "You haven’t created an account yet. Get started by adding one now!"
+
+#: src/app/(transaction)/list.tsx:84
+msgid "Your transactions will appear here, adjust your filters or add a new transaction."
+msgstr "Your transactions will appear here, adjust your filters or add a new transaction."

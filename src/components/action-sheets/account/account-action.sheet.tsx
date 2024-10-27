@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { Trans } from '@lingui/macro';
 import { router } from 'expo-router';
 import React, { PropsWithChildren, useState } from 'react';
 import { View } from 'react-native';
@@ -97,7 +98,9 @@ const AccountActionSheet = () => {
                 onPress={changeAccountHandler(sheetData?.id)}
               >
                 <PencilIcon size={20} className="text-foreground" />
-                <Text>Edit account</Text>
+                <Text>
+                  <Trans>Edit account</Trans>
+                </Text>
               </Button>
 
               <Button
@@ -107,7 +110,9 @@ const AccountActionSheet = () => {
                 onPress={changeAccountBalanceHandler(sheetData?.id)}
               >
                 <PencilIcon size={20} className="text-foreground" />
-                <Text>Adjust balance</Text>
+                <Text>
+                  <Trans>Adjust balance</Trans>
+                </Text>
               </Button>
 
               <Button
@@ -117,7 +122,9 @@ const AccountActionSheet = () => {
                 onPress={() => setRenderView('remove-confirm')}
               >
                 <TrashIcon size={20} className="text-red-600" />
-                <Text>Delete account</Text>
+                <Text>
+                  <Trans>Delete account</Trans>
+                </Text>
               </Button>
             </View>
           </View>
@@ -125,13 +132,17 @@ const AccountActionSheet = () => {
 
         {renderView === 'remove-confirm' && (
           <View className="px-4 pb-4">
-            <Text className="mb-2 text-xl font-bold">Delete account?</Text>
+            <Text className="mb-2 text-xl font-bold">
+              <Trans>Delete account?</Trans>
+            </Text>
             <Text className="mb-1">
-              All transaction history related to this account will be deleted
-              permanently.
+              <Trans>
+                All transaction history related to this account will be deleted
+                permanently.
+              </Trans>
             </Text>
             <Text className="mb-3 text-red-600">
-              This action cannot be undone.
+              <Trans>This action cannot be undone.</Trans>
             </Text>
 
             <View className="gap-1">
@@ -140,7 +151,9 @@ const AccountActionSheet = () => {
                 size="lg"
                 onPress={removeAccountHandler(sheetData?.id)}
               >
-                <Text>Delete</Text>
+                <Text>
+                  <Trans>Delete</Trans>
+                </Text>
               </Button>
 
               <Button
@@ -148,7 +161,9 @@ const AccountActionSheet = () => {
                 size="lg"
                 onPress={() => setRenderView('menu')}
               >
-                <Text>Cancel</Text>
+                <Text>
+                  <Trans>Cancel</Trans>
+                </Text>
               </Button>
             </View>
           </View>

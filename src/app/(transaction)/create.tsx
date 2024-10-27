@@ -1,4 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import {
   DateTimePickerAndroid,
   DateTimePickerEvent,
@@ -16,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { FormGroup } from '@/components/ui/form/form';
 import SegmentedControl from '@/components/ui/form/segmented-control';
 import { Text } from '@/components/ui/text';
-import { TRANSACTION_TYPES } from '@/constants/app';
+import { TRANSACTION_TYPES } from '@/constants/transaction-types';
 import {
   insertTxFormSchema,
   useCreateTransaction,
@@ -35,6 +37,7 @@ type Schema = z.infer<typeof insertTxFormSchema>;
 
 // eslint-disable-next-line max-lines-per-function
 const CreateTransactionForm = () => {
+  const { _ } = useLingui();
   const { showSheetAsync: showAccountSheetAsync } =
     useAccountListSheetContext();
   const { showSheetAsync: showNumInputSheetAsync } = useNumInputSheetContext();
@@ -54,7 +57,7 @@ const CreateTransactionForm = () => {
     resolver: zodResolver(insertTxFormSchema),
     defaultValues: {
       datetime: getToday(),
-      transactionType: defaultTransactionType,
+      transactionTypeId: defaultTransactionType.id,
     },
   });
 
@@ -63,8 +66,8 @@ const CreateTransactionForm = () => {
   const datetimeString = dayjs(datetime).format('dddd, D MMMM YYYY');
   const fromAccount = watch('fromAccount');
   const toAccount = watch('toAccount');
-  const transactionType = watch('transactionType');
-  const isTransfer = transactionType.id === 'tf';
+  const transactionTypeId = watch('transactionTypeId');
+  const isTransfer = transactionTypeId === 'tf';
 
   const submitHandler = handleSubmit(async (data: Schema) => {
     try {
@@ -76,14 +79,12 @@ const CreateTransactionForm = () => {
         amount: data.amount,
         datetime: data.datetime,
         description: data.description,
-        type: data.transactionType.id,
+        type: data.transactionTypeId,
       });
 
       router.back();
     } catch (error) {
-      setError('root.api', {
-        message: getErrorMessage(error),
-      });
+      setError('root.api', { message: getErrorMessage(error) });
     }
   });
 
@@ -104,10 +105,7 @@ const CreateTransactionForm = () => {
     if (res) {
       setValue(
         'fromAccount',
-        {
-          id: res.accountId,
-          name: res.accountName,
-        },
+        { id: res.accountId, name: res.accountName },
         { shouldValidate: true }
       );
     }
@@ -123,19 +121,14 @@ const CreateTransactionForm = () => {
     if (res) {
       setValue(
         'toAccount',
-        {
-          id: res.accountId,
-          name: res.accountName,
-        },
+        { id: res.accountId, name: res.accountName },
         { shouldValidate: true }
       );
     }
   };
 
   const dateChangeHandler = (event: DateTimePickerEvent, date?: Date) => {
-    if (date) {
-      setValue('datetime', date, { shouldValidate: true });
-    }
+    if (date) setValue('datetime', date, { shouldValidate: true });
   };
 
   const showDatepicker = () => {
@@ -146,6 +139,7 @@ const CreateTransactionForm = () => {
       mode: 'date',
     });
   };
+
   return (
     <View className="px-4 pt-2">
       <View className="mb-4">
@@ -153,7 +147,7 @@ const CreateTransactionForm = () => {
           segments={TRANSACTION_TYPES}
           defaultIndex={0}
           onValueChange={(segment) => {
-            setValue('transactionType', segment);
+            setValue('transactionTypeId', segment.id);
             if (segment.id !== 'tf') setValue('toAccount', undefined);
           }}
         />
@@ -177,14 +171,14 @@ const CreateTransactionForm = () => {
 
       <FormGroup errorMessage={errors.fromAccount?.message}>
         <FormGroup.Label>
-          {isTransfer ? 'From account' : 'Account'}
+          {isTransfer ? <Trans>From account</Trans> : <Trans>Account</Trans>}
         </FormGroup.Label>
         <Pressable
           className="active:opacity-50"
           onPress={showFromAccountSheetHandler}
         >
           <FormGroup.Input
-            placeholder="Select account"
+            placeholder={_(msg`Select account`)}
             disabled
             value={fromAccount?.name ?? ''}
           />
@@ -193,13 +187,15 @@ const CreateTransactionForm = () => {
 
       {isTransfer && (
         <FormGroup errorMessage={errors.toAccount?.message}>
-          <FormGroup.Label>To account</FormGroup.Label>
+          <FormGroup.Label>
+            <Trans>To account</Trans>
+          </FormGroup.Label>
           <Pressable
             className="active:opacity-50"
             onPress={showToAccountSheetHandler}
           >
             <FormGroup.Input
-              placeholder="Select account"
+              placeholder={_(msg`Select account`)}
               disabled
               value={toAccount?.name ?? ''}
             />
@@ -208,10 +204,12 @@ const CreateTransactionForm = () => {
       )}
 
       <FormGroup errorMessage={errors.datetime?.message}>
-        <FormGroup.Label>Date</FormGroup.Label>
+        <FormGroup.Label>
+          <Trans>Date</Trans>
+        </FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={showDatepicker}>
           <FormGroup.Input
-            placeholder="Select date"
+            placeholder={_(msg`Select date`)}
             value={datetimeString}
             disabled
           />
@@ -223,8 +221,13 @@ const CreateTransactionForm = () => {
         control={control}
         render={({ field }) => (
           <FormGroup errorMessage={errors.description?.message}>
-            <FormGroup.Label>Description (optional)</FormGroup.Label>
-            <FormGroup.Input placeholder="Enter description" {...field} />
+            <FormGroup.Label>
+              <Trans>Description (optional)</Trans>
+            </FormGroup.Label>
+            <FormGroup.Input
+              placeholder={_(msg`Enter description`)}
+              {...field}
+            />
             <FormGroup.ErrorMessage />
           </FormGroup>
         )}
@@ -240,7 +243,9 @@ const CreateTransactionForm = () => {
         disabled={isSubmitting}
         loading={isSubmitting}
       >
-        <Text>Add transaction</Text>
+        <Text>
+          <Trans>Add transaction</Trans>
+        </Text>
       </Button>
     </View>
   );

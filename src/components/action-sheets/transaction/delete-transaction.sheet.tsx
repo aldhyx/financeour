@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { Trans } from '@lingui/macro';
 import { router } from 'expo-router';
 import React, { PropsWithChildren } from 'react';
 import { View } from 'react-native';
@@ -62,9 +63,11 @@ const DeleteTransactionSheet = () => {
     >
       <BottomSheetView>
         <View className="px-4 pb-4">
-          <Text className="mb-1 text-xl font-bold">Delete transaction?</Text>
+          <Text className="mb-1 text-xl font-bold">
+            <Trans>Delete transaction?</Trans>
+          </Text>
           <Text className="mb-3 text-red-600">
-            This action cannot be undone.
+            <Trans>This action cannot be undone.</Trans>
           </Text>
 
           <View className="gap-1">
@@ -73,7 +76,9 @@ const DeleteTransactionSheet = () => {
               size="lg"
               onPress={removeAccountHandler(sheetData?.id)}
             >
-              <Text>Delete</Text>
+              <Text>
+                <Trans>Delete</Trans>
+              </Text>
             </Button>
 
             <Button
@@ -83,7 +88,9 @@ const DeleteTransactionSheet = () => {
                 sheetRef.current?.dismiss();
               }}
             >
-              <Text>Cancel</Text>
+              <Text>
+                <Trans>Cancel</Trans>
+              </Text>
             </Button>
           </View>
         </View>

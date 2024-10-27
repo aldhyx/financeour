@@ -2,12 +2,11 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
-import {
-  ArrowBigDownIcon,
-  ArrowBigRightIcon,
-  ArrowBigUpIcon,
-} from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import {
+  getTransactionColor,
+  getTransactionIcon,
+} from '@/constants/transaction-types';
 import { Tx } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
 
@@ -20,22 +19,10 @@ type Props = {
   txId: Tx['id'];
 };
 
-export const txTypeIcons = {
-  in: ArrowBigDownIcon,
-  out: ArrowBigUpIcon,
-  tf: ArrowBigRightIcon,
-} as const;
-
-export const txTypeColors = {
-  in: 'text-green-600 fill-green-600',
-  out: 'text-red-600 fill-red-600',
-  tf: 'text-amber-600 fill-amber-600',
-} as const;
-
 export const TransactionCard = (props: Props) => {
   const { maskCurrency } = useMaskCurrency();
-  const TxIcon = txTypeIcons[props.txType];
-  const txColor = txTypeColors[props.txType];
+  const TxIcon = getTransactionIcon(props.txType);
+  const txColor = getTransactionColor(props.txType);
   const router = useRouter();
 
   return (

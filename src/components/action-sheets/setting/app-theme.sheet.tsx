@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { Trans } from '@lingui/macro';
 import React, { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -55,7 +56,7 @@ const AppThemeSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            Select app theme
+            <Trans>Select app theme</Trans>
           </Text>
           <ScrollView>
             <RadioGroup value={selectedTheme.id}>

@@ -1,9 +1,11 @@
+import { Trans as TransLazy } from '@lingui/react';
 import { useRouter } from 'expo-router';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { Pressable, TouchableOpacity, View } from 'react-native';
 
 import { EllipsisIcon, StarIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import { getAccountTypeLabel } from '@/constants/account-types';
 import { Account } from '@/db/actions/account';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
 import { cn } from '@/lib/utils';
@@ -16,6 +18,7 @@ type Props = {
 export const AccountCard = memo((props: Props) => {
   const { maskCurrency } = useMaskCurrency();
   const router = useRouter();
+  const accountTypeLabel = getAccountTypeLabel(props.type);
 
   return (
     <TouchableOpacity onPress={() => router.push(`/(account)/${props.id}`)}>
@@ -28,7 +31,9 @@ export const AccountCard = memo((props: Props) => {
             borderBottomRightRadius: 12,
           }}
         >
-          <Text className="text-sm capitalize">{props.type}</Text>
+          <Text className="text-sm capitalize">
+            <TransLazy id={accountTypeLabel.id} />
+          </Text>
         </View>
 
         <View className="flex-row items-start justify-between gap-2 px-4 pb-4">

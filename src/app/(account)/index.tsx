@@ -1,3 +1,5 @@
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
 import React from 'react';
@@ -25,6 +27,7 @@ export default function MyAccountScreen() {
 }
 
 const MyAccountList = ({ data }: { data: Account[] }) => {
+  const { _ } = useLingui();
   const { showSheet: showActionSheet } = useAccountActionSheetContext();
   const { mutateAsync } = useUpdateAccount();
 
@@ -65,8 +68,10 @@ const MyAccountList = ({ data }: { data: Account[] }) => {
         ItemSeparatorComponent={() => <View className="h-2" />}
         ListEmptyComponent={
           <AlertCard
-            title="No account found."
-            subTitle="You haven’t created an account yet. Get started by adding one now!"
+            title={_(msg`No account found`)}
+            subTitle={_(
+              msg`You haven’t created an account yet. Get started by adding one now!`
+            )}
           />
         }
       />

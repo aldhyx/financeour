@@ -1,4 +1,6 @@
 import { Env } from '@env';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Stack } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
@@ -12,11 +14,13 @@ import { useSelectedLanguage } from '@/hooks/use-selected-language';
 import { useSelectedTheme } from '@/hooks/use-selected-theme';
 
 export default function SettingsScreen() {
+  const { _ } = useLingui();
+
   return (
     <View className="flex-1 px-4">
       <Stack.Screen
         options={{
-          title: 'Settings',
+          title: _(msg`Profile`),
           header({ options }) {
             return <HeaderBar title={options.title} />;
           },
@@ -24,8 +28,8 @@ export default function SettingsScreen() {
       />
 
       <View className="gap-2 pt-2">
-        <ThemeSetting />
         <LanguageSetting />
+        <ThemeSetting />
       </View>
 
       <Text className="py-6 text-center text-muted-foreground">
@@ -44,7 +48,9 @@ const ThemeSetting = () => {
       <View className="flex-row items-center gap-3 rounded-2xl bg-secondary p-4">
         <PaletteIcon size={24} className="text-foreground" />
         <View className="shrink">
-          <Text className="font-semibold">App theme</Text>
+          <Text className="font-semibold">
+            <Trans>Theme</Trans>
+          </Text>
           <Text className="text-sm text-muted-foreground">
             {selectedTheme.label}
           </Text>
@@ -63,7 +69,9 @@ const LanguageSetting = () => {
       <View className="flex-row items-center gap-3 rounded-2xl bg-secondary p-4">
         <LanguagesIcon size={24} className="text-foreground" />
         <View className="shrink">
-          <Text className="font-semibold">App language</Text>
+          <Text className="font-semibold">
+            <Trans>Language</Trans>
+          </Text>
           <Text className="text-sm text-muted-foreground">
             {selectedLanguage.name}
           </Text>

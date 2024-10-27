@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { Trans as TransLazy } from '@lingui/react';
 import React, { PropsWithChildren, useRef } from 'react';
 import { View } from 'react-native';
 
@@ -12,7 +13,7 @@ import {
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
 import { Text } from '@/components/ui/text';
-import { ACCOUNT_TYPES } from '@/constants/app';
+import { ACCOUNT_TYPES } from '@/constants/account-types';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
 import { createSheetContext } from '../sheet-context';
@@ -72,20 +73,20 @@ const AccountTypeSheet = () => {
       <BottomSheetView>
         <View className="pb-3">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-semibold">
-            Select account type
+            <TransLazy id="Select account type" />
           </Text>
 
           <RadioGroup value={sheetData?.accountType}>
             {ACCOUNT_TYPES.map((item) => (
               <RadioGroupItem
-                key={item.label}
-                value={item.label}
+                key={item.id}
+                value={item.id}
                 onPress={pressRadioHandler}
               >
                 <View className="flex-row items-center gap-4">
                   <item.icon size={20} className="text-foreground" />
                   <Text className="shrink pr-2 font-semibold capitalize">
-                    {item.label}
+                    <TransLazy id={item.label.id} />
                   </Text>
                 </View>
                 <RadioGroupIndicator />

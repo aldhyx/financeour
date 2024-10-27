@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Trans } from '@lingui/macro';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { ActivityIndicator, Keyboard, Pressable, View } from 'react-native';
@@ -99,7 +100,9 @@ function UpdateAccountBalanceForm(props: {
     <>
       <View className="mt-2 px-4">
         <FormGroup errorMessage={errors.balance?.message}>
-          <FormGroup.Label>Current balance</FormGroup.Label>
+          <FormGroup.Label>
+            <Trans>Current balance</Trans>
+          </FormGroup.Label>
 
           <View className="flex-row items-baseline justify-start gap-3">
             <Text className="text-2xl font-medium leading-none">Rp</Text>
@@ -127,7 +130,9 @@ function UpdateAccountBalanceForm(props: {
           disabled={isSubmitting}
           loading={isSubmitting}
         >
-          <Text>Update balance</Text>
+          <Text>
+            <Trans>Update balance</Trans>
+          </Text>
         </Button>
       </View>
     </>

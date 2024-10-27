@@ -1,4 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -62,6 +64,8 @@ function UpdateAccountForm(props: {
   type: string;
   id: string;
 }) {
+  const { _ } = useLingui();
+
   const { showSheetAsync: showAccountTypeSheet } =
     useAccountTypeListSheetContext();
 
@@ -111,9 +115,11 @@ function UpdateAccountForm(props: {
           control={control}
           render={({ field }) => (
             <FormGroup errorMessage={errors.name?.message}>
-              <FormGroup.Label>Name</FormGroup.Label>
+              <FormGroup.Label>
+                <Trans>Name</Trans>
+              </FormGroup.Label>
               <FormGroup.Input
-                placeholder="e.g. Bank XY, Saving Wallet"
+                placeholder={_(msg`e.g. Bank XY, Saving Wallet`)}
                 {...field}
               />
             </FormGroup>
@@ -122,13 +128,15 @@ function UpdateAccountForm(props: {
         />
 
         <FormGroup errorMessage={errors.type?.message}>
-          <FormGroup.Label>Account type</FormGroup.Label>
+          <FormGroup.Label>
+            <Trans>Account type</Trans>
+          </FormGroup.Label>
           <Pressable
             className="active:opacity-50"
             onPress={selectAccountTypeHandler}
           >
             <FormGroup.Input
-              placeholder="Select account type"
+              placeholder={_(msg`Select account type`)}
               disabled
               value={accountType}
             />
@@ -139,9 +147,11 @@ function UpdateAccountForm(props: {
           control={control}
           render={({ field }) => (
             <FormGroup errorMessage={errors.description?.message}>
-              <FormGroup.Label>Description (optional)</FormGroup.Label>
+              <FormGroup.Label>
+                <Trans>Description (optional)</Trans>
+              </FormGroup.Label>
               <FormGroup.Input
-                placeholder="e.g. Personal saving for vacation"
+                placeholder={_(msg`e.g. Personal saving for vacation`)}
                 {...field}
               />
               <FormGroup.ErrorMessage />
@@ -159,7 +169,9 @@ function UpdateAccountForm(props: {
           disabled={isSubmitting}
           loading={isSubmitting}
         >
-          <Text>Save changes</Text>
+          <Text>
+            <Trans>Save changes</Trans>
+          </Text>
         </Button>
       </View>
     </>

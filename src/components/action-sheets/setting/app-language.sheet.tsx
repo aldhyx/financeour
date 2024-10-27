@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { Trans } from '@lingui/macro';
 import React, { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -56,7 +57,7 @@ const AppLanguageSheet = () => {
       <BottomSheetView className="flex-1">
         <View className="pb-4">
           <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            Select app language
+            <Trans>Select app language</Trans>
           </Text>
           <ScrollView>
             <RadioGroup value={selectedLanguage.code}>

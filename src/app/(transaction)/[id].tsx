@@ -1,3 +1,5 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import dayjs from 'dayjs';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useMemo } from 'react';
@@ -5,15 +7,15 @@ import { ActivityIndicator, View } from 'react-native';
 
 import { useDeleteTransactionSheetContext } from '@/components/action-sheets/transaction/delete-transaction.sheet';
 import { Button } from '@/components/ui/button';
-import {
-  txTypeColors,
-  txTypeIcons,
-} from '@/components/ui/cards/transaction.card';
 import { HeaderBar } from '@/components/ui/header-bar';
 import { TrashIcon } from '@/components/ui/icon';
 import { ErrorScreen } from '@/components/ui/screen/error-screen';
 import { Text } from '@/components/ui/text';
-import { TRANSACTION_TYPES_LABEL } from '@/constants/app';
+import {
+  getTransactionColor,
+  getTransactionIcon,
+  getTransactionLabel,
+} from '@/constants/transaction-types';
 import { Tx, useTransactionByID } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
 
@@ -29,6 +31,7 @@ export default function DetailTransactionScreen() {
 }
 
 function DetailTransaction({ data: tx }: { data: Tx }) {
+  const { _ } = useLingui();
   const { showSheet: showDeleteTxSheet } = useDeleteTransactionSheetContext();
   const { maskCurrency } = useMaskCurrency();
 
@@ -49,15 +52,16 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
   }, [showDeleteTxSheet, tx.id]);
 
   const isTransfer = Boolean(tx.type === 'tf' && tx.toAccountName);
-  const txColor = txTypeColors[tx.type];
-  const TxIcon = txTypeIcons[tx.type];
-  const txLabel = TRANSACTION_TYPES_LABEL[tx.type];
+  const txColor = getTransactionColor(tx.type);
+  const TxIcon = getTransactionIcon(tx.type);
+  const txLabelTrans = getTransactionLabel(tx.type);
+  const txLabel = _(txLabelTrans);
 
   return (
     <View className="px-4 pt-2">
       <Stack.Screen
         options={{
-          title: 'Detail transaction',
+          title: _(msg`Detail transaction`),
           header({ options }) {
             return (
               <HeaderBar
@@ -71,7 +75,9 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
       />
       <View className={`rounded-2xl border border-dashed border-border py-4`}>
         <View className="mb-2 px-3">
-          <Text className="text-sm text-muted-foreground">Account</Text>
+          <Text className="text-sm text-muted-foreground">
+            <Trans>Account</Trans>
+          </Text>
           <View className="flex-row items-start">
             <Text className="text-lg font-bold">{tx.fromAccountName}</Text>
 
@@ -94,24 +100,28 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
 
         <View className="mb-3 gap-1 px-3">
           <Text className="text-sm text-muted-foreground">
-            Transaction date
+            <Trans>Transaction date</Trans>
           </Text>
           <Text>{dayjs(tx.datetime).format('dddd, D MMMM YYYY')}</Text>
         </View>
 
         <View className="mb-3 gap-1 px-3">
-          <Text className="text-sm text-muted-foreground">Kategori</Text>
+          <Text className="text-sm text-muted-foreground">
+            <Trans>Category</Trans>
+          </Text>
           <Text>Shopping</Text>
         </View>
 
         <View className="gap-1 px-3">
-          <Text className="text-sm text-muted-foreground">Description</Text>
+          <Text className="text-sm text-muted-foreground">
+            <Trans>Description</Trans>
+          </Text>
           <Text>{tx.description || '-'}</Text>
         </View>
       </View>
 
       <Text className="mt-4 text-center text-xs text-muted-foreground">
-        Created at: {tx.createdAt}
+        <Trans>Created at: {tx.createdAt}</Trans>
       </Text>
     </View>
   );

@@ -1,3 +1,5 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
@@ -21,7 +23,9 @@ function CurrentBalanceSection() {
         <EyeOffIcon className="text-primary" size={24} />
       </Pressable>
 
-      <Text className="mb-1">Total account balance</Text>
+      <Text className="mb-1">
+        <Trans>Total balance</Trans>
+      </Text>
       <Text className="text-3xl font-semibold">
         {maskCurrency(data).masked}
       </Text>
@@ -31,7 +35,7 @@ function CurrentBalanceSection() {
       <View className="flex-row gap-4">
         <View className="w-full shrink justify-center">
           <Text numberOfLines={1} className="text-sm">
-            Monthly Income
+            <Trans>Monthly Income</Trans>
           </Text>
           <Text numberOfLines={1} className="font-semibold">
             Rp. 0
@@ -39,7 +43,7 @@ function CurrentBalanceSection() {
         </View>
         <View className="w-full shrink justify-center">
           <Text numberOfLines={1} className="text-sm">
-            Monthly Expense
+            <Trans>Monthly Expense</Trans>
           </Text>
           <Text numberOfLines={1} className="font-semibold">
             Rp. 0
@@ -96,15 +100,19 @@ function RecentTransactionSection() {
     limit: 5,
   });
   const isEmptyData = !isLoading && data.length === 0;
-
+  const { _ } = useLingui();
   return (
     <>
       <View className="mb-1 flex-row items-baseline justify-between gap-1 px-4">
-        <Text className="font-semibold">Recent transactions</Text>
+        <Text className="font-semibold">
+          <Trans>Recent transactions</Trans>
+        </Text>
 
         <Link asChild href="/(transaction)/list" push>
           <Button variant="link" className="flex-row gap-1 px-0" size="sm">
-            <Text className="font-semibold">View all</Text>
+            <Text className="font-semibold">
+              <Trans>View all</Trans>
+            </Text>
             <ChevronRightIcon className="text-primary" size={18} />
           </Button>
         </Link>
@@ -113,8 +121,8 @@ function RecentTransactionSection() {
       {isEmptyData && (
         <View className="px-4">
           <AlertCard
-            title="It’s quite here"
-            subTitle="There are no recent transactions."
+            title={_(msg`No recent transactions`)}
+            subTitle={_(msg`Recent transactions will appear here.`)}
           />
         </View>
       )}

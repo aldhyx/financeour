@@ -9,7 +9,7 @@ import { storage } from '@/lib/storage';
 export type ColorSchemeType = 'light' | 'dark' | 'system';
 
 const APP_THEMES = [
-  { label: 'System default (auto)', id: 'system', icon: Smartphone },
+  { label: 'System (auto)', id: 'system', icon: Smartphone },
   { label: 'Light', id: 'light', icon: SunIcon },
   { label: 'Dark', id: 'dark', icon: MoonIcon },
 ] as const;
