@@ -1,4 +1,5 @@
 import '../../global.css';
+import '../i18n/dayjs';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
@@ -26,7 +27,6 @@ import { loadSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 import { loadSelectedLocale } from '@/i18n/i18n';
 import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
-import { initializeDayJs } from '@/lib/dayjs/index';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -40,8 +40,6 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 // initialize app theme
 loadSelectedTheme();
-// initialize dayjs, TODO: load this after load locals
-initializeDayJs();
 // initialize locale
 loadSelectedLocale();
 

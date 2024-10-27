@@ -22,7 +22,7 @@ import {
   useCreateTransaction,
 } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
-import { getToday } from '@/lib/dayjs/utils';
+import { getToday } from '@/i18n/dayjs-helpers';
 import { getErrorMessage } from '@/lib/utils';
 
 export default function CreateTransactionScreen() {

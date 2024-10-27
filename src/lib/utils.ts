@@ -19,6 +19,7 @@ export function iconWithClassName(icon: LucideIcon) {
     },
   });
 }
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
