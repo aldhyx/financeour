@@ -17,7 +17,7 @@ import { DEFAULT_APP_LANGUAGE } from './app-languages';
 import { deviceLocales } from './device-locales';
 
 /**
- * Init i18n from persisted store or user device
+ * Used in the root to initialize i18n from persisted store or user device
  */
 export const loadSelectedLocale = () => {
   const storedLangCode = storage.getString(STORED_KEY.LANGUAGE_CODE);

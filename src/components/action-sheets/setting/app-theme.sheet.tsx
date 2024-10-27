@@ -13,7 +13,7 @@ import {
   RadioGroupItem,
 } from '@/components/ui/form/radio-group';
 import { Text } from '@/components/ui/text';
-import { APP_THEMES, useSelectedTheme } from '@/hooks/use-selected-theme';
+import { useSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
 
 import { createSheetContext } from '../sheet-context';
@@ -39,7 +39,7 @@ const AppThemeSheetProvider = (props: PropsWithChildren) => {
 const AppThemeSheet = () => {
   const { sheetRef } = useInternalSheetContext();
   const { colors } = useThemeConfig();
-  const { selectedTheme, setSelectedTheme } = useSelectedTheme();
+  const { selectedTheme, setSelectedTheme, appThemes } = useSelectedTheme();
 
   return (
     <BottomSheetModal
@@ -59,7 +59,7 @@ const AppThemeSheet = () => {
           </Text>
           <ScrollView>
             <RadioGroup value={selectedTheme.id}>
-              {APP_THEMES.map(({ id, icon: Icon, label }) => (
+              {appThemes.map(({ id, icon: Icon, label }) => (
                 <RadioGroupItem
                   key={id}
                   value={id}
