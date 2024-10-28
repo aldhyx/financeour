@@ -55,9 +55,13 @@ const AppThemeSheet = () => {
     >
       <BottomSheetView className="flex-1">
         <View className="pb-4">
-          <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            <Trans>Select app theme</Trans>
+          <Text className="pl-4 font-bold">
+            <Trans>Theme</Trans>
           </Text>
+          <Text className="border-b border-b-secondary pb-3 pl-4 text-sm">
+            <Trans>Select your preferred theme</Trans>
+          </Text>
+
           <ScrollView>
             <RadioGroup value={selectedTheme.id}>
               {appThemes.map(({ id, icon: Icon, label }) => (

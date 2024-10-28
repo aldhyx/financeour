@@ -56,9 +56,13 @@ const AppLanguageSheet = () => {
     >
       <BottomSheetView className="flex-1">
         <View className="pb-4">
-          <Text className="border-b border-b-secondary pb-3 text-center text-sm font-bold">
-            <Trans>Select app language</Trans>
+          <Text className="pl-4 font-bold">
+            <Trans>Language</Trans>
           </Text>
+          <Text className="border-b border-b-secondary pb-3 pl-4 text-sm">
+            <Trans>Select your preferred language</Trans>
+          </Text>
+
           <ScrollView>
             <RadioGroup value={selectedLanguage.code}>
               {languages.map((language) => (
