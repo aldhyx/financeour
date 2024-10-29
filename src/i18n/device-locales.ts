@@ -9,9 +9,17 @@ import { removeDuplicateArray } from '@/lib/utils';
  */
 function fixLegacyLanguageCode(code: string): string {
   if (code === 'in') return 'id'; // indonesian
-  if (code === 'iw') return 'he'; // hebrew
-  if (code === 'ji') return 'yi'; // yiddish
+  // Add more legacy tags as needed
   return code;
+}
+
+/**
+ * Handles legacy migration for language tags.
+ */
+function fixLegacyLanguageTag(tag: string): string {
+  if (tag === 'in-ID') return 'id-ID'; // Indonesian
+  // Add more legacy tags as needed
+  return tag;
 }
 
 /**
@@ -23,6 +31,7 @@ function getLocales() {
     if (typeof locale.languageCode === 'string') {
       // change legacy language code
       locale.languageCode = fixLegacyLanguageCode(locale.languageCode);
+      locale.languageTag = fixLegacyLanguageTag(locale.languageTag);
     }
     return locale;
   });

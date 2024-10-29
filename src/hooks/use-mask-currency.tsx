@@ -1,27 +1,37 @@
 import { useCallback } from 'react';
 
-import { CURRENCY, CURRENCY_FORMAT } from '@/constants/currency';
-import { createMaskCurrency, createUnmaskCurrency } from '@/lib/mask';
+import { useCurrencyContext } from '@/components/contexts/currency.context';
 
-type MaskFunc = (
-  value?: string | number | null
-) => ReturnType<typeof createMaskCurrency>;
-type UnmaskFunc = (value: string) => ReturnType<typeof createUnmaskCurrency>;
+type Props = {
+  style: 'decimal' | 'currency';
+};
 
-export const useMaskCurrency = (currency: CURRENCY | undefined = 'IDR') => {
-  const maskCurrency = useCallback<MaskFunc>(
-    (value) => {
-      return createMaskCurrency(String(value), CURRENCY_FORMAT[currency]);
+export const useMaskCurrency = (
+  props: Props = {
+    style: 'currency',
+  }
+) => {
+  const { selectedCurrency } = useCurrencyContext();
+  const languageTag = selectedCurrency.languageTag.replaceAll('_', '-');
+  const currencyCode = selectedCurrency.currencyCode;
+
+  const maskCurrency = useCallback(
+    (value?: number | string | null) => {
+      let val = Number(value);
+      val = isNaN(val) ? 0 : val;
+
+      const masked = new Intl.NumberFormat(languageTag, {
+        currency: currencyCode,
+        style: props.style,
+        currencyDisplay: 'narrowSymbol',
+        minimumFractionDigits: 0, // Allows no decimal places if not necessary.
+        maximumFractionDigits: 3, // Ensures no rounding by allowing up to 3 decimal places.
+      }).format(val);
+
+      return masked;
     },
-    [currency]
+    [currencyCode, languageTag, props.style]
   );
 
-  const unmaskCurrency = useCallback<UnmaskFunc>(
-    (value) => {
-      return createUnmaskCurrency(value, CURRENCY_FORMAT[currency]);
-    },
-    [currency]
-  );
-
-  return { maskCurrency, unmaskCurrency };
+  return { maskCurrency };
 };

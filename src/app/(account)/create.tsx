@@ -114,7 +114,7 @@ function CreateAccountForm() {
           <Trans>Current balance (optional)</Trans>
         </FormGroup.Label>
         <Pressable className="active:opacity-50" onPress={pressNumInputHandler}>
-          <FormGroup.Input disabled value={maskCurrency(balance).masked} />
+          <FormGroup.Input disabled value={maskCurrency(balance)} />
         </Pressable>
       </FormGroup>
 

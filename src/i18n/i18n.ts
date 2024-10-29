@@ -21,12 +21,8 @@ import { deviceLocales } from './device-locales';
  */
 export const loadSelectedLocale = () => {
   const storedLangCode = storage.getString(STORED_KEY.LANGUAGE_CODE);
-
-  if (storedLangCode && typeof storedLangCode === 'string') {
-    dynamicActivate(storedLangCode);
-  } else {
-    dynamicActivate(deviceLocales[0].languageCode);
-  }
+  const userDeviceLangCode = deviceLocales[0].languageCode;
+  dynamicActivate(storedLangCode ?? userDeviceLangCode);
 };
 
 /**

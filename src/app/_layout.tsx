@@ -18,6 +18,7 @@ import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
 
+import { CurrencyProvider } from '@/components/contexts/currency.context';
 import { DevTools } from '@/components/dev-tools';
 import BottomSheetRootProvider from '@/components/providers/bottom-sheet-root-provider';
 import I18nProvider from '@/components/providers/i18n-provider';
@@ -25,6 +26,7 @@ import { QueryClientProvider } from '@/components/providers/query-provider';
 import { useLoadDB } from '@/hooks/use-load-db';
 import { loadSelectedTheme } from '@/hooks/use-selected-theme';
 import { useThemeConfig } from '@/hooks/use-theme-config';
+import { APP_CURRENCIES, DEFAULT_APP_CURRENCY } from '@/i18n/app-currencies';
 import { loadSelectedLocale } from '@/i18n/i18n';
 import { setAndroidNavigationBar } from '@/lib/android-navigation-bar';
 export {
@@ -72,11 +74,16 @@ const Providers = (props: PropsWithChildren) => {
           <QueryClientProvider>
             <KeyboardProvider>
               <ThemeProvider value={theme}>
-                <BottomSheetModalProvider>
-                  <BottomSheetRootProvider>
-                    {props.children}
-                  </BottomSheetRootProvider>
-                </BottomSheetModalProvider>
+                <CurrencyProvider
+                  currencyList={APP_CURRENCIES}
+                  defaultCurrency={DEFAULT_APP_CURRENCY}
+                >
+                  <BottomSheetModalProvider>
+                    <BottomSheetRootProvider>
+                      {props.children}
+                    </BottomSheetRootProvider>
+                  </BottomSheetModalProvider>
+                </CurrencyProvider>
               </ThemeProvider>
             </KeyboardProvider>
           </QueryClientProvider>

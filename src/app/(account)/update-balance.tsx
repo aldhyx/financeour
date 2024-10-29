@@ -100,24 +100,20 @@ function UpdateAccountBalanceForm(props: {
     <>
       <View className="mt-2 px-4">
         <FormGroup errorMessage={errors.balance?.message}>
-          <FormGroup.Label>
+          <FormGroup.Label className="mb-2">
             <Trans>Current balance</Trans>
           </FormGroup.Label>
 
-          <View className="flex-row items-baseline justify-start gap-3">
-            <Text className="text-2xl font-medium leading-none">Rp</Text>
-
-            <Pressable
-              className="grow active:opacity-50"
-              onPress={pressNumInputHandler}
-            >
-              <FormGroup.Input
-                className="h-auto rounded-none border-x-0 border-t-0 border-border bg-background pl-0 text-4xl font-semibold"
-                disabled
-                value={maskCurrency(balance).maskedRaw}
-              />
-            </Pressable>
-          </View>
+          <Pressable
+            className="grow active:opacity-50"
+            onPress={pressNumInputHandler}
+          >
+            <FormGroup.Input
+              className="h-auto rounded-none border-x-0 border-t-0 border-border bg-background pl-0 text-4xl font-semibold"
+              disabled
+              value={maskCurrency(balance)}
+            />
+          </Pressable>
           <FormGroup.ErrorMessage className="ml-9" />
         </FormGroup>
 

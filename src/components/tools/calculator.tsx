@@ -124,7 +124,7 @@ export const Calculator = (props: Props) => {
     <View className="mx-auto w-[372px] items-center justify-center gap-2 p-4">
       <View className="w-full justify-end">
         <Text className="text-right text-3xl font-semibold">
-          {maskCurrency(result).masked}
+          {maskCurrency(result)}
         </Text>
       </View>
 

@@ -20,11 +20,7 @@ const APP_THEMES = [
 const DEFAULT_APP_THEME = APP_THEMES[0];
 
 /**
- * This hooks should only be used while selecting the theme
- * This hooks will return the selected theme which is stored in MMKV
- * selectedTheme should be one of the following values 'light', 'dark' or 'system'
- * don't use this hooks if you want to use it to style your component based on the theme use useColorScheme from nativewind instead
- *
+ * Used to set default app theme
  */
 export const useSelectedTheme = () => {
   const { setColorScheme } = useColorScheme();

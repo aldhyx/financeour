@@ -14,7 +14,7 @@ import { useTransactions } from '@/db/actions/transaction';
 import { useMaskCurrency } from '@/hooks/use-mask-currency';
 
 function CurrentBalanceSection() {
-  const { data } = useTotalBalance();
+  const { data: balance } = useTotalBalance();
   const { maskCurrency } = useMaskCurrency();
 
   return (
@@ -26,9 +26,7 @@ function CurrentBalanceSection() {
       <Text className="mb-1">
         <Trans>Total balance</Trans>
       </Text>
-      <Text className="text-3xl font-semibold">
-        {maskCurrency(data).masked}
-      </Text>
+      <Text className="text-3xl font-semibold">{maskCurrency(balance)}</Text>
 
       <View className="my-4 h-px w-full bg-background" />
 
@@ -38,7 +36,7 @@ function CurrentBalanceSection() {
             <Trans>Monthly Income</Trans>
           </Text>
           <Text numberOfLines={1} className="font-semibold">
-            Rp. 0
+            {maskCurrency(0)}
           </Text>
         </View>
         <View className="w-full shrink justify-center">
@@ -46,7 +44,7 @@ function CurrentBalanceSection() {
             <Trans>Monthly Expense</Trans>
           </Text>
           <Text numberOfLines={1} className="font-semibold">
-            Rp. 0
+            {maskCurrency(0)}
           </Text>
         </View>
       </View>
@@ -78,7 +76,7 @@ function FavoriteAccountSection() {
             {item.name}
           </Text>
           <Text numberOfLines={1} className="text-base font-semibold">
-            {maskCurrency(item.balance).masked}
+            {maskCurrency(1000)}
           </Text>
         </View>
       ))}

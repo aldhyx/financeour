@@ -157,7 +157,7 @@ const MonthlySummarizeCard = ({
           <Trans>Total Income</Trans>
         </Text>
         <Text className="text-xl font-semibold leading-tight">
-          {maskCurrency(income).masked}
+          {maskCurrency(income)}
         </Text>
       </View>
 
@@ -166,7 +166,7 @@ const MonthlySummarizeCard = ({
           <Trans>Total Expense</Trans>
         </Text>
         <Text className="text-xl font-semibold leading-tight">
-          {maskCurrency(expense).masked}
+          {maskCurrency(expense)}
         </Text>
       </View>
     </View>

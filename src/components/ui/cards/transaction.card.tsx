@@ -41,7 +41,7 @@ export const TransactionCard = (props: Props) => {
 
         <View className="flex-row items-center gap-1">
           <Text className={`text-forefill-foreground font-semibold ${txColor}`}>
-            {maskCurrency(props.txAmount).masked}
+            {maskCurrency(props.txAmount)}
           </Text>
 
           <TxIcon size={20} className={`${txColor}`} />

@@ -71,7 +71,7 @@ export const Numpad = (props: Props) => {
     <View className="mx-auto w-[372px] items-center justify-center gap-2 p-4">
       <View className="mb-2 w-full justify-end">
         <Text className="text-right text-3xl font-semibold">
-          {maskCurrency(input).masked}
+          {maskCurrency(input)}
         </Text>
       </View>
 
