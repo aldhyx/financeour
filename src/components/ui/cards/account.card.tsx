@@ -40,7 +40,7 @@ export const AccountCard = memo((props: Props) => {
           <View className="shrink">
             <Text>{props.name}</Text>
             <Text className="text-xl font-semibold">
-              {maskCurrency(props.balance).masked}
+              {maskCurrency(props.balance)}
             </Text>
           </View>
 

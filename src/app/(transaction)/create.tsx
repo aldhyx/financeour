@@ -154,19 +154,16 @@ const CreateTransactionForm = () => {
       </View>
 
       <FormGroup className="mb-4" errorMessage={errors.amount?.message}>
-        <View className="flex-row items-baseline justify-start gap-3">
-          <Text className="text-2xl font-medium">Rp</Text>
-          <Pressable
-            className="grow active:opacity-50"
-            onPress={showNumInputHandler}
-          >
-            <FormGroup.Input
-              className="h-auto rounded-none border-x-0 border-t-0 border-border bg-background pl-0 text-4xl font-semibold"
-              disabled
-              value={maskCurrency(amount).maskedRaw}
-            />
-          </Pressable>
-        </View>
+        <Pressable
+          className="grow active:opacity-50"
+          onPress={showNumInputHandler}
+        >
+          <FormGroup.Input
+            className="h-auto rounded-none border-x-0 border-t-0 border-border bg-background pl-0 text-4xl font-semibold"
+            disabled
+            value={maskCurrency(amount)}
+          />
+        </Pressable>
       </FormGroup>
 
       <FormGroup errorMessage={errors.fromAccount?.message}>

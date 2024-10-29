@@ -5,10 +5,12 @@ import { Stack } from 'expo-router';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
+import { useAppCurrencySheetContext } from '@/components/action-sheets/setting/app-currency.sheet';
 import { useAppLanguageSheetContext } from '@/components/action-sheets/setting/app-language.sheet';
 import { useAppThemeSheetContext } from '@/components/action-sheets/setting/app-theme.sheet';
+import { useCurrencyContext } from '@/components/contexts/currency.context';
 import { HeaderBar } from '@/components/ui/header-bar';
-import { LanguagesIcon, PaletteIcon } from '@/components/ui/icon';
+import { CoinsIcon, LanguagesIcon, PaletteIcon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { useSelectedLanguage } from '@/hooks/use-selected-language';
 import { useSelectedTheme } from '@/hooks/use-selected-theme';
@@ -28,6 +30,7 @@ export default function SettingsScreen() {
       />
 
       <View className="gap-2 pt-2">
+        <CurrencySetting />
         <LanguageSetting />
         <ThemeSetting />
       </View>
@@ -39,6 +42,26 @@ export default function SettingsScreen() {
   );
 }
 
+const CurrencySetting = () => {
+  const { showSheet } = useAppCurrencySheetContext();
+  const { selectedCurrency } = useCurrencyContext();
+
+  return (
+    <Pressable className="active:opacity-50" onPress={showSheet}>
+      <View className="flex-row items-center gap-3 rounded-2xl bg-secondary p-4">
+        <CoinsIcon size={24} className="text-foreground" />
+        <View className="shrink">
+          <Text className="font-semibold">
+            <Trans>Currency</Trans>
+          </Text>
+          <Text className="text-sm text-muted-foreground">
+            {selectedCurrency.currencyName} ({selectedCurrency.currencySymbol})
+          </Text>
+        </View>
+      </View>
+    </Pressable>
+  );
+};
 const ThemeSetting = () => {
   const { showSheet } = useAppThemeSheetContext();
   const { selectedTheme } = useSelectedTheme();

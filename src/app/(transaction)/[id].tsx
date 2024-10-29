@@ -93,7 +93,7 @@ function DetailTransaction({ data: tx }: { data: Tx }) {
             <TxIcon size={20} className={`${txColor}`} />
 
             <Text className={`text-2xl font-bold ${txColor}`}>
-              {maskCurrency(tx.amount).masked}
+              {maskCurrency(tx.amount)}
             </Text>
           </View>
         </View>
