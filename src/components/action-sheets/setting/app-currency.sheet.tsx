@@ -91,7 +91,7 @@ const AppLanguageSheet = () => {
                 >
                   <View className="flex-row items-center gap-4">
                     <View className="size-9 items-center justify-center rounded-xl bg-secondary">
-                      <Text className="text-center font-bold leading-tight">
+                      <Text className="text-center font-bold">
                         {currency.currencySymbol}
                       </Text>
                     </View>

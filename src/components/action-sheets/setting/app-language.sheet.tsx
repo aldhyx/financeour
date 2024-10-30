@@ -75,11 +75,12 @@ const AppLanguageSheet = () => {
                   }}
                 >
                   <View className="flex-row items-center gap-4">
-                    <View className="w-6">
-                      <Text className="font-bold uppercase leading-tight">
+                    <View className="size-9 items-center justify-center rounded-xl bg-secondary">
+                      <Text className="text-center text-sm font-bold uppercase">
                         {language.code}
                       </Text>
                     </View>
+
                     <Text className="font-semibold">{language.name}</Text>
                   </View>
 
