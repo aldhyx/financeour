@@ -22,7 +22,7 @@ export default function SettingsScreen() {
     <View className="flex-1 px-4">
       <Stack.Screen
         options={{
-          title: _(msg`Profile`),
+          title: _(msg`Settings`),
           header({ options }) {
             return <HeaderBar title={options.title} />;
           },

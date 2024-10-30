@@ -19,7 +19,7 @@ msgid "Select account type"
 msgstr "Pilih tipe akun"
 
 #: src/app/(transaction)/[id].tsx:79
-#: src/app/(transaction)/create.tsx:174
+#: src/app/(transaction)/create.tsx:171
 msgid "Account"
 msgstr "Akun"
 
@@ -34,7 +34,7 @@ msgid "Add account"
 msgstr "Tambah akun"
 
 #: src/app/(transaction)/_layout.tsx:25
-#: src/app/(transaction)/create.tsx:247
+#: src/app/(transaction)/create.tsx:244
 msgid "Add transaction"
 msgstr "Tambah transaksi"
 
@@ -79,6 +79,11 @@ msgstr ""
 msgid "Created at: {0}"
 msgstr "Dibuat pada: {0}"
 
+#: src/app/settings.tsx:55
+#: src/components/action-sheets/setting/app-currency.sheet.tsx:68
+msgid "Currency"
+msgstr "Mata uang"
+
 #: src/app/(account)/update-balance.tsx:104
 msgid "Current balance"
 msgstr "Saldo saat ini"
@@ -87,7 +92,7 @@ msgstr "Saldo saat ini"
 msgid "Current balance (optional)"
 msgstr "Saldo saat ini (opsional)"
 
-#: src/app/(transaction)/create.tsx:208
+#: src/app/(transaction)/create.tsx:205
 msgid "Date"
 msgstr "Tanggal"
 
@@ -114,7 +119,7 @@ msgstr "Keterangan"
 
 #: src/app/(account)/create.tsx:126
 #: src/app/(account)/update.tsx:151
-#: src/app/(transaction)/create.tsx:225
+#: src/app/(transaction)/create.tsx:222
 msgid "Description (optional)"
 msgstr "Keterangan (opsional)"
 
@@ -144,7 +149,7 @@ msgstr "contoh: Tabungan pribadi untuk liburan"
 msgid "Edit account"
 msgstr "Ubah akun"
 
-#: src/app/(transaction)/create.tsx:228
+#: src/app/(transaction)/create.tsx:225
 msgid "Enter description"
 msgstr ""
 
@@ -152,7 +157,7 @@ msgstr ""
 msgid "Expense"
 msgstr "Pengeluaran"
 
-#: src/app/(transaction)/create.tsx:174
+#: src/app/(transaction)/create.tsx:171
 msgid "From account"
 msgstr "Dari akun"
 
@@ -160,15 +165,16 @@ msgstr "Dari akun"
 msgid "Income"
 msgstr "Pendapatan"
 
-#: src/app/settings.tsx:73
+#: src/app/settings.tsx:96
+#: src/components/action-sheets/setting/app-language.sheet.tsx:60
 msgid "Language"
 msgstr "Bahasa"
 
-#: src/app/(main)/home.tsx:46
+#: src/app/(main)/home.tsx:44
 msgid "Monthly Expense"
 msgstr "Pengeluaran Bulanan"
 
-#: src/app/(main)/home.tsx:38
+#: src/app/(main)/home.tsx:36
 msgid "Monthly Income"
 msgstr "Pemasukan Bulanan"
 
@@ -190,7 +196,7 @@ msgstr "Tidak ada akun"
 msgid "No account found."
 msgstr "Tidak ada akun."
 
-#: src/app/(main)/home.tsx:124
+#: src/app/(main)/home.tsx:122
 msgid "No recent transactions"
 msgstr "Tidak ada transaksi terbaru"
 
@@ -219,15 +225,14 @@ msgid "Please try again or contact support if the problem persists."
 msgstr ""
 
 #: src/app/(main)/_layout.tsx:117
-#: src/app/settings.tsx:23
 msgid "Profile"
 msgstr "Profil"
 
-#: src/app/(main)/home.tsx:108
+#: src/app/(main)/home.tsx:106
 msgid "Recent transactions"
 msgstr "Transaksi terbaru"
 
-#: src/app/(main)/home.tsx:125
+#: src/app/(main)/home.tsx:123
 msgid "Recent transactions will appear here."
 msgstr "Transaksi terbaru akan tampil disini."
 
@@ -243,8 +248,12 @@ msgstr "Simpan perubahan"
 msgid "Search account..."
 msgstr "Cari akun..."
 
-#: src/app/(transaction)/create.tsx:181
-#: src/app/(transaction)/create.tsx:198
+#: src/components/action-sheets/setting/app-currency.sheet.tsx:77
+msgid "Search currency..."
+msgstr "Cari mata uang..."
+
+#: src/app/(transaction)/create.tsx:178
+#: src/app/(transaction)/create.tsx:195
 msgid "Select account"
 msgstr "Pilih akun"
 
@@ -257,19 +266,28 @@ msgstr "Pilih tipe akun"
 msgid "Select an account"
 msgstr "Pilih akun"
 
-#: src/components/action-sheets/setting/app-language.sheet.tsx:60
-msgid "Select app language"
-msgstr "Pilih bahasa aplikasi"
-
-#: src/components/action-sheets/setting/app-theme.sheet.tsx:59
-msgid "Select app theme"
-msgstr "Pilih tema aplikasi"
-
-#: src/app/(transaction)/create.tsx:212
+#: src/app/(transaction)/create.tsx:209
 msgid "Select date"
 msgstr "Pilih tanggal"
 
-#: src/app/settings.tsx:52
+#: src/components/action-sheets/setting/app-currency.sheet.tsx:71
+msgid "Select your preferred currency"
+msgstr ""
+
+#: src/components/action-sheets/setting/app-language.sheet.tsx:63
+msgid "Select your preferred language"
+msgstr ""
+
+#: src/components/action-sheets/setting/app-theme.sheet.tsx:62
+msgid "Select your preferred theme"
+msgstr ""
+
+#: src/app/settings.tsx:25
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: src/app/settings.tsx:75
+#: src/components/action-sheets/setting/app-theme.sheet.tsx:59
 msgid "Theme"
 msgstr "Tema"
 
@@ -278,7 +296,7 @@ msgstr "Tema"
 msgid "This action cannot be undone."
 msgstr "Aksi ini tidak bisa dibatalkan."
 
-#: src/app/(transaction)/create.tsx:191
+#: src/app/(transaction)/create.tsx:188
 msgid "To account"
 msgstr "Ke akun"
 
@@ -306,11 +324,11 @@ msgstr "Riwayat transaksi"
 msgid "Transfer"
 msgstr ""
 
-#: src/app/(account)/update-balance.tsx:134
+#: src/app/(account)/update-balance.tsx:130
 msgid "Update balance"
 msgstr "Ubah saldo"
 
-#: src/app/(main)/home.tsx:114
+#: src/app/(main)/home.tsx:112
 msgid "View all"
 msgstr "Lihat semua"
 
