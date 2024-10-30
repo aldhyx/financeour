@@ -19,7 +19,7 @@ msgid "Select account type"
 msgstr "Select account type"
 
 #: src/app/(transaction)/[id].tsx:79
-#: src/app/(transaction)/create.tsx:174
+#: src/app/(transaction)/create.tsx:171
 msgid "Account"
 msgstr "Account"
 
@@ -34,7 +34,7 @@ msgid "Add account"
 msgstr "Add account"
 
 #: src/app/(transaction)/_layout.tsx:25
-#: src/app/(transaction)/create.tsx:247
+#: src/app/(transaction)/create.tsx:244
 msgid "Add transaction"
 msgstr "Add transaction"
 
@@ -79,6 +79,11 @@ msgstr "Create your first account & start manage your finance now."
 msgid "Created at: {0}"
 msgstr "Created at: {0}"
 
+#: src/app/settings.tsx:55
+#: src/components/action-sheets/setting/app-currency.sheet.tsx:68
+msgid "Currency"
+msgstr "Currency"
+
 #: src/app/(account)/update-balance.tsx:104
 msgid "Current balance"
 msgstr "Current balance"
@@ -87,7 +92,7 @@ msgstr "Current balance"
 msgid "Current balance (optional)"
 msgstr "Current balance (optional)"
 
-#: src/app/(transaction)/create.tsx:208
+#: src/app/(transaction)/create.tsx:205
 msgid "Date"
 msgstr "Date"
 
@@ -114,7 +119,7 @@ msgstr "Description"
 
 #: src/app/(account)/create.tsx:126
 #: src/app/(account)/update.tsx:151
-#: src/app/(transaction)/create.tsx:225
+#: src/app/(transaction)/create.tsx:222
 msgid "Description (optional)"
 msgstr "Description (optional)"
 
@@ -144,7 +149,7 @@ msgstr "e.g. Personal saving for vacation"
 msgid "Edit account"
 msgstr "Edit account"
 
-#: src/app/(transaction)/create.tsx:228
+#: src/app/(transaction)/create.tsx:225
 msgid "Enter description"
 msgstr "Enter description"
 
@@ -152,7 +157,7 @@ msgstr "Enter description"
 msgid "Expense"
 msgstr "Expense"
 
-#: src/app/(transaction)/create.tsx:174
+#: src/app/(transaction)/create.tsx:171
 msgid "From account"
 msgstr "From account"
 
@@ -160,15 +165,16 @@ msgstr "From account"
 msgid "Income"
 msgstr "Income"
 
-#: src/app/settings.tsx:73
+#: src/app/settings.tsx:96
+#: src/components/action-sheets/setting/app-language.sheet.tsx:60
 msgid "Language"
 msgstr "Language"
 
-#: src/app/(main)/home.tsx:46
+#: src/app/(main)/home.tsx:44
 msgid "Monthly Expense"
 msgstr "Monthly Expense"
 
-#: src/app/(main)/home.tsx:38
+#: src/app/(main)/home.tsx:36
 msgid "Monthly Income"
 msgstr "Monthly Income"
 
@@ -190,7 +196,7 @@ msgstr "No account found"
 msgid "No account found."
 msgstr "No account found."
 
-#: src/app/(main)/home.tsx:124
+#: src/app/(main)/home.tsx:122
 msgid "No recent transactions"
 msgstr "No recent transactions"
 
@@ -219,15 +225,14 @@ msgid "Please try again or contact support if the problem persists."
 msgstr "Please try again or contact support if the problem persists."
 
 #: src/app/(main)/_layout.tsx:117
-#: src/app/settings.tsx:23
 msgid "Profile"
 msgstr "Profile"
 
-#: src/app/(main)/home.tsx:108
+#: src/app/(main)/home.tsx:106
 msgid "Recent transactions"
 msgstr "Recent transactions"
 
-#: src/app/(main)/home.tsx:125
+#: src/app/(main)/home.tsx:123
 msgid "Recent transactions will appear here."
 msgstr "Recent transactions will appear here."
 
@@ -243,8 +248,12 @@ msgstr "Save changes"
 msgid "Search account..."
 msgstr "Search account..."
 
-#: src/app/(transaction)/create.tsx:181
-#: src/app/(transaction)/create.tsx:198
+#: src/components/action-sheets/setting/app-currency.sheet.tsx:77
+msgid "Search currency..."
+msgstr "Search currency..."
+
+#: src/app/(transaction)/create.tsx:178
+#: src/app/(transaction)/create.tsx:195
 msgid "Select account"
 msgstr "Select account"
 
@@ -257,19 +266,28 @@ msgstr "Select account type"
 msgid "Select an account"
 msgstr "Select an account"
 
-#: src/components/action-sheets/setting/app-language.sheet.tsx:60
-msgid "Select app language"
-msgstr "Select app language"
-
-#: src/components/action-sheets/setting/app-theme.sheet.tsx:59
-msgid "Select app theme"
-msgstr "Select app theme"
-
-#: src/app/(transaction)/create.tsx:212
+#: src/app/(transaction)/create.tsx:209
 msgid "Select date"
 msgstr "Select date"
 
-#: src/app/settings.tsx:52
+#: src/components/action-sheets/setting/app-currency.sheet.tsx:71
+msgid "Select your preferred currency"
+msgstr "Select your preferred currency"
+
+#: src/components/action-sheets/setting/app-language.sheet.tsx:63
+msgid "Select your preferred language"
+msgstr "Select your preferred language"
+
+#: src/components/action-sheets/setting/app-theme.sheet.tsx:62
+msgid "Select your preferred theme"
+msgstr "Select your preferred theme"
+
+#: src/app/settings.tsx:25
+msgid "Settings"
+msgstr "Settings"
+
+#: src/app/settings.tsx:75
+#: src/components/action-sheets/setting/app-theme.sheet.tsx:59
 msgid "Theme"
 msgstr "Theme"
 
@@ -278,7 +296,7 @@ msgstr "Theme"
 msgid "This action cannot be undone."
 msgstr "This action cannot be undone."
 
-#: src/app/(transaction)/create.tsx:191
+#: src/app/(transaction)/create.tsx:188
 msgid "To account"
 msgstr "To account"
 
@@ -306,11 +324,11 @@ msgstr "Transaction history"
 msgid "Transfer"
 msgstr "Transfer"
 
-#: src/app/(account)/update-balance.tsx:134
+#: src/app/(account)/update-balance.tsx:130
 msgid "Update balance"
 msgstr "Update balance"
 
-#: src/app/(main)/home.tsx:114
+#: src/app/(main)/home.tsx:112
 msgid "View all"
 msgstr "View all"
 
