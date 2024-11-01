@@ -68,11 +68,8 @@ export function useCreateTransaction() {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
-
-      // Invalidate recent transaction in main/home.tsx
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.TX_LIST, { limit: 5 }],
-        exact: true,
+        queryKey: [QUERY_KEYS.TX_LIST],
       });
     },
   });
@@ -94,12 +91,13 @@ export function useRemoveTransaction() {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
-
       queryClient.removeQueries({
         queryKey: [QUERY_KEYS.TX_BY_ID, id],
         exact: true,
       });
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TX_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TX_LIST],
+      });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.TX_LIST_GROUPED_BY_DAY],
       });

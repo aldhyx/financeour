@@ -47,7 +47,9 @@ export function useCreateAccount() {
   const mutation = useMutation({
     mutationFn: createAccount,
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ACCOUNT_LIST],
+      });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
@@ -62,7 +64,9 @@ export function useUpdateAccount() {
   const mutation = useMutation({
     mutationFn: updateAccount,
     onSuccess(_, variables) {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ACCOUNT_LIST],
+      });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_BY_ID, variables.id],
         exact: true,
@@ -78,7 +82,9 @@ export function useUpdateAccountBalance() {
   const mutation = useMutation({
     mutationFn: updateAccountBalance,
     onSuccess(_, variables) {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ACCOUNT_LIST] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ACCOUNT_LIST],
+      });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_BY_ID, variables.id],
         exact: true,
@@ -86,11 +92,8 @@ export function useUpdateAccountBalance() {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
       });
-
-      // Invalidate recent transaction in main/home.tsx
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.TX_LIST, { limit: 5 }],
-        exact: true,
+        queryKey: [QUERY_KEYS.TX_LIST],
       });
     },
   });
@@ -110,6 +113,9 @@ export function useRemoveAccount() {
       });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ACCOUNT_TOTAL_BALANCE],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.TX_LIST],
       });
     },
   });
